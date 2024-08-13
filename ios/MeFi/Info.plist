@@ -26,14 +26,13 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -48,5 +47,26 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FZ Poppins-Black.ttf</string>
+		<string>FZ Poppins-Bold.ttf</string>
+		<string>FZ Poppins-ExtraBold.ttf</string>
+		<string>FZ Poppins-ExtraLight.ttf</string>
+		<string>FZ Poppins-Light.ttf</string>
+		<string>FZ Poppins-Medium.ttf</string>
+		<string>FZ Poppins-Regular.ttf</string>
+		<string>FZ Poppins-SemiBold.ttf</string>
+		<string>FZ Poppins-Thin.ttf</string>
+		<string>FZ Poppins-BlackItalic.ttf</string>
+		<string>FZ Poppins-BoldItalic.ttf</string>
+		<string>FZ Poppins-ExtraBoldItalic.ttf</string>
+		<string>FZ Poppins-ExtraLightItalic.ttf</string>
+		<string>FZ Poppins-Italic.ttf</string>
+		<string>FZ Poppins-LightItalic.ttf</string>
+		<string>FZ Poppins-MediumItalic.ttf</string>
+		<string>FZ Poppins-SemiBoldItalic.ttf</string>
+		<string>FZ Poppins-ThinItalic.ttf</string>
+	</array>
 </dict>
 </plist>
