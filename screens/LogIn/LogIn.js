@@ -24,7 +24,16 @@ const LogIn = () => {
       <StatusBar hidden />
       <View style={styles.content}>
         <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
-        <InputField label="Email" placeholder="Enter your email" />
+        <View style={styles.email}>
+          <InputField label="Email" placeholder="Enter your email" />
+        </View>
+        <View style={styles.password}>
+          <InputField
+            label="Password"
+            placeholder="Enter your email"
+            secureTextEntry={true}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -40,6 +49,14 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(80),
     alignItems: 'center',
     marginHorizontal: horizontalScale(30),
+  },
+  email: {
+    marginTop: verticalScale(70),
+    width: '100%',
+  },
+  password: {
+    marginTop: verticalScale(14),
+    width: '100%',
   },
 });
 

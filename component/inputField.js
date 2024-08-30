@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   label: {
     position: 'absolute',
-    left: horizontalScale(15),
+    left: horizontalScale(11),
     fontSize: horizontalScale(10),
     color: '#818181',
     fontFamily: getFontFamily('FZ Poppins', 600, ''),
