@@ -12,7 +12,8 @@ import {
   scaleFontSize,
 } from '../assets/styles/scaling';
 import {getFontFamily} from '../assets/fonts/helper';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 const CustomInput = ({
   customStyle,
@@ -38,6 +39,7 @@ const CustomInput = ({
     }
   };
 
+  // eslint-disable-next-line no-shadow
   const handleTextChange = text => {
     setText(text);
     if (onChangeText) {
@@ -62,7 +64,7 @@ const CustomInput = ({
     left: horizontalScale(10),
     top: labelPosition.interpolate({
       inputRange: [0, 1],
-      outputRange: [17, 0],
+      outputRange: [17, 5],
     }),
     fontSize: labelPosition.interpolate({
       inputRange: [0, 1],
@@ -96,9 +98,10 @@ const CustomInput = ({
             onBlur={handleBlur}
             onChangeText={handleTextChange}
             value={text}
+            keyboardType={placeholder === 'Email' ? 'email-address' : 'default'}
             textAlignVertical="center"
             textContentType={
-              props.secureTextEntry ? 'password' : props.secureTextEntry
+              props.secureTextEntry ? 'newPassword' : props.secureTextEntry
             }
             secureTextEntry={showPassword}
           />
@@ -108,9 +111,9 @@ const CustomInput = ({
                 style={styles.passwordIcon}
                 onPress={() => setShowPassword(!showPassword)}>
                 {!showPassword ? (
-                  <Icon name="eye-outline" color={'gray'} size={24} />
+                  <FontAwesomeIcon icon={faEye} color={'gray'} size={24} />
                 ) : (
-                  <Icon name="eye-off-outline" color={'gray'} size={24} />
+                  <FontAwesomeIcon icon={faEyeSlash} color={'gray'} size={24} />
                 )}
               </TouchableOpacity>
             </View>
@@ -129,6 +132,7 @@ const styles = StyleSheet.create({
     borderColor: '#FFD55F',
     justifyContent: 'center',
     height: verticalScale(52),
+    paddingTop: verticalScale(10),
   },
   label: {
     position: 'absolute',

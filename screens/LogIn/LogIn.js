@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -17,6 +18,8 @@ import {getFontFamily} from '../../assets/fonts/helper';
 import Logo from '../../assets/images/Logo.svg';
 import InputField from '../../component/inputField';
 import CustomInput from '../../component/customInput';
+import CustomButton from '../../component/customButton';
+import {height} from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
@@ -41,6 +44,24 @@ const LogIn = () => {
           error={passwordError}
           secureTextEntry
         />
+        <View style={styles.forgotButton}>
+          <TouchableWithoutFeedback>
+            <Text style={styles.forgot}>Forgot password</Text>
+          </TouchableWithoutFeedback>
+        </View>
+        <CustomButton
+          customStyle={{
+            marginTop: verticalScale(40),
+            height: verticalScale(50),
+          }}
+          title="Log In"
+        />
+        <View style={styles.signUpContainer}>
+          <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
+          <TouchableOpacity>
+            <Text style={styles.signUp}> Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -64,6 +85,34 @@ const styles = StyleSheet.create({
   password: {
     marginTop: verticalScale(14),
     width: '100%',
+  },
+  forgotButton: {
+    width: '100%',
+    marginTop: verticalScale(10),
+  },
+  forgot: {
+    position: 'absolute',
+    right: horizontalScale(2),
+    fontFamily: getFontFamily('FZ Poppins', 400, ''),
+    fontSize: scaleFontSize(12),
+    color: '#00164A',
+  },
+  signUpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'space-between',
+    marginTop: verticalScale(15),
+  },
+  dontHaveAccount: {
+    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontSize: scaleFontSize(12),
+    color: '#8A7B7B',
+  },
+  signUp: {
+    marginLeft: horizontalScale(10),
+    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontSize: scaleFontSize(12),
+    color: '#4D4D4D',
   },
 });
 
