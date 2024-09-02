@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -16,24 +16,31 @@ import {
 import {getFontFamily} from '../../assets/fonts/helper';
 import Logo from '../../assets/images/Logo.svg';
 import InputField from '../../component/inputField';
+import CustomInput from '../../component/customInput';
 
 const LogIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
   const {width: SCREEN_WIDTH} = useWindowDimensions();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
       <View style={styles.content}>
         <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
-        <View style={styles.email}>
-          <InputField label="Email" placeholder="Enter your email" />
-        </View>
-        <View style={styles.password}>
-          <InputField
-            label="Password"
-            placeholder="Enter your email"
-            secureTextEntry={true}
-          />
-        </View>
+        <CustomInput
+          customStyle={styles.email}
+          placeholder="Email"
+          onChangeText={setEmail}
+        />
+        <CustomInput
+          customStyle={styles.password}
+          placeholder="Password"
+          onChangeText={setPassword}
+          error={passwordError}
+          secureTextEntry
+        />
       </View>
     </SafeAreaView>
   );
