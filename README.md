@@ -22,14 +22,8 @@ Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _roo
 ### For Android
 
 ```bash
-npx react-native start
+npx react-native run android
 ```
-
-After the Metro Bundler run, press 
-```bash
-a
-```
-to run the android application
 
 ### For iOS (try not to do this!!)
 
