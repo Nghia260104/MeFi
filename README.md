@@ -1,6 +1,6 @@
 Welcome to MeFi!
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
-
+Link UI: [Mefi](https://www.figma.com/design/INpo5899LHXfMBEpHP5Mm5/MEMO-(Copy)?node-id=105-1053&t=PX8zWoGqXYfEWmvn-1) - Password: Mefi-123456
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/set-up-your-environment).
