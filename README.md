@@ -1,6 +1,6 @@
 Welcome to MeFi!
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
-
+Link UI: [Mefi](https://www.figma.com/design/INpo5899LHXfMBEpHP5Mm5/MEMO-(Copy)?node-id=105-1053&t=PX8zWoGqXYfEWmvn-1) - Password: Mefi-123456
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/set-up-your-environment).
@@ -13,7 +13,35 @@ When first pull the project to your personal workspace, please make sure that yo
 # using npm
 npm install
 ```
-Then install the dependencies for the app (I will update later!)
+Then install the dependencies for the app
+### React Native reanimated
+```bash
+# install react-native-reanimated
+npm install react-native-reanimated
+```
+Documentation: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started
+
+### React Navigation
+```bash
+# install react-navigation
+npm install @react-navigation/native
+# install dependencies
+npm install react-native-screens react-native-safe-area-context
+```
+Documentation: https://reactnavigation.org/docs/getting-started/
+
+### React font awesome - icon
+```bash
+# install fontawesome
+npm i --save @fortawesome/react-native-fontawesome @fortawesome/fontawesome-svg-core react-native-svg
+# install styles
+npm i --save @fortawesome/free-solid-svg-icons
+npm i --save @fortawesome/free-brands-svg-icons
+npm i --save @fortawesome/free-regular-svg-icons
+```
+Documentation: https://docs.fontawesome.com/web/use-with/react-native
+
+If there are any other needed dependencies, I will add later!
 
 ## Step 2: 
 
