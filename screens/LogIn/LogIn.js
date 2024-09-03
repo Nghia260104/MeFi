@@ -47,7 +47,7 @@ const LogIn = () => {
           placeholder="Password"
           onChangeText={setPassword}
           error={passwordError}
-          secureTextEntry
+          secureTextEntry={true}
         />
         <View style={styles.forgotButton}>
           <TouchableWithoutFeedback>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     color: '#4D4D4D',
   },
   alternativeLogin: {
-    zIndex: -1,
+    //zIndex: -1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

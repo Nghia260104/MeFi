@@ -111,9 +111,9 @@ const CustomInput = ({
                 style={styles.passwordIcon}
                 onPress={() => setShowPassword(!showPassword)}>
                 {!showPassword ? (
-                  <FontAwesomeIcon icon={faEye} color={'gray'} size={24} />
-                ) : (
                   <FontAwesomeIcon icon={faEyeSlash} color={'gray'} size={24} />
+                ) : (
+                  <FontAwesomeIcon icon={faEye} color={'gray'} size={24} />
                 )}
               </TouchableOpacity>
             </View>

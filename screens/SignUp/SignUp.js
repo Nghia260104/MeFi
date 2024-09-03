@@ -21,11 +21,16 @@ import Facebook from '../../assets/images/Facebook.svg';
 import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
+import {useNavigation} from '@react-navigation/native';
+import LogIn from '../LogIn/LogIn';
 
 const SignUp = () => {
+  const navigation = useNavigation();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [dob, setDob] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
@@ -49,19 +54,34 @@ const SignUp = () => {
           placeholder="Password"
           onChangeText={setPassword}
           error={passwordError}
-          secureTextEntry
+          secureTextEntry={true}
         />
+        <CustomInput
+          customStyle={styles.dob}
+          placeholder="Date of birth"
+          onChangeText={setDob}
+        />
+        <View style={styles.consentContainer}>
+          <View style={styles.checkBox} />
+          <Text style={styles.consent}>
+            I would like to receive your newsletter and other promotional
+            information.
+          </Text>
+        </View>
         <CustomButton
           customStyle={{
-            marginTop: verticalScale(40),
+            marginTop: verticalScale(30),
             height: verticalScale(50),
           }}
           title="Sign Up"
         />
         <View style={styles.signUpContainer}>
-          <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
-          <TouchableOpacity>
-            <Text style={styles.signUp}> Sign Up</Text>
+          <Text style={styles.dontHaveAccount}>Already have an account?</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(LogIn);
+            }}>
+            <Text style={styles.signUp}> Log in</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.alternativeLogin}>
@@ -92,7 +112,7 @@ const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(30),
   },
   name: {
-    marginTop: verticalScale(70),
+    marginTop: verticalScale(25),
     width: '100%',
   },
   email: {
@@ -103,16 +123,9 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(14),
     width: '100%',
   },
-  forgotButton: {
+  dob: {
+    marginTop: verticalScale(14),
     width: '100%',
-    marginTop: verticalScale(10),
-  },
-  forgot: {
-    position: 'absolute',
-    right: horizontalScale(2),
-    fontFamily: getFontFamily('FZ Poppins', 400, ''),
-    fontSize: scaleFontSize(12),
-    color: '#00164A',
   },
   signUpContainer: {
     flexDirection: 'row',
@@ -132,12 +145,29 @@ const styles = StyleSheet.create({
     color: '#4D4D4D',
   },
   alternativeLogin: {
-    zIndex: -1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
     marginTop: verticalScale(32),
+  },
+  consentContainer: {
+    flexDirection: 'row',
+    marginTop: verticalScale(10),
+    width: '100%',
+    alignItems: 'center',
+  },
+  checkBox: {
+    borderWidth: 2,
+    height: horizontalScale(16),
+    width: verticalScale(16),
+    borderRadius: 5,
+  },
+  consent: {
+    marginLeft: horizontalScale(10),
+    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontSize: scaleFontSize(12),
+    color: '#666666',
   },
 });
 
