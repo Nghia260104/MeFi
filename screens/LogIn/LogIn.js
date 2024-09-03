@@ -16,10 +16,11 @@ import {
 } from '../../assets/styles/scaling';
 import {getFontFamily} from '../../assets/fonts/helper';
 import Logo from '../../assets/images/Logo.svg';
-import InputField from '../../component/inputField';
+import Apple from '../../assets/images/Apple.svg';
+import Facebook from '../../assets/images/Facebook.svg';
+import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
-import {height} from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
@@ -61,6 +62,11 @@ const LogIn = () => {
           <TouchableOpacity>
             <Text style={styles.signUp}> Sign Up</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.alternativeLogin}>
+          <Google width={horizontalScale(30)} height={verticalScale(30)} />
+          <Facebook width={horizontalScale(30)} height={verticalScale(30)} />
+          <Apple width={horizontalScale(30)} height={verticalScale(30)} />
         </View>
       </View>
     </SafeAreaView>
@@ -113,6 +119,13 @@ const styles = StyleSheet.create({
     fontFamily: getFontFamily('FZ Poppins', 600, ''),
     fontSize: scaleFontSize(12),
     color: '#4D4D4D',
+  },
+  alternativeLogin: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: verticalScale(32),
   },
 });
 
