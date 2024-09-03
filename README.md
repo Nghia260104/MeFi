@@ -13,7 +13,35 @@ When first pull the project to your personal workspace, please make sure that yo
 # using npm
 npm install
 ```
-Then install the dependencies for the app (I will update later!)
+Then install the dependencies for the app
+### React Native reanimated
+```bash
+# install react-native-reanimated
+npm install react-native-reanimated
+```
+Documentation: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started
+
+### React Navigation
+```bash
+# install react-navigation
+npm install @react-navigation/native
+# install dependencies
+npm install react-native-screens react-native-safe-area-context
+```
+Documentation: https://reactnavigation.org/docs/getting-started/
+
+### React font awesome - icon
+```bash
+# install fontawesome
+npm i --save @fortawesome/react-native-fontawesome @fortawesome/fontawesome-svg-core react-native-svg
+# install styles
+npm i --save @fortawesome/free-solid-svg-icons
+npm i --save @fortawesome/free-brands-svg-icons
+npm i --save @fortawesome/free-regular-svg-icons
+```
+Documentation: https://docs.fontawesome.com/web/use-with/react-native
+
+If there are any other needed dependencies, I will add later!
 
 ## Step 2: 
 
