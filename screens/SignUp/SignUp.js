@@ -21,12 +21,9 @@ import Facebook from '../../assets/images/Facebook.svg';
 import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
-import SignUp from '../SignUp/SignUp';
-import {useNavigation} from '@react-navigation/native';
 
-const LogIn = () => {
-  const navigation = useNavigation();
-
+const SignUp = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -37,6 +34,11 @@ const LogIn = () => {
       <StatusBar hidden />
       <View style={styles.content}>
         <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
+        <CustomInput
+          customStyle={styles.name}
+          placeholder="Name"
+          onChangeText={setName}
+        />
         <CustomInput
           customStyle={styles.email}
           placeholder="Email"
@@ -49,24 +51,16 @@ const LogIn = () => {
           error={passwordError}
           secureTextEntry
         />
-        <View style={styles.forgotButton}>
-          <TouchableWithoutFeedback>
-            <Text style={styles.forgot}>Forgot password</Text>
-          </TouchableWithoutFeedback>
-        </View>
         <CustomButton
           customStyle={{
             marginTop: verticalScale(40),
             height: verticalScale(50),
           }}
-          title="Log In"
+          title="Sign Up"
         />
         <View style={styles.signUpContainer}>
           <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(SignUp);
-            }}>
+          <TouchableOpacity>
             <Text style={styles.signUp}> Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -97,8 +91,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: horizontalScale(30),
   },
-  email: {
+  name: {
     marginTop: verticalScale(70),
+    width: '100%',
+  },
+  email: {
+    marginTop: verticalScale(14),
     width: '100%',
   },
   password: {
@@ -143,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogIn;
+export default SignUp;
