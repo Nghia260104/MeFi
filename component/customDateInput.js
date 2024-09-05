@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {
   Animated,
+  Platform,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -12,52 +13,61 @@ import {
   scaleFontSize,
 } from '../assets/styles/scaling';
 import {getFontFamily} from '../assets/fonts/helper';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {faCalendar} from '@fortawesome/free-regular-svg-icons';
 
-const CustomInput = ({
+const CustomDateInput = ({
   customStyle,
   placeholder = '',
   onChangeText,
-  error,
   ...props
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
   const [text, setText] = useState('');
-  const [showPassword, setShowPassword] = useState(props.secureTextEntry);
-  const labelPosition = useRef(new Animated.Value(text ? 1 : 0)).current;
+  const labelPosition = useRef(new Animated.Value(0)).current;
 
-  const handleFocus = () => {
-    setIsFocused(true);
-    animatedLabel(1);
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate = `${tempDate.getDate()}/${
+      tempDate.getMonth() + 1
+    }/${tempDate.getFullYear()}`;
+
+    setText(fDate);
+    onChangeText?.(fDate);
+    animateLabel(1);
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
-    if (!text) {
-      animatedLabel(0);
-    }
+  const showDatepicker = () => {
+    setShow(true);
+    animateLabel(1);
   };
 
-  // eslint-disable-next-line no-shadow
-  const handleTextChange = text => {
-    setText(text);
-    if (onChangeText) {
-      onChangeText(text);
-    }
-    if (text) {
-      animatedLabel(1);
-    } else {
-      animatedLabel(isFocused ? 1 : 0);
-    }
-  };
-
-  const animatedLabel = toValue => {
+  const animateLabel = toValue => {
     Animated.timing(labelPosition, {
-      toValue: toValue,
+      toValue,
       duration: 200,
       useNativeDriver: false,
     }).start();
+  };
+
+  const handleFocus = () => animateLabel(1);
+
+  const handleBlur = () => {
+    if (!text) {
+      animateLabel(0);
+    }
+  };
+
+  const handleTextChange = newText => {
+    setText(newText);
+    animateLabel(newText ? 1 : 0);
+    onChangeText?.(newText);
   };
 
   const labelStyle = {
@@ -98,28 +108,24 @@ const CustomInput = ({
             onBlur={handleBlur}
             onChangeText={handleTextChange}
             value={text}
-            keyboardType={placeholder === 'Email' ? 'email-address' : 'default'}
             textAlignVertical="center"
-            textContentType={
-              props.secureTextEntry ? 'newPassword' : props.secureTextEntry
-            }
-            secureTextEntry={showPassword}
+            editable={false}
           />
-          {props.secureTextEntry && !!text && (
-            <View>
-              <TouchableOpacity
-                style={styles.passwordIcon}
-                onPress={() => setShowPassword(!showPassword)}>
-                {!showPassword ? (
-                  <FontAwesomeIcon icon={faEyeSlash} color={'gray'} size={24} />
-                ) : (
-                  <FontAwesomeIcon icon={faEye} color={'gray'} size={24} />
-                )}
-              </TouchableOpacity>
-            </View>
-          )}
+          <TouchableOpacity onPress={showDatepicker}>
+            <FontAwesomeIcon icon={faCalendar} size={20} color="gray" />
+          </TouchableOpacity>
         </View>
       </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </View>
   );
 };
@@ -149,9 +155,6 @@ const styles = StyleSheet.create({
     paddingLeft: horizontalScale(10),
     fontFamily: getFontFamily('FZ Poppins', 400, ''),
   },
-  passwordIcon: {
-    width: 24,
-  },
 });
 
-export default CustomInput;
+export default CustomDateInput;

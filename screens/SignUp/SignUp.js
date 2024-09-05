@@ -21,6 +21,7 @@ import Facebook from '../../assets/images/Facebook.svg';
 import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
+import CustomDateInput from '../../component/customDateInput';
 import {useNavigation} from '@react-navigation/native';
 import LogIn from '../LogIn/LogIn';
 
@@ -56,11 +57,7 @@ const SignUp = () => {
           error={passwordError}
           secureTextEntry={true}
         />
-        <CustomInput
-          customStyle={styles.dob}
-          placeholder="Date of birth"
-          onChangeText={setDob}
-        />
+        <CustomDateInput customStyle={styles.dob} placeholder="Date of birth" />
         <View style={styles.consentContainer}>
           <View style={styles.checkBox} />
           <Text style={styles.consent}>
@@ -149,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
-    marginTop: verticalScale(32),
+    marginTop: verticalScale(25),
   },
   consentContainer: {
     flexDirection: 'row',
