@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,46 @@ import {getFontFamily} from '../../assets/fonts/helper';
 import CustomButton from '../../component/customButton';
 
 const PeriodTrackerCalendar = () => {
-  const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+  const {height: SCREEN_HEIGHT} = useWindowDimensions();
+
+  const [selectedRange, setSelectedRange] = useState({});
+
+  const onDayPress = day => {
+    if (
+      Object.keys(selectedRange).length === 0 ||
+      Object.keys(selectedRange).length === 2
+    ) {
+      // Start new selection
+      setSelectedRange({
+        [day.dateString]: {startingDay: true, color: '#FF8533'},
+      });
+    } else {
+      // Complete the range
+      const startDate = Object.keys(selectedRange)[0];
+      const endDate = day.dateString;
+      const range = getDateRange(startDate, endDate);
+      setSelectedRange(range);
+    }
+  };
+
+  const getDateRange = (startDate, endDate) => {
+    const range = {};
+    let currentDate = new Date(startDate);
+    const end = new Date(endDate);
+
+    while (currentDate <= end) {
+      const dateString = currentDate.toISOString().split('T')[0];
+      if (dateString === startDate) {
+        range[dateString] = {startingDay: true, color: '#FF8533'};
+      } else if (dateString === endDate) {
+        range[dateString] = {endingDay: true, color: '#FF8533'};
+      } else {
+        range[dateString] = {color: '#FFDF99', textColor: 'white'};
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return range;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -32,17 +71,22 @@ const PeriodTrackerCalendar = () => {
         </View>
         <Calendar
           style={[styles.calendar, {marginTop: SCREEN_HEIGHT * 0.37}]}
+          onDayPress={onDayPress}
+          markingType={'period'}
+          markedDates={selectedRange}
           theme={{
             backgroundColor: 'transparent',
             calendarBackground: 'transparent',
             textSectionTitleColor: '#b6c1cd',
-            selectedDayBackgroundColor: '#00adf5',
+            selectedDayBackgroundColor: '#FF7F50',
             selectedDayTextColor: '#ffffff',
-            todayTextColor: '#00adf5',
+            todayTextColor: '#FF7F50',
             dayTextColor: '#2d4150',
             textDisabledColor: '#d9e1e8',
-            arrowColor: 'orange',
-            monthTextColor: 'blue',
+            dotColor: '#FF7F50',
+            selectedDotColor: '#ffffff',
+            arrowColor: '#FF7F50',
+            monthTextColor: '#FF7F50',
             textDayFontFamily: 'monospace',
             textMonthFontFamily: 'monospace',
             textDayHeaderFontFamily: 'monospace',
