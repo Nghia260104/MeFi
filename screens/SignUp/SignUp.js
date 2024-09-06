@@ -26,6 +26,9 @@ import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import CustomDateInput from '../../component/customDateInput';
 import LogIn from '../LogIn/LogIn';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -33,6 +36,7 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isTick, setIsTick] = useState(false);
   const [passwordError, setPasswordError] = useState('');
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
@@ -60,7 +64,19 @@ const SignUp = () => {
         />
         <CustomDateInput customStyle={styles.dob} placeholder="Date of birth" />
         <View style={styles.consentContainer}>
-          <View style={styles.checkBox} />
+          <TouchableOpacity
+            style={styles.checkBox}
+            onPress={() => {
+              setIsTick(!isTick);
+            }}>
+            {isTick && (
+              <FontAwesomeIcon
+                icon={faCheck}
+                color="#121619"
+                size={scaleFontSize(14)}
+              />
+            )}
+          </TouchableOpacity>
           <Text style={styles.consent}>
             I would like to receive your newsletter and other promotional
             information.
@@ -72,6 +88,9 @@ const SignUp = () => {
             height: verticalScale(50),
           }}
           title="Sign Up"
+          onPress={() => {
+            navigation.navigate(PeriodTrackerCalendar);
+          }}
         />
         <View style={styles.signUpContainer}>
           <Text style={styles.dontHaveAccount}>Already have an account?</Text>
