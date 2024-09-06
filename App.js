@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import LogIn from './screens/LogIn/LogIn';
 import SignUp from './screens/SignUp/SignUp';
+import PeriodTrackerCalendar from './screens/Calendar/Calendar';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,10 @@ const App = () => {
         <Stack.Screen name="Sex" component={Sex} />
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen
+          name="PeriodTrackerCalendar"
+          component={PeriodTrackerCalendar}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -23,6 +23,7 @@ import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
+import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -60,6 +61,9 @@ const LogIn = () => {
             height: verticalScale(50),
           }}
           title="Log In"
+          onPress={() => {
+            navigation.navigate(PeriodTrackerCalendar);
+          }}
         />
         <View style={styles.signUpContainer}>
           <Text style={styles.dontHaveAccount}>Don't have an account?</Text>

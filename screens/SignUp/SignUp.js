@@ -5,24 +5,26 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   useWindowDimensions,
   View,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+
 import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
 } from '../../assets/styles/scaling';
 import {getFontFamily} from '../../assets/fonts/helper';
+
 import Logo from '../../assets/images/Logo.svg';
 import Apple from '../../assets/images/Apple.svg';
 import Facebook from '../../assets/images/Facebook.svg';
 import Google from '../../assets/images/Google.svg';
+
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import CustomDateInput from '../../component/customDateInput';
-import {useNavigation} from '@react-navigation/native';
 import LogIn from '../LogIn/LogIn';
 
 const SignUp = () => {
@@ -31,7 +33,6 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [dob, setDob] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
