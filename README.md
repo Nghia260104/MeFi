@@ -75,6 +75,12 @@ npm install --save react-native-calendars
 
 Documentation: <https://www.npmjs.com/package/react-native-calendars/v/1.1286.0>
 
+#### MongoDB
+```bash
+# install driver for mongodb
+npm install mongodb
+```
+
 If there are any other needed dependencies, I will add later!
 
 ### Step 2
