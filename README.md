@@ -75,6 +75,38 @@ npm install --save react-native-calendars
 
 Documentation: <https://www.npmjs.com/package/react-native-calendars/v/1.1286.0>
 
+#### MongoDB
+```bash
+# install driver for mongodb
+npm install mongodb --save
+```
+
+#### Dependencies for MongoDB, Backend and api between front-end and back-end
+```bash
+npm install mongoose express cors axios dotenv jsonwebtoken bcrypt @react-oauth/google@latest jwt-decode --save
+```
+
+#### Redux for global state management
+```bash
+npm install redux react-redux redux-thunk @reduxjs/toolkit --save
+```
+
+#### Async Storage for keeps user logged in
+```bash
+npm install @react-native-async-storage/async-storage --save
+```
+
+#### Nodemailer for verification register code
+```bash
+npm install nodemailer googleapis --save
+```
+
+If you want code suggestions for nodejs modules, you can install @types/<modules_name> (Remember to check their installation first)
+```bash
+npm install --save @types/express # For express
+# Do not install @types/mongoose because it has already included its own types in the package
+```
+
 If there are any other needed dependencies, I will add later!
 
 ### Step 2

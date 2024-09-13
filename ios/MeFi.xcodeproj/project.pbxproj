@@ -32,7 +32,7 @@
 		EFB238138DD640C7AE2AB9B1 /* FZ Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F48E9EB4EBFA43B5ACFF0180 /* FZ Poppins-MediumItalic.ttf */; };
 		2F8044235BFD483F85E17D9B /* FZ Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1DFC170F01A487FA611CD13 /* FZ Poppins-SemiBoldItalic.ttf */; };
 		3E3082E76FA743EF994B5233 /* FZ Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E65C52707EF49B39A11DDDA /* FZ Poppins-ThinItalic.ttf */; };
-		690EFB1C1FF240E3855636A5 /* helper.js in Resources */ = {isa = PBXBuildFile; fileRef = F38504C6DB2C4266AF06B8DB /* helper.js */; };
+		328FC4BC1E25456D8AFD2FAB /* helper.js in Resources */ = {isa = PBXBuildFile; fileRef = 18CBD06C714A43AB87022247 /* helper.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,7 @@
 		F48E9EB4EBFA43B5ACFF0180 /* FZ Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; name = "FZ Poppins-MediumItalic.ttf"; path = "../assets/fonts/FZ Poppins-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A1DFC170F01A487FA611CD13 /* FZ Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "FZ Poppins-SemiBoldItalic.ttf"; path = "../assets/fonts/FZ Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		2E65C52707EF49B39A11DDDA /* FZ Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; name = "FZ Poppins-ThinItalic.ttf"; path = "../assets/fonts/FZ Poppins-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F38504C6DB2C4266AF06B8DB /* helper.js */ = {isa = PBXFileReference; name = "helper.js"; path = "../assets/fonts/helper.js"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		18CBD06C714A43AB87022247 /* helper.js */ = {isa = PBXFileReference; name = "helper.js"; path = "../assets/fonts/helper.js"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,7 +210,7 @@
 				F48E9EB4EBFA43B5ACFF0180 /* FZ Poppins-MediumItalic.ttf */,
 				A1DFC170F01A487FA611CD13 /* FZ Poppins-SemiBoldItalic.ttf */,
 				2E65C52707EF49B39A11DDDA /* FZ Poppins-ThinItalic.ttf */,
-				F38504C6DB2C4266AF06B8DB /* helper.js */,
+				18CBD06C714A43AB87022247 /* helper.js */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -329,7 +329,7 @@
 				EFB238138DD640C7AE2AB9B1 /* FZ Poppins-MediumItalic.ttf in Resources */,
 				2F8044235BFD483F85E17D9B /* FZ Poppins-SemiBoldItalic.ttf in Resources */,
 				3E3082E76FA743EF994B5233 /* FZ Poppins-ThinItalic.ttf in Resources */,
-				690EFB1C1FF240E3855636A5 /* helper.js in Resources */,
+				328FC4BC1E25456D8AFD2FAB /* helper.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
