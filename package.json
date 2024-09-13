@@ -23,9 +23,6 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@react-navigation/stack": "^6.4.0",
-<<<<<<< HEAD
-    "mongodb": "^6.8.1",
-=======
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/bcrypt": "^5.0.2",
@@ -35,7 +32,6 @@
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -43,7 +39,6 @@
     "mongodb": "^6.8.1",
     "mongoose": "^8.6.2",
     "nodemailer": "^6.9.15",
->>>>>>> bc1eae9ed01f7ede4e631e8b45424d8ad96e3f01
     "react": "18.3.1",
     "react-native": "0.75.2",
     "react-native-calendars": "^1.1306.0",
@@ -71,9 +66,12 @@
     "@types/react-native-svg-uri": "^1.2.8",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
+    "dotenv": "^16.4.5",
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
+    "path": "^0.12.7",
     "prettier": "^2.8.8",
+    "react-native-dotenv": "^3.4.11",
     "react-native-svg-transformer": "^1.5.0",
     "react-test-renderer": "18.3.1",
     "typescript": "5.0.4"

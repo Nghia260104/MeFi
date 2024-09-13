@@ -8,19 +8,20 @@ import SignUp from './screens/SignUp/SignUp';
 import PeriodTrackerCalendar from './screens/Calendar/Calendar';
 
 import {Provider} from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 
 import {reducers} from './reducers';
 
 const Stack = createStackNavigator();
 
-const store = configureStore(reducers);
+const store = configureStore({reducer: reducers});
 
 const App = () => {
   return (
-    <Provider store = {store}>
+    <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{header: () => null, headerShown: false}}>
+        <Stack.Navigator
+          screenOptions={{header: () => null, headerShown: false}}>
           <Stack.Screen name="Onboarding" component={Onboarding} />
           <Stack.Screen name="Sex" component={Sex} />
           <Stack.Screen name="LogIn" component={LogIn} />
