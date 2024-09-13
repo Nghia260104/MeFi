@@ -48,11 +48,19 @@ const PeriodTrackerCalendar = () => {
     while (currentDate <= end) {
       const dateString = currentDate.toISOString().split('T')[0];
       if (dateString === startDate) {
-        range[dateString] = {startingDay: true, color: '#FF8533'};
+        range[dateString] = {
+          startingDay: true,
+          color: '#FF8533',
+          textColor: 'white',
+        };
       } else if (dateString === endDate) {
-        range[dateString] = {endingDay: true, color: '#FF8533'};
+        range[dateString] = {
+          endingDay: true,
+          color: '#FF8533',
+          textColor: 'white',
+        };
       } else {
-        range[dateString] = {color: '#FFDF99', textColor: 'white'};
+        range[dateString] = {color: '#FFDF99', textColor: 'black'};
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -78,7 +86,7 @@ const PeriodTrackerCalendar = () => {
             backgroundColor: 'transparent',
             calendarBackground: 'transparent',
             textSectionTitleColor: '#b6c1cd',
-            selectedDayBackgroundColor: '#FF7F50',
+            selectedDayBackgroundColor: '#FF8533',
             selectedDayTextColor: '#ffffff',
             todayTextColor: '#FF7F50',
             dayTextColor: '#2d4150',
