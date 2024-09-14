@@ -14,7 +14,7 @@ import {reducers} from './reducers';
 
 const Stack = createStackNavigator();
 
-const store = configureStore(reducers);
+const store = configureStore({reducer:reducers});
 
 const App = () => {
   return (

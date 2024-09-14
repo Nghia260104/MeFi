@@ -83,7 +83,7 @@ npm install mongodb --save
 
 #### Dependencies for MongoDB, Backend and api between front-end and back-end
 ```bash
-npm install mongoose express cors axios dotenv jsonwebtoken bcrypt @react-oauth/google@latest jwt-decode --save
+npm install mongoose express cors axios react-native-dotenv jsonwebtoken bcrypt @react-oauth/google@latest jwt-decode --save
 ```
 
 #### Redux for global state management
@@ -98,7 +98,7 @@ npm install @react-native-async-storage/async-storage --save
 
 #### Nodemailer for verification register code
 ```bash
-npm install nodemailer googleapis --save
+npm install nodemailer googleapis @googleapis/docs --save
 ```
 
 If you want code suggestions for nodejs modules, you can install @types/<modules_name> (Remember to check their installation first)
