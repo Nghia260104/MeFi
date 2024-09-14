@@ -1,4 +1,4 @@
-import jwt, {decode} from 'jsonwebtoken';
+import jwt, { decode } from 'jsonwebtoken';
 
 // Ongoing
 
@@ -7,12 +7,12 @@ const auth = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const isCustomAuth = token.length < 500;
 
-    let decodedData;
-    // if (token && isCustomAuth){
-    //     decodedData = jwt.verify(token, process.env.PASSWORD_HASH_KEY);
-
-    // }
-  } catch (error) {
-    console.log(error);
-  }
+        let decodedData;
+        // if (token && isCustomAuth){
+        //     decodedData = jwt.verify(token, process.env.PASSWORD_HASH_KEY);
+            
+        // }
+    } catch (error) {
+        console.log(error);
+    }
 };

@@ -2,6 +2,7 @@
   "name": "MeFi",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -32,6 +33,7 @@
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -66,7 +68,6 @@
     "@types/react-native-svg-uri": "^1.2.8",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
-    "dotenv": "^16.4.5",
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
     "path": "^0.12.7",

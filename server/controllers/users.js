@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import users from '../models/users';
+import users from '../models/users.js';
 import nodemailer from 'nodemailer';
 import google from 'googleapis';
 import {
@@ -12,10 +12,10 @@ import {
   SEND_MAIL_REFRESH_TOKEN,
 } from '@env';
 
-const OAuth2Client = new google.auth.OAuth2(
-  SEND_MAIL_CLIENT_ID,
-  SEND_MAIL_CLIENT_SECRET,
-  SEND_MAIL_REDIRECT_URL,
+const OAuth2Client = new google.google.auth.OAuth2(
+    process.env.SEND_MAIL_CLIENT_ID,
+    process.env.SEND_MAIL_CLIENT_SECRET,
+    process.env.SEND_MAIL_REDIRECT_URL
 );
 
 export const signIn = async (req, res) => {
@@ -53,17 +53,18 @@ export const signUp = async (req, res) => {
       return res.status(404).json({message: 'User already existed'});
     }
 
-    const salt = await bcrypt.genSaltSync();
-    const hashedPassword = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSaltSync();
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-    // const result = await users.create({email, password: hashedPassword, name, DateOfBirth: dob});
-    const result = await users.create({email, password: hashedPassword, name});
+        // const result = await users.create({email, password: hashedPassword, name, DateOfBirth: dob});
+        const result = await users.create({email, password: hashedPassword, name});
 
-    const token = jwt.sign({email: result.email, id: result._id}, JWT_SECRET);
-    res.status(200).json({user: result, token});
-  } catch (error) {
-    res.status(500).json({message: 'Something went wrong!'});
-  }
+        const token = jwt.sign({email: result.email, id: result._id}, process.env.JWT_SECRET);
+        res.status(200).json({user: result, token});
+    } catch (error) {
+        users.deleteOne({email});
+        res.status(500).json({message: 'Something went wrong!'});
+    }
 };
 
 const generate6DigitCode = () => {
