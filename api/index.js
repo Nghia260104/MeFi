@@ -12,7 +12,7 @@ export const signUp = (formData) => {
     return API.post('/users/signUp', formData);
 };
 export const sendCode = (email) => {
-    return API.post('/users/sendCode', email);
+    return API.post('/users/sendCode', {email});
 };
 export const verify = (email, verifiedCode) => {
     return API.post('/users/verify', {email, verifiedCode});

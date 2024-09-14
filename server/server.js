@@ -1,7 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import {PORT, MONGODB_URI} from '@env';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import usersRoute from './routes/users.js';
 
