@@ -16,8 +16,11 @@ import {
 } from '../../assets/styles/scaling';
 import {getFontFamily} from '../../assets/fonts/helper';
 import CustomButton from '../../component/customButton';
+import {useNavigation} from '@react-navigation/native';
 
 const PeriodTrackerCalendar = () => {
+  const navigation = useNavigation();
+
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const [selectedRange, setSelectedRange] = useState({});
@@ -109,6 +112,7 @@ const PeriodTrackerCalendar = () => {
         <CustomButton
           customStyle={[styles.button, {marginTop: SCREEN_HEIGHT * 0.9}]}
           title="Next"
+          onPress={() => navigation.navigate('PeriodFrequency')}
         />
       </View>
     </SafeAreaView>
@@ -152,7 +156,6 @@ const styles = StyleSheet.create({
     width: 150,
     borderRadius: 35,
     alignItems: 'center',
-    marginTop: 56,
   },
 });
 

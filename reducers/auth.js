@@ -6,7 +6,7 @@ const authReducer = (state = {authData: null}, action) => {
     case actionType.AUTH:
     case actionType.SEND_CODE:
     case actionType.VERIFY:
-    asyncStorage.setItem('UsERToKEn', JSON.stringify({...action.data}));
+      asyncStorage.setItem('UsERToKEn', JSON.stringify({...action.data}));
 
       return {...state, authData: action.data, loading: false, errors: null};
     case actionType.LOGOUT:
