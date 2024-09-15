@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken';
 import users from '../models/users.js';
 import nodemailer from 'nodemailer';
 import google from 'googleapis';
-import {
-  SEND_MAIL_CLIENT_ID,
-  SEND_MAIL_CLIENT_SECRET,
-  SEND_MAIL_REDIRECT_URL,
-  JWT_SECRET,
-  EMAIL_USER,
-  SEND_MAIL_REFRESH_TOKEN,
-} from '@env';
+// import {
+//   SEND_MAIL_CLIENT_ID,
+//   SEND_MAIL_CLIENT_SECRET,
+//   SEND_MAIL_REDIRECT_URL,
+//   JWT_SECRET,
+//   EMAIL_USER,
+//   SEND_MAIL_REFRESH_TOKEN,
+// } from '@env';
 
 const OAuth2Client = new google.google.auth.OAuth2(
     process.env.SEND_MAIL_CLIENT_ID,
@@ -21,8 +21,16 @@ const OAuth2Client = new google.google.auth.OAuth2(
 export const signIn = async (req, res) => {
   const {email, password} = req.body;
 
+  console.log(`controllers email password log:`)
+  console.log(email);
+  console.log(password);
+  
   try {
     const existingUser = await users.findOne({email});
+    console.log(`controllers/users.js existing user log:`);
+    console.log(existingUser);
+
+   
     if (!existingUser) {
       return res.status(404).json({message: 'User does not exist!'});
     }
@@ -49,6 +57,7 @@ export const signUp = async (req, res) => {
   const {email, password, name, dob} = req.body;
   try {
     const existingUser = await users.findOne({email});
+    console.log(`Server/Controllers: You have just click the SignUp Button right?`);
     if (existingUser) {
       return res.status(404).json({message: 'User already existed'});
     }

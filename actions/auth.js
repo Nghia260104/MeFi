@@ -4,8 +4,9 @@ import * as api from '../api/index.js';
 export const signIn = (formData) => async (dispatch) => {
     try {
         const {data} = await api.signIn(formData);
-
-        dispatch({type: TYPES.AUTH, data});
+        console.log(`Action: check data sign in log:`)
+        console.log(data);
+        await dispatch({type: TYPES.AUTH, data});
     } catch (error) {
         console.log(error);
     }
@@ -14,8 +15,8 @@ export const signIn = (formData) => async (dispatch) => {
 export const signUp = (formData) => async (dispatch) => {
     try {
         const {data} = await api.signUp(formData);
-
-        dispatch({type: TYPES.AUTH, data});
+        console.log(`Action: You have just click the SignUp Button right?`);
+        await dispatch({type: TYPES.AUTH, data});
     } catch (error) {
         console.log(error);
     }
@@ -24,8 +25,7 @@ export const signUp = (formData) => async (dispatch) => {
 export const sendCode = (email) => async (dispatch) => {
     try {
         const {data} = await api.sendCode(email);
-
-        dispatch({type: TYPES.SEND_CODE, data});
+        await dispatch({type: TYPES.SEND_CODE, data});
     } catch (error) {
         console.log(error);
     }
@@ -34,8 +34,7 @@ export const sendCode = (email) => async (dispatch) => {
 export const verify = (email, verifiedCode) => async (dispatch) => {
     try {
         const {data} = await api.verify(email, verifiedCode);
-
-        dispatch({type: TYPES.VERIFY, data});
+        await dispatch({type: TYPES.VERIFY, data});
     } catch (error) {
         console.log(error);
     }

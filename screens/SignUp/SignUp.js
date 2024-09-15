@@ -51,6 +51,7 @@ const SignUp = () => {
       email,
       password,
     };
+    console.log(`SignUp Screen: You have just click the SignUp Button right?`);
     dispatch(signUp(data));
   };
 

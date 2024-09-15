@@ -9,6 +9,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';  // Import useDispatch from react-redux
+import asyncStorage from '@react-native-async-storage/async-storage';  // Ensure asyncStorage is imported
 import {
   horizontalScale,
   scaleFontSize,
@@ -25,6 +27,9 @@ import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 
+import {signIn} from '../../actions/auth.js';  // Import signIn from auth.js
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const LogIn = () => {
   const navigation = useNavigation();
 
@@ -33,6 +38,108 @@ const LogIn = () => {
   const [passwordError, setPasswordError] = useState('');
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
+  const [accountError, setAccountError] = useState('');
+  
+  const dispatch = useDispatch();
+
+  const handleSubmit = async() => {
+    const data = {
+      email,
+      password,
+    };
+    console.log(`LogIn Screen: You have just click the LogIn Button right?`);
+    AsyncStorage.clear();
+    await dispatch(signIn(data));
+    const storedData = await asyncStorage.getItem('UsERToKEn');
+    if (storedData){
+      const data = JSON.parse(storedData);
+      console.log(data);
+    }
+  };
+    // try {
+    //   const response = await dispatch(signIn(data));
+    //   const storedData = await asyncStorage.getItem('UsERToKEn');
+    //   if (storedData) {
+    //     const parsedData = JSON.parse(storedData);
+    //     console.log(parsedData);
+    //     navigation.navigate('PeriodTrackerCalendar');
+    //   } else {
+    //     console.log('No stored data found');
+    //   }
+    // } catch (error) {
+    //   if (error.response && error.response.status === 404) {
+    //     setAccountError('Not exist account');
+    //   } else if (error.response && error.response.status === 400) {
+    //     setPasswordError('Password incorrect');
+    //   } else {
+    //     console.error('Error in handleSubmit:', error);
+    //   }
+    // }
+
+  // const handleSubmit = async () => {
+  //   const data = {
+  //     email,
+  //     password,
+  //   };
+  //   console.log('LogIn Screen: You have just clicked the LogIn Button right?');
+  //   try {
+  //     const response = await dispatch(signIn(data));
+  //     console.log('Response from signIn:', response);
+  
+  //     if (response && response.data) {
+  //       const { token, result } = response.data;
+  //       await asyncStorage.setItem('UsERToKEn', JSON.stringify({ token, user: result }));
+  //       navigation.navigate('PeriodTrackerCalendar');
+  //     } else {
+  //       if (response && response.response) {
+  //         if (response.response.status === 404) {
+  //           setAccountError('Not exist account');
+  //         } else if (response.response.status === 400) {
+  //           setPasswordError('Password incorrect');
+  //         } else {
+  //           console.error('Error in handleSubmit:', response);
+  //         }
+  //       } else {
+  //         console.error('Unexpected error in handleSubmit:', response);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error in handleSubmit:', error);
+  //   }
+  // };
+
+  // const handleSubmit = async () => {
+  //   const data = {
+  //     email,
+  //     password,
+  //   };
+  //   console.log('LogIn Screen: You have just clicked the LogIn Button right?');
+  //   try {
+  //     const response = await dispatch(signIn(data));
+  //     console.log('Response from signIn:', response);
+  
+  //     if (response && response.data) {
+  //       const { token, result } = response.data;
+  //       await asyncStorage.setItem('UsERToKEn', JSON.stringify({ token, user: result }));
+  //       navigation.navigate('PeriodTrackerCalendar');
+  //     } else {
+  //       if (response && response.error && response.error.response) {
+  //         if (response.error.response.status === 404) {
+  //           setAccountError('Not exist account');
+  //         } else if (response.error.response.status === 400) {
+  //           setPasswordError('Password incorrect');
+  //         } else {
+  //           console.error('Error in handleSubmit:', response.error);
+  //         }
+  //       } else {
+  //         console.error('Unexpected error in handleSubmit:', response);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error in handleSubmit:', error);
+  //   }
+  // };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
@@ -42,6 +149,7 @@ const LogIn = () => {
           customStyle={styles.email}
           placeholder="Email"
           onChangeText={setEmail}
+          error={accountError}
         />
         <CustomInput
           customStyle={styles.password}
@@ -62,7 +170,13 @@ const LogIn = () => {
           }}
           title="Log In"
           onPress={() => {
-            navigation.navigate(PeriodTrackerCalendar);
+            handleSubmit();
+            // if(1){
+            //   setAccountError('Invalid email or password');
+            // }
+            // else {
+            //   navigation.navigate(PeriodTrackerCalendar);
+            // }
           }}
         />
         <View style={styles.signUpContainer}>
