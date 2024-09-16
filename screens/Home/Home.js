@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import InfiniteScrollCalendar from '../../component/InfiniteCalendar';
 
@@ -29,6 +30,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar hidden />
       <View style={styles.userContainer}>
         <View style={styles.avatarContainer}>
           <TouchableWithoutFeedback
@@ -49,7 +51,8 @@ const Home = () => {
       <View style={styles.greetingRabbieContainer}>
         <Hello width={320} height={170} />
         <View style={styles.hello}>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('Carousel2')}>
             <Text
               style={{
                 color: '#000',

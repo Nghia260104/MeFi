@@ -7,6 +7,7 @@ import SignUp from '../screens/SignUp/SignUp';
 import PeriodTrackerCalendar from '../screens/Calendar/Calendar';
 import PeriodFrequency from '../screens/Calendar/Calendar2';
 import TabNavigator from './TabNavigator';
+import Carousel2 from '../screens/Home/Carousel2';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const MainNavigator = () => {
       />
       <Stack.Screen name="PeriodFrequency" component={PeriodFrequency} />
       <Stack.Screen name="Main" component={TabNavigator} />
+      <Stack.Screen name="Carousel2" component={Carousel2} />
     </Stack.Navigator>
   );
 };

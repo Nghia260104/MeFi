@@ -109,6 +109,13 @@ Documentation: <https://reactnavigation.org/docs/bottom-tab-navigator/>
 npm install lottie-react-native
 ```
 
+### @react-native-picker/picker
+
+```bash
+#install @react-native-picker/picker
+npm install @react-native-picker/picker
+```
+
 #### MongoDB
 
 ```bash
