@@ -43,7 +43,6 @@ export const signUp = async (req, res) => {
         const salt = await bcrypt.genSaltSync();
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // const result = await users.create({email, password: hashedPassword, name, DateOfBirth: dob});
         let result;
         if (!dob){
           result = await users.create({email, password: hashedPassword, name});

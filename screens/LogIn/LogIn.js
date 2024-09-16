@@ -45,7 +45,7 @@ const LogIn = () => {
       email,
       password,
     };
-    AsyncStorage.clear();
+    await AsyncStorage.clear();
     await dispatch(signIn(data));
     // console.log(USER_KEY);
 
@@ -57,7 +57,7 @@ const LogIn = () => {
     }
 
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
-    console.log(res.token);
+    console.log(res.token); // If token exists, logged in successfully.
   };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
