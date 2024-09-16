@@ -24,8 +24,12 @@ import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
+
 import { useDispatch } from 'react-redux';
 import { signIn } from '../../actions/auth';
+
+import { USER_KEY } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -41,7 +45,19 @@ const LogIn = () => {
       email,
       password,
     };
+    AsyncStorage.clear();
     await dispatch(signIn(data));
+    // console.log(USER_KEY);
+
+    // Handle data response
+    const storedData = await AsyncStorage.getItem(USER_KEY);
+    if (!storedData) {
+      // Handle log in failed
+      return;
+    }
+
+    const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
+    console.log(res.token);
   };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();

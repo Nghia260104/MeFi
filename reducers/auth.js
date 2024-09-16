@@ -1,16 +1,17 @@
 import * as actionType from '../constants/actionTypes';
-import asyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USER_KEY} from '@env';
 
-const authReducer = (state = {authData: null}, action) => {
+const authReducer = async (state = {authData: null}, action) => {
   switch (action.type) {
     case actionType.AUTH:
     case actionType.SEND_CODE:
     case actionType.VERIFY:
-      asyncStorage.setItem('UsERToKEn', JSON.stringify({...action.data}));
+      await AsyncStorage.setItem(USER_KEY, JSON.stringify({...action.data}));
 
       return {...state, authData: action.data, loading: false, errors: null};
     case actionType.LOGOUT:
-      asyncStorage.clear();
+      await AsyncStorage.clear();
 
       return {...state, authData: null, loading: false, errors: null};
     default:

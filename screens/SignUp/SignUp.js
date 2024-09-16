@@ -32,6 +32,8 @@ import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../actions/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USER_KEY} from '@env';
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -49,8 +51,18 @@ const SignUp = () => {
       email,
       name,
       password,
+      // Will need dob: <Date of birth input field>
     };
     await dispatch(signUp(data));
+
+    // Handle data response
+    const storedData = await AsyncStorage.getItem('UsERToKEn');
+    if (!storedData) {
+      // Handle log in failed
+      return;
+    }
+
+    const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
   };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
