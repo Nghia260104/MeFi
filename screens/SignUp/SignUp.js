@@ -30,6 +30,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../actions/auth';
+
 const SignUp = () => {
   const navigation = useNavigation();
 
@@ -38,6 +41,17 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [isTick, setIsTick] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    const data = {
+      email,
+      name,
+      password,
+    };
+    await dispatch(signUp(data));
+  };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
   return (
@@ -89,7 +103,8 @@ const SignUp = () => {
           }}
           title="Sign Up"
           onPress={() => {
-            navigation.navigate(PeriodTrackerCalendar);
+              handleSubmit();
+            // navigation.navigate(PeriodTrackerCalendar);
           }}
         />
         <View style={styles.signUpContainer}>

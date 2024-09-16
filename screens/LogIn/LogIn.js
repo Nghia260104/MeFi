@@ -24,6 +24,8 @@ import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../../actions/auth';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -31,6 +33,16 @@ const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    const data = {
+      email,
+      password,
+    };
+    await dispatch(signIn(data));
+  };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
   return (
@@ -62,7 +74,8 @@ const LogIn = () => {
           }}
           title="Log In"
           onPress={() => {
-            navigation.navigate(PeriodTrackerCalendar);
+            handleSubmit();
+            // navigation.navigate(PeriodTrackerCalendar);
           }}
         />
         <View style={styles.signUpContainer}>

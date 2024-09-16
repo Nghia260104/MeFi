@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {PORT} from '@env';
 
-const API = axios.create({baseURL: 'https://localhost:' + (PORT).toString()}); // Own phone
-// const API = axios.create({baseURL: 'https://10.0.2.2:' + (.PORT).toString()}); // Android Studio Emulator
+// const API = axios.create({baseURL: 'http://localhost:' + (PORT).toString()}); // Own phone
+const API = axios.create({baseURL: 'http://10.0.2.2:' + (PORT).toString()}); // Android Studio Emulator
 
 export const signIn = (formData) => {
     return API.post('/users/signIn', formData);

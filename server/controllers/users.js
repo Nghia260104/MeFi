@@ -81,18 +81,18 @@ export const sendCode = async (req, res) => {
     await User.save();
 
     const transporter = nodemailer.createTransport({
-      service: 'hotmail',
+      service: process.env.EMAIL_SERVICE,
       auth: {
-        user: 'MeFiMemorii@outlook.com.vn',
-        pass: 'MeFi@12369874',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     const message = {
-      from: 'Memorii <MeFiMemorii@outlook.com.vn>',
+      from: `Memorii <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Verify gmail users',
-      text: 'Your verification code for Memorii app is ${verificationCode}. This code will be expired after ${expiredMin} minutes',
+      subject: 'Verify Memorii users',
+      text: `Your verification code for Memorii app is ${verificationCode}. This code will be expired after ${expiredMins} minutes`,
     };
 
     await transporter.sendMail(message);
