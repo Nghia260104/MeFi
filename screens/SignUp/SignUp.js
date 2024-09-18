@@ -34,6 +34,7 @@ import { useDispatch } from 'react-redux';
 import { signUp } from '../../actions/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_KEY} from '@env';
+import VerificationScreen from '../Verification/VerificationScreen';
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -53,6 +54,7 @@ const SignUp = () => {
       password,
       // Will need dob: <Date of birth input field>
     };
+    console.log("SignUp: You have submitted the following data: ", data);
     await dispatch(signUp(data));
 
     // Handle data response
@@ -61,8 +63,8 @@ const SignUp = () => {
       // Handle log in failed
       return;
     }
-
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
+    navigation.navigate(VerificationScreen);
   };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();

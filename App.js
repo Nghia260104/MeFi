@@ -7,6 +7,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import {reducers} from './reducers';
 import Splash from './screens/Splash/Splash';
 import MainNavigator from './navigation/MainNavigator';
+import VerificationScreen from './screens/Verification/VerificationScreen';
 
 const store = configureStore({reducer: reducers});
 

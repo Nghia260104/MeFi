@@ -23,6 +23,7 @@ import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
+import VerificationScreen from '../Verification/VerificationScreen';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 import { useDispatch } from 'react-redux';
@@ -55,9 +56,17 @@ const LogIn = () => {
       // Handle log in failed
       return;
     }
-
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
     console.log(res.token); // If token exists, logged in successfully.
+    if(res?.token){
+      // handle user co verified chua 
+      
+      // neu verified roi thi 
+      // navigation.navigate(PeriodTrackerCalendar);
+
+      // neu chua verified thi 
+      // navigation.navigate(VerificationScreen);
+    }
   };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
