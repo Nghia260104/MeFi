@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { 
-    View, 
-    Text, 
-    TextInput, 
-    StyleSheet, 
-    TouchableOpacity, 
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    TouchableOpacity,
     KeyboardAvoidingView,
 } from 'react-native';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../assets/styles/scaling';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { signIn } from '../../actions/auth';
+import { sendCode, verify } from '../../actions/auth';
 import { USER_KEY } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../component/customButton';
@@ -26,13 +26,14 @@ const VerificationScreen = () => {
 // const VerificationScreen = ({ navigation }) => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const [code, setCode] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
 
     const handleChange = (text, index) => {
         const newCode = [...code];
         newCode[index] = text;
-        
+
         setCode(newCode);
 
         // Move to next input box if a digit is entered
@@ -54,16 +55,32 @@ const VerificationScreen = () => {
 
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        // Submit code to backend
         const verificationCode = code.join('');
-        // Handle the verification code submission
-        console.log('Verification Code:', verificationCode);
+        const encryptedLoadedData = await AsyncStorage.getItem(USER_KEY);
+        const loadedData = JSON.parse(encryptedLoadedData);
+        const email = loadedData.user.email;
+        await dispatch(verify(email, verificationCode));
+
+        // Backend return response
+        const encryptedData = await AsyncStorage.getItem(USER_KEY);
+        const data = JSON.parse(encryptedData);
+        const verified = data.user.verified;
+        if (!verified) {
+            console.log('Invalid or expired code!'); // Need Frontend handle
+            return;
+        }
+        console.log('Verified successfully'); // Need frontend handle
     };
 
-    const handleResend = () => {
+    const handleResend = async () => {
         // Handle the resend code button
-        console.log('Resend Code');
-    }
+        // console.log('Resend Code');
+        const loadedData = await JSON.parse(AsyncStorage.getItem(USER_KEY));
+        const email = loadedData.user.email;
+        await dispatch(sendCode(email));
+    };
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text style={styles.title}>OTP</Text>
@@ -78,21 +95,21 @@ const VerificationScreen = () => {
                         value={digit}
                         onChangeText={(text) => handleChange(text, index)}
                         onKeyPress={(e) => handleKeyPress(e, index)}
-                        ref={(ref) => inputRefs.current[index] = ref}
+                        ref={(ref) => {inputRefs.current[index] = ref;}}
                     />
                 ))}
             </View>
             <View style={styles.submitContainer}>
-                <CustomButton 
-                    customStyle={styles.button} 
-                    title={'Continue'} 
+                <CustomButton
+                    customStyle={styles.button}
+                    title={'Continue'}
                     onPress={handleSubmit} />
                 <View style={styles.resendContainer}>
                     <Text style={styles.textResend}>Can not get the code? Resend here:</Text>
                     <TouchableOpacity style={styles.resend} onPress={handleResend}>
-                        <FontAwesomeIcon 
-                            icon={faRotateRight} 
-                            size={20} 
+                        <FontAwesomeIcon
+                            icon={faRotateRight}
+                            size={20}
                             color={'#000'} />
                     </TouchableOpacity>
                 </View>
@@ -172,7 +189,7 @@ const styles = StyleSheet.create({
         // position: 'absolute',
         right: 0,
         marginLeft: 10,
-    }
+    },
 });
 
 export default VerificationScreen;

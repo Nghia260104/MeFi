@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const signIn = async (req, res) => {
-  const {email, password} = req.body;
+  const {email, password, type} = req.body;
 
   try {
     const existingUser = await users.findOne({email});
@@ -14,49 +14,58 @@ export const signIn = async (req, res) => {
       return res.status(404).json({message: 'User does not exist!'});
     }
 
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      existingUser.password,
-    );
-    if (!isPasswordCorrect) {
-      return res.status(400).json({message: 'Invalid credentials!'});
+    if (type !== 'Google')
+    {
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        existingUser.password,
+      );
+      if (!isPasswordCorrect) {
+        return res.status(400).json({message: 'Invalid credentials!'});
+      }
     }
 
     const token = jwt.sign(
       {email: existingUser.email, id: existingUser._id},
       process.env.JWT_SECRET,
     );
-    res.status(200).json({result: existingUser, token});
+    res.status(200).json({user: existingUser, token});
   } catch (error) {
     res.status(500).json({message: 'Something went wrong!'});
   }
 };
 
 export const signUp = async (req, res) => {
-  const {email, password, name, dob} = req.body;
+  const {email, password, name, dob, type, profilePhoto} = req.body;
   try {
     const existingUser = await users.findOne({email});
     if (existingUser) {
       return res.status(404).json({message: 'User already existed'});
     }
 
-        const salt = await bcrypt.genSaltSync();
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        let result;
-        if (!dob){
-          result = await users.create({email, password: hashedPassword, name});
-        }
-        else {
-          result = await users.create({email, password: hashedPassword, name, DateOfBirth: dob});
-        }
-
-        const token = jwt.sign({email: result.email, id: result._id}, process.env.JWT_SECRET);
-        res.status(200).json({user: result, token});
-    } catch (error) {
-        users.deleteOne({email});
-        res.status(500).json({message: 'Something went wrong!'});
+    let result;
+    if (type === 'Google'){
+      result = await users.create({email, name, verified: true, profilePhoto});
     }
+    else {
+      const salt = await bcrypt.genSaltSync();
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      if (!dob){
+        result = await users.create({email, password: hashedPassword, name});
+      }
+      else {
+        result = await users.create({email, password: hashedPassword, name, DateOfBirth: dob});
+      }
+    }
+
+    const token = jwt.sign({email: result.email, id: result._id}, process.env.JWT_SECRET);
+    res.status(200).json({user: result, token});
+  }
+  catch (error) {
+      users.deleteOne({email});
+      res.status(500).json({message: 'Something went wrong!'});
+  }
 };
 
 const generate6DigitCode = () => {
