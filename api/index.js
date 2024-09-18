@@ -7,6 +7,8 @@ const API = axios.create({baseURL: 'http://10.0.2.2:' + (PORT).toString()}); // 
 
 // !!!!!!!!!!!!!! REMEMBER ONLY TOGGLE ON OR OFF THE DECLARATION, NOT TO CHANGE ANY LINE ABOVE EXCEPT THE IP ADDRESS IN LINE 2 (LINE 5 IN FILE) !!!!!!!!!!!
 
+// AUTHENTICATION
+
 export const signIn = (formData) => {
     return API.post('/users/signIn', formData);
 };
@@ -18,4 +20,14 @@ export const sendCode = (email) => {
 };
 export const verify = (email, verifiedCode) => {
     return API.post('/users/verify', {email, verifiedCode});
+};
+
+// PERIOD SETTINGS
+
+export const setPeriodRange = (email, startDate, endDate) => {
+    return API.post('/users/setPeriodRange', {email, startDate, endDate});
+};
+
+export const setPeriodType = (email, p_type) => {
+    return API.post('/users/setPeriodType', {email, p_type});
 };

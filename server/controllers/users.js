@@ -139,3 +139,36 @@ export const verify = async (req, res) => {
     res.status(500).json({message: 'Something went wrong'});
   }
 };
+
+export const setPeriodRange = async (req, res) => {
+  const {email, startDate, endDate} = req.body;
+  try {
+    const User = await users.findOne({email});
+    if (!User) {
+      return res.status(404).json({message: 'User does not exist!'});
+    }
+    User.period_start = startDate;
+    User.period_end = endDate;
+    await User.save();
+
+    res.status(200).json({user: User});
+  } catch (error) {
+    res.status(500).json({message: 'Something went wrong'});
+  }
+};
+
+export const setPeriodType = async (req, res) => {
+  const {email, p_type} = req.body;
+  try {
+    const User = await users.findOne({email});
+    if (!User) {
+      return res.status(404).json({message: 'User does not exist!'});
+    }
+    User.period_type = p_type;
+    await User.save();
+
+    res.status(200).json({user: User});
+  } catch (error) {
+    res.status(500).json({message: 'Something went wrong'});
+  }
+};

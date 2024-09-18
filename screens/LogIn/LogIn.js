@@ -38,6 +38,7 @@ import {
   GoogleSignin,
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
+import PeriodFrequency from '../Calendar/Calendar2';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -71,9 +72,22 @@ const LogIn = () => {
       // navigation.navigate(PeriodTrackerCalendar);
 
       if (!res?.user.verified) {
-        navigation.navigate(VerificationScreen);
+        navigation.navigate('VerificationScreen');
         await dispatch(sendCode(email));
+        return;
       }
+
+      if (!res?.user.period_start) {
+        navigation.navigate('PeriodTrackerCalendar');
+        return;
+      }
+
+      if (!res?.user.period_type) {
+        navigation.navigate('PeriodFrequency');
+        return;
+      }
+
+      navigation.navigate('Main');
     }
   };
 

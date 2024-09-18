@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../component/customButton';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
+import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 const VerificationScreen = () => {
 
@@ -71,7 +72,8 @@ const VerificationScreen = () => {
             console.log('Invalid or expired code!'); // Need Frontend handle
             return;
         }
-        console.log('Verified successfully'); // Need frontend handle
+        // console.log('Verified successfully'); // Need frontend handle
+        navigation.navigate('PeriodTrackerCalendar');
     };
 
     const handleResend = async () => {

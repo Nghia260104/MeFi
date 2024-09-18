@@ -78,7 +78,7 @@ const SignUp = () => {
       // Sign up failed, need frontend handle, the return statement has to be kept
       return; // Compulsory
     }
-    navigation.navigate(VerificationScreen);
+    navigation.navigate('VerificationScreen');
     await dispatch(sendCode(email));
   };
 
@@ -93,7 +93,6 @@ const SignUp = () => {
           email: response.data.user.email,
           name: response.data.user.name,
           type: 'Google',
-          profilePhoto: response.data.user.photo,
         };
       }
     } catch (error) {
