@@ -44,7 +44,7 @@ const TabNavigator = () => {
             label = 'Home';
           } else if (route.name === 'VaccineNavigator') {
             IconComponent = focused ? SelectedVaccine : UnselectedVaccine;
-            label = 'Vaccination';
+            label = 'Vaccine';
           } else if (route.name === 'ComicsNavigator') {
             IconComponent = focused ? SelectedComics : UnselectedComics;
             label = 'Comics';

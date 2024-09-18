@@ -1,21 +1,22 @@
 import React from 'react';
 import {View, Dimensions} from 'react-native';
-import {ItemType} from './Data';
 import SliderItem from './SliderItem';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import {ItemType} from './Data';
 
 type Props = {
   itemList: ItemType[];
+  setSelectedOptions: (options: {title: string; selected: string}[]) => void;
 };
 
 const {width} = Dimensions.get('window');
-const ITEM_WIDTH = width * 0.8; // Set the item width to 80% of the screen
-const SPACING = (width - ITEM_WIDTH) / 2; // Calculate the spacing for centering
+const ITEM_WIDTH = width * 0.8;
+const SPACING = (width - ITEM_WIDTH) / 2;
 
-const Slider = ({itemList}: Props) => {
+const Slider = ({itemList, setSelectedOptions}: Props) => {
   const scrollX = useSharedValue(0);
 
   const onScrollHandler = useAnimatedScrollHandler({
@@ -31,14 +32,20 @@ const Slider = ({itemList}: Props) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => (
-          <SliderItem item={item} index={index} scrollX={scrollX} />
+          <SliderItem
+            item={item}
+            index={index}
+            scrollX={scrollX}
+            setSelectedOptions={setSelectedOptions}
+          />
         )}
         onScroll={onScrollHandler}
         bounces={false}
-        decelerationRate="fast" // This helps with smooth scrolling
-        snapToInterval={ITEM_WIDTH + SPACING * 2} // Snap to the width of the item + spacing
-        snapToAlignment="center" // Align items to the center
-        scrollEventThrottle={16} // Ensures the scroll handler fires smoothly
+        pagingEnabled
+        decelerationRate="fast"
+        snapToInterval={ITEM_WIDTH + SPACING * 2}
+        snapToAlignment="center"
+        scrollEventThrottle={16}
       />
     </View>
   );

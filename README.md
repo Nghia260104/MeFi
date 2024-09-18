@@ -141,6 +141,12 @@ npm install redux react-redux redux-thunk @reduxjs/toolkit --save
 npm install @react-native-async-storage/async-storage --save
 ```
 
+#### redux-persist
+
+```bash
+npm install redux-persist
+```
+
 #### Nodemailer for verification register code
 
 ```bash

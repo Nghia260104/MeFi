@@ -6,25 +6,30 @@ import {useNavigation} from '@react-navigation/native';
 import {scaleFontSize} from '../assets/styles/scaling';
 import {getFontFamily} from '../assets/fonts/helper';
 
-const CustomTitle = ({title}) => {
+const CustomTitle = ({customStyle, title}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, customStyle]}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <BackChevron width={18} height={14} />
+        <BackChevron width={24} height={24} />
       </TouchableOpacity>
       <Text style={styles.text}>{title}</Text>
+      <View style={{width: 24, height: 24}} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF8DC',
-    padding: 10,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: '#ABABAB',
   },
   text: {
     color: '#000000',

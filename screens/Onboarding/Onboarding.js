@@ -49,6 +49,7 @@ const Onboarding = () => {
         bounces={false}
         scrollEventThrottle={16}
         pagingEnabled={true}
+        decelerationRate={'fast'}
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{

@@ -1,38 +1,56 @@
-import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import Slider from './Slider';
 import CustomButton from '../../component/customButton';
-import {useNavigation} from '@react-navigation/native';
+import CustomTitle from '../../component/customTitle';
 import {Item} from './Data';
-import Animated from 'react-native-reanimated';
+import {setOptions} from '../../reducers/optionSlice';
 
 const Carousel2 = () => {
+  const [selectedOptions, setSelectedOptions] = useState<
+    {title: string; selected: string}[]
+  >([]);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleDone = () => {
+    // Dispatch selected options to Redux
+    dispatch(setOptions(selectedOptions));
+    console.log('Selected options:', selectedOptions);
+    navigation.navigate('CycleJournal');
+  };
 
   return (
-    <Animated.View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <Slider itemList={Item} />
+      <CustomTitle customStyle={styles.title} title={'Menstrual period'} />
+      <View style={{flex: 0.95}}>
+        <Slider itemList={Item} setSelectedOptions={setSelectedOptions} />
+      </View>
       <CustomButton
         customStyle={styles.done}
         title={'Done'}
-        onPress={() => navigation.navigate('Home')}
+        onPress={handleDone}
       />
-    </Animated.View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
     flex: 1,
+    backgroundColor: 'white',
   },
   done: {
     position: 'absolute',
     width: 120,
     bottom: 40,
+  },
+  title: {
+    flex: 0.05,
   },
 });
 

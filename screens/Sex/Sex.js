@@ -30,7 +30,10 @@ const Sex = () => {
         <TouchableOpacity>
           <Male width={SCREEN_WIDTH * 0.75} height={SCREEN_WIDTH * 0.75} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('LogIn');
+          }}>
           <Female width={SCREEN_WIDTH * 0.75} height={SCREEN_WIDTH * 0.75} />
         </TouchableOpacity>
       </View>

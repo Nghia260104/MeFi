@@ -17,6 +17,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {getFontFamily} from '../../assets/fonts/helper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Button = ({flatListIndex, flatListRef, dataLength, x, navigation}) => {
   const {width: SCREEN_WIDTH} = useWindowDimensions();
@@ -73,13 +74,23 @@ const Button = ({flatListIndex, flatListRef, dataLength, x, navigation}) => {
     };
   });
 
+  const handlePress = async () => {
+    try {
+      await AsyncStorage.setItem('alreadyLaunched', 'true');
+      console.log('alreadyLaunched flag set to true');
+      navigation.navigate('Sex');
+    } catch (error) {
+      console.error('Error setting alreadyLaunched flag:', error);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         if (flatListIndex.value < dataLength - 1) {
           flatListRef.current?.scrollToIndex({index: flatListIndex.value + 1});
         } else {
-          navigation.navigate('Sex');
+          handlePress();
         }
       }}>
       <Animated.View

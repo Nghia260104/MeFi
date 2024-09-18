@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker'; // Updated import
+import {Picker} from '@react-native-picker/picker';
 import {ItemType} from './Data';
 import {getFontFamily} from '../../assets/fonts/helper';
 import Animated, {
@@ -22,16 +22,27 @@ type Props = {
   item: ItemType;
   index: number;
   scrollX: SharedValue<number>;
+  setSelectedOptions: (options: {title: string; selected: string}[]) => void;
 };
 
 const width = Dimensions.get('window').width;
 
-const SliderItem = ({item, index, scrollX}: Props) => {
+const SliderItem = ({item, index, scrollX, setSelectedOptions}: Props) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [selectedTemperature, setSelectedTemperature] = useState('37'); // Default temperature
+  const [selectedTemperature, setSelectedTemperature] = useState('37');
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  // Animated styles for the carousel
+  useEffect(() => {
+    // Update the selected options state whenever an option is selected
+    if (selectedOption || selectedTemperature) {
+      setSelectedOptions((prevOptions: {title: string; selected: string}[]) => [
+        ...prevOptions.filter(opt => opt.title !== item.title),
+        {title: item.title, selected: selectedOption || selectedTemperature},
+      ]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption, selectedTemperature]);
+
   const rnAnimatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -63,7 +74,6 @@ const SliderItem = ({item, index, scrollX}: Props) => {
     if (item.type === 'dropdown') {
       return (
         <View style={styles.pickerContainer}>
-          {/* Dropdown Header */}
           <TouchableOpacity
             style={styles.dropdownHeader}
             onPress={toggleDropdown}>
@@ -145,8 +155,8 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     width: width,
+    marginTop: 80,
   },
   item: {
     height: 465,

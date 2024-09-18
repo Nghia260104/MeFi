@@ -52,7 +52,7 @@ const Home = () => {
         <Hello width={320} height={170} />
         <View style={styles.hello}>
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('CycleJournal')}>
             <Text
               style={{
                 color: '#000',

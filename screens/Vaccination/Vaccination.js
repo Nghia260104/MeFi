@@ -8,15 +8,7 @@ const Vaccination = () => {
   return (
     <SafeAreaView>
       <StatusBar hidden />
-      <View style={styles.splash}>
-        <Logo width={260} height={200} />
-        <LottieView
-          source={require('../../assets/images/Splash/Splash.json')}
-          style={styles.lottie}
-          autoPlay
-          loop
-        />
-      </View>
+      <View style={styles.splash}></View>
     </SafeAreaView>
   );
 };

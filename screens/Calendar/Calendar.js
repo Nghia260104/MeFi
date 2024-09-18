@@ -26,18 +26,25 @@ const PeriodTrackerCalendar = () => {
   const [selectedRange, setSelectedRange] = useState({});
 
   const onDayPress = day => {
-    if (
+    const selectedDate = day.dateString;
+    const isStartDate = selectedRange[selectedDate]?.startingDay;
+    const isEndDate = selectedRange[selectedDate]?.endingDay;
+
+    // If start date or end date is pressed again, unselect it
+    if (isStartDate || isEndDate) {
+      setSelectedRange({});
+    } else if (
       Object.keys(selectedRange).length === 0 ||
       Object.keys(selectedRange).length === 2
     ) {
       // Start new selection
       setSelectedRange({
-        [day.dateString]: {startingDay: true, color: '#FF8533'},
+        [selectedDate]: {startingDay: true, color: '#FF8533'},
       });
     } else {
       // Complete the range
       const startDate = Object.keys(selectedRange)[0];
-      const endDate = day.dateString;
+      const endDate = selectedDate;
       const range = getDateRange(startDate, endDate);
       setSelectedRange(range);
     }
@@ -88,25 +95,20 @@ const PeriodTrackerCalendar = () => {
           theme={{
             backgroundColor: 'transparent',
             calendarBackground: 'transparent',
-            textSectionTitleColor: '#b6c1cd',
+            textSectionTitleColor: '#000000',
             selectedDayBackgroundColor: '#FF8533',
             selectedDayTextColor: '#ffffff',
             todayTextColor: '#FF7F50',
             dayTextColor: '#2d4150',
-            textDisabledColor: '#d9e1e8',
-            dotColor: '#FF7F50',
-            selectedDotColor: '#ffffff',
-            arrowColor: '#FF7F50',
-            monthTextColor: '#FF7F50',
-            textDayFontFamily: 'monospace',
-            textMonthFontFamily: 'monospace',
-            textDayHeaderFontFamily: 'monospace',
-            textDayFontWeight: '300',
-            textMonthFontWeight: 'bold',
-            textDayHeaderFontWeight: '300',
-            textDayFontSize: 16,
+            textDisabledColor: 'rgba(0, 0, 0, 0.40)',
+            arrowColor: '#000000',
+            monthTextColor: '#828282',
+            textDayFontFamily: getFontFamily('FZ Poppins', 600, ''),
+            textMonthFontFamily: getFontFamily('FZ Poppins', 500, ''),
+            textDayHeaderFontFamily: getFontFamily('FZ Poppins', 500, ''),
+            textDayFontSize: 17,
             textMonthFontSize: 16,
-            textDayHeaderFontSize: 16,
+            textDayHeaderFontSize: 12,
           }}
         />
         <CustomButton
