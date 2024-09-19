@@ -30,14 +30,90 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 
+import { useDispatch } from 'react-redux';
+import { signUp, sendCode } from '../../actions/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USER_KEY, ANDROID_CLIENT_ID, WEB_CLIENT_ID} from '@env';
+
+import {
+  statusCodes,
+  isErrorWithCode,
+  GoogleSignin,
+  isSuccessResponse,
+} from '@react-native-google-signin/google-signin';
+import VerificationScreen from '../Verification/VerificationScreen';
+
 const SignUp = () => {
   const navigation = useNavigation();
+
+  GoogleSignin.configure({
+    webClientId: WEB_CLIENT_ID,
+  });
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isTick, setIsTick] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    const data = {
+      email,
+      name,
+      password,
+      // Will need dob: <Date of birth input field>
+    };
+    await dispatch(signUp(data));
+
+    // Handle data response
+    const storedData = await AsyncStorage.getItem(USER_KEY);
+    if (!storedData) {
+      // Handle log in failed
+      return;
+    }
+    const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
+    if (!res?.token){
+      // Sign up failed, need frontend handle, the return statement has to be kept
+      return; // Compulsory
+    }
+    navigation.navigate('VerificationScreen');
+    await dispatch(sendCode(email));
+  };
+
+  const handleGoogleSignUp = async() => {
+    GoogleSignin.signOut();
+    try {
+      await GoogleSignin.hasPlayServices();
+      const response = await GoogleSignin.signIn();
+      if (isSuccessResponse(response)) {
+        // console.log(response.data);
+        const data = {
+          email: response.data.user.email,
+          name: response.data.user.name,
+          type: 'Google',
+        };
+      }
+    } catch (error) {
+      if (isErrorWithCode(error)) {
+        switch (error.code) {
+          case statusCodes.ONE_TAP_START_FAILED:
+            // Android-only, you probably have hit rate limiting.
+            // You can still call `presentExplicitSignIn` in this case.
+            break;
+          case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+            // Android: play services not available or outdated
+            // Web: when calling an unimplemented api (requestAuthorization)
+            break;
+          default:
+          // something else happened
+        }
+      } else {
+        // an error that's not related to google sign in occurred
+      }
+    }
+  };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
   return (
@@ -89,7 +165,7 @@ const SignUp = () => {
           }}
           title="Sign Up"
           onPress={() => {
-            navigation.navigate(PeriodTrackerCalendar);
+              handleSubmit();
           }}
         />
         <View style={styles.signUpContainer}>
@@ -102,7 +178,9 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.alternativeLogin}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            handleGoogleSignUp();
+          }}>
             <Google width={horizontalScale(30)} height={verticalScale(30)} />
           </TouchableOpacity>
           <TouchableOpacity>

@@ -2,6 +2,7 @@
   "name": "MeFi",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -19,6 +20,7 @@
     "@googleapis/docs": "^3.3.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-community/datetimepicker": "^8.2.0",
+    "@react-native-google-signin/google-signin": "^13.0.1",
     "@react-native-masked-view/masked-view": "^0.3.1",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.1.18",

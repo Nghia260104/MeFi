@@ -15,7 +15,7 @@ app.use('/users', usersRoute);
 
 mongoose.connect(process.env.MONGODB_URI, {dbName: 'MeFi'})
     .then(() => {
-        app.listen(process.env.PORT, '0.0.0.0',() => console.log('Server is running on port: ${process.env.PORT}'));
+        app.listen(process.env.PORT, '0.0.0.0',() => console.log(`Server is running on port: ${process.env.PORT}`));
         console.log(process.env.PORT);
     })
     .catch((error) => console.log(error.message));

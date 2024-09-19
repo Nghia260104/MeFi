@@ -23,7 +23,22 @@ import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
+import VerificationScreen from '../Verification/VerificationScreen';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
+
+import { useDispatch } from 'react-redux';
+import { sendCode, signIn } from '../../actions/auth';
+
+import { USER_KEY } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {
+  statusCodes,
+  isErrorWithCode,
+  GoogleSignin,
+  isSuccessResponse,
+} from '@react-native-google-signin/google-signin';
+import PeriodFrequency from '../Calendar/Calendar2';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -31,6 +46,80 @@ const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    const data = {
+      email,
+      password,
+    };
+    await AsyncStorage.clear();
+    await dispatch(signIn(data));
+
+    // Handle data response
+    const storedData = await AsyncStorage.getItem(USER_KEY);
+    if (!storedData) {
+      // Handle log in failed
+      return;
+    }
+    const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
+    // console.log(res.token); // If token exists, logged in successfully.
+    if(res?.token){
+      // handle user co verified chua
+
+      // neu verified roi thi
+      // navigation.navigate(PeriodTrackerCalendar);
+
+      if (!res?.user.verified) {
+        navigation.navigate('VerificationScreen');
+        await dispatch(sendCode(email));
+        return;
+      }
+
+      if (!res?.user.period_start) {
+        navigation.navigate('PeriodTrackerCalendar');
+        return;
+      }
+
+      if (!res?.user.period_type) {
+        navigation.navigate('PeriodFrequency');
+        return;
+      }
+
+      navigation.navigate('Main');
+    }
+  };
+
+  const handleGoogleSignIn = async() => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const response = await GoogleSignin.signIn();
+
+      if (isSuccessResponse(response)) {
+        // read user's info
+        // console.log(response.data);
+        await dispatch(signIn({email: response.data.user.email}));
+      }
+    } catch (error) {
+      if (isErrorWithCode(error)) {
+        switch (error.code) {
+          case statusCodes.ONE_TAP_START_FAILED:
+            // Android-only, you probably have hit rate limiting.
+            // You can still call `presentExplicitSignIn` in this case.
+            break;
+          case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+            // Android: play services not available or outdated
+            // Web: when calling an unimplemented api (requestAuthorization)
+            break;
+          default:
+          // something else happened
+        }
+      } else {
+        // an error that's not related to google sign in occurred
+      }
+    }
+  };
 
   const {width: SCREEN_WIDTH} = useWindowDimensions();
   return (
@@ -62,7 +151,8 @@ const LogIn = () => {
           }}
           title="Log In"
           onPress={() => {
-            navigation.navigate(PeriodTrackerCalendar);
+            handleSubmit();
+            // navigation.navigate(PeriodTrackerCalendar);
           }}
         />
         <View style={styles.signUpContainer}>
@@ -75,7 +165,9 @@ const LogIn = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.alternativeLogin}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            handleGoogleSignIn();
+          }}>
             <Google width={horizontalScale(30)} height={verticalScale(30)} />
           </TouchableOpacity>
           <TouchableOpacity>

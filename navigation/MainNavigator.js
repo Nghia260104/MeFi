@@ -8,6 +8,7 @@ import SignUp from '../screens/SignUp/SignUp';
 import PeriodTrackerCalendar from '../screens/Calendar/Calendar';
 import PeriodFrequency from '../screens/Calendar/Calendar2';
 import TabNavigator from './TabNavigator';
+import VerificationScreen from '../screens/Verification/VerificationScreen';
 import Carousel2 from '../screens/Home/Carousel2';
 import CycleJournal from '../screens/Home/CycleJournal';
 
@@ -22,6 +23,7 @@ const MainNavigator = alreadyLaunched => {
       <Stack.Screen name="Sex" component={Sex} />
       <Stack.Screen name="LogIn" component={LogIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="VerificationScreen" component={VerificationScreen} />
       <Stack.Screen
         name="PeriodTrackerCalendar"
         component={PeriodTrackerCalendar}

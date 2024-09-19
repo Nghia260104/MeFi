@@ -7,6 +7,9 @@ import {configureStore} from '@reduxjs/toolkit';
 import {combineReducers} from 'redux';
 
 import auth from './auth';
+import period from './period';
+
+export const reducers = combineReducers({auth, period});
 import optionsSlice from './optionSlice';
 
 const rootReducer = combineReducers({
