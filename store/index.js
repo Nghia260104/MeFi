@@ -5,24 +5,25 @@ import {configureStore} from '@reduxjs/toolkit';
 import rootReducer from '../reducers';
 
 const configuration = {
-    key: 'root',
-    storage: AsyncStorage,
-    whitelist: ['auth', 'options'],
-  };
+  key: 'root',
+  storage: AsyncStorage,
+  whitelist: ['auth', 'options', 'period'],
+};
 
-  const persistedReducer = persistReducer(configuration, rootReducer);
+const persistedReducer = persistReducer(configuration, rootReducer);
 
-  const store = configureStore({
-    reducer: persistedReducer,
+const store = configureStore({
+  reducer: persistedReducer,
 
-    // Using the getDefaultMiddleware function from the Redux Toolkit to add default middleware to the store
-    // We're passing in an object with the serializableCheck key set to false to avoid serialization errors with non-serializable data
-    middleware: getDefaultMiddleware => {
-      return getDefaultMiddleware({
-        serializableCheck: false,
-      });
-    },
-  });
+  // Using the getDefaultMiddleware function from the Redux Toolkit to add default middleware to the store
+  // We're passing in an object with the serializableCheck key set to false to avoid serialization errors with non-serializable data
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware({
+      serializableCheck: false,
+    });
+  },
+});
 
-  // export default store;
-  export const persistor = persistStore(store);
+// export default store;
+export default store;
+export const persistor = persistStore(store);
