@@ -1,4 +1,4 @@
-import * as actionType from '../constants/actionTypes';
+import * as actionType from '../../constants/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_KEY} from '@env';
 

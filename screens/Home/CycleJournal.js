@@ -13,7 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import Plus from '../../assets/images/Home/Plus.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {scaleFontSize} from '../../assets/styles/scaling';
-import {clearSelectedOptions, setDay} from '../../reducers/optionSlice';
+import {clearSelectedOptions, setDay} from '../../reducers/slices/optionSlice';
 
 const CycleJournal = () => {
   const navigation = useNavigation();

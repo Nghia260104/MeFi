@@ -1,4 +1,4 @@
-import * as periodType from '../constants/periodTypes.js';
+import * as periodType from '../../constants/periodTypes.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_KEY} from '@env';
 

@@ -6,7 +6,7 @@ import Slider from './Slider';
 import CustomButton from '../../component/customButton';
 import CustomTitle from '../../component/customTitle';
 import {Item} from './Data';
-import {setOptions} from '../../reducers/optionSlice';
+import {setOptions} from '../../reducers/slices/optionSlice';
 
 const Carousel2 = () => {
   const [selectedOptions, setSelectedOptions] = useState<

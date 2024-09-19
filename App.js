@@ -6,7 +6,7 @@ import Splash from './screens/Splash/Splash';
 import MainNavigator from './navigation/MainNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PersistGate} from 'redux-persist/integration/react';
-import store, {persistor} from './reducers/index';
+import store, {persistor} from './store';
 
 const App = () => {
   const [alreadyLaunched, setAlreadyLaunched] = useState(null);
