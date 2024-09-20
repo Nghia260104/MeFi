@@ -31,3 +31,27 @@ export const setPeriodRange = (email, startDate, endDate) => {
 export const setPeriodType = (email, p_type) => {
     return API.post('/users/setPeriodType', {email, p_type});
 };
+
+// GET COMICS
+
+export const getComics = () => {
+    return API.post('/comics');
+};
+
+// VACCINES
+
+export const getGlobalVaccine = (vaccine_id, g_type) => {
+    return API.post('/vaccines/getGlobal', {vaccine_id, g_type});
+};
+
+export const setVaccine = (user_id, vaccine_data) => {
+    return API.post('/vaccines/set', {user_id, vaccine_data});
+};
+
+export const getVaccine = (user_id, vaccine_id, g_type) => {
+    return API.post('/vaccines/get', {user_id, vaccine_id, g_type});
+};
+
+export const deleteVaccine = (user_id, vaccine_id) => {
+    return API.post('/vaccines/delete', {user_id, vaccine_id});
+};
