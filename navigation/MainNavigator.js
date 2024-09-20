@@ -13,10 +13,13 @@ import Carousel2 from '../screens/Home/Carousel2';
 import CycleJournal from '../screens/Home/CycleJournal';
 import Personal from '../screens/PersonalInfo.js/Personal';
 import Info from '../screens/PersonalInfo.js/Info';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
-const MainNavigator = alreadyLaunched => {
+const MainNavigator = () => {
+  const alreadyLaunched = useSelector(state => state.check.alreadyLaunched);
+
   return (
     <Stack.Navigator
       screenOptions={{header: () => null, headerShown: false}}

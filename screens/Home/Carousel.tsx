@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 15,
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
   },
   choiceContainer: {
     backgroundColor: '#fff',
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   choices: {
     color: '#000',
     fontSize: 13,
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
     paddingLeft: 15,
     paddingVertical: 10,
     borderBottomWidth: 0.5,

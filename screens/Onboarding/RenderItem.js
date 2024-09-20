@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaleFontSize(36),
-    fontFamily: getFontFamily('FZ Poppins', 700),
+    fontFamily: getFontFamily(700),
   },
   text: {
     fontSize: scaleFontSize(13),
-    fontFamily: getFontFamily('FZ Poppins', 500, 'Italic'),
+    fontFamily: getFontFamily(500, 'Italic'),
     marginHorizontal: horizontalScale(23),
   },
   circleContainer: {

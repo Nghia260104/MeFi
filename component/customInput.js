@@ -75,7 +75,6 @@ const CustomInput = ({
       outputRange: ['#808080', '#818181'],
     }),
     fontFamily: getFontFamily(
-      'FZ Poppins',
       labelPosition.interpolate({
         inputRange: [0, 1],
         outputRange: [400, 600],
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: scaleFontSize(15),
     paddingLeft: horizontalScale(10),
-    fontFamily: getFontFamily('FZ Poppins', 400, ''),
+    fontFamily: getFontFamily(400, ''),
   },
   passwordIcon: {
     width: 24,

@@ -1,12 +1,10 @@
 import React from 'react';
 import {
   Image,
-  Pressable,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  Touchable,
   TouchableOpacity,
   useWindowDimensions,
   View,
@@ -40,7 +38,6 @@ const Personal = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-
       <CustomTitle title="Information" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userContainer}>
@@ -143,8 +140,6 @@ const styles = StyleSheet.create({
     width: horizontalScale(140),
     height: horizontalScale(140),
     borderRadius: horizontalScale(70),
-    borderWidth: 2,
-    borderColor: '#000',
   },
   nameContainer: {
     flexDirection: 'row',
@@ -158,12 +153,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: scaleFontSize(20),
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
     color: '#000',
   },
   info: {
     fontSize: scaleFontSize(13),
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
     color: '#000',
   },
   cateContainer: {

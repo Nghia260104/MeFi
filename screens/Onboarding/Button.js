@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#FCA735',
     fontSize: scaleFontSize(14),
-    fontFamily: getFontFamily('FZ Poppins', 700, ''),
+    fontFamily: getFontFamily(700, ''),
   },
 });
 

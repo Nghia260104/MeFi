@@ -1,5 +1,3 @@
-/* eslint-disable no-extra-parens */
-/*prettier-ignore */
 import axios from 'axios';
 import {PORT} from '@env';
 

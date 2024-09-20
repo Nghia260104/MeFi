@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -24,18 +24,11 @@ import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProfileImage} from '../../reducers/slices/profileImage';
 
-import defaultFemaleImage from '../../assets/images/defaultFemale.png';
-
 const Info = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profileImage = useSelector(state => state.image.profileImage);
   const [localImage, setLocalImage] = useState(null);
-
-  useEffect(() => {
-    // Initialize localImage with the value from the reducer
-    setLocalImage(profileImage);
-  }, [profileImage]);
 
   const handleSave = () => {
     if (localImage !== profileImage) {
@@ -54,7 +47,6 @@ const Info = () => {
       compressImageMaxHeight: 3060,
       compressImageQuality: 1,
     }).then(image => {
-      console.log(image);
       setLocalImage(image.path);
     });
   };
@@ -66,8 +58,6 @@ const Info = () => {
       return typeof profileImage === 'string'
         ? {uri: profileImage}
         : profileImage;
-    } else {
-      return defaultFemaleImage;
     }
   };
 
@@ -83,7 +73,13 @@ const Info = () => {
             <View style={styles.avatarContainer}>
               <Image
                 style={styles.avatar}
-                source={getImageSource()}
+                source={
+                  localImage
+                    ? {uri: localImage}
+                    : typeof profileImage === 'string'
+                    ? {uri: profileImage}
+                    : profileImage
+                }
                 resizeMode="cover"
               />
               <View style={styles.edit}>
@@ -101,7 +97,7 @@ const Info = () => {
               <CustomInput
                 style={styles.input}
                 label="Email"
-                placeholder="email"
+                placeholder="Email"
               />
               <CustomDateInput
                 style={styles.input}
@@ -137,8 +133,6 @@ const styles = StyleSheet.create({
     width: horizontalScale(140),
     height: horizontalScale(140),
     borderRadius: horizontalScale(70),
-    borderWidth: 2,
-    borderColor: '#000',
   },
   avatarContainer: {
     marginTop: verticalScale(31),

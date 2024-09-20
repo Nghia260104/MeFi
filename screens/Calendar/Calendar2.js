@@ -97,13 +97,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaleFontSize(25),
-    fontFamily: getFontFamily('FZ Poppins', 700, ''),
+    fontFamily: getFontFamily(700, ''),
     color: '#FF8533',
     textAlign: 'center',
   },
   subtitle: {
     color: '#595959',
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
     fontSize: scaleFontSize(15),
     margintop: verticalScale(13),
     textAlign: 'center',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   answer: {
     fontSize: scaleFontSize(15),
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
     color: '#2E2E2E',
   },
   button: {

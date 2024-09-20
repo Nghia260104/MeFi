@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     color: '#2E2E2E',
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
   },
   button: {
     flexDirection: 'row',
@@ -193,12 +193,12 @@ const styles = StyleSheet.create({
   category: {
     fontSize: 13,
     color: '#2E2E2E',
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
   },
   selectedOption: {
     fontSize: scaleFontSize(10),
     color: '#000',
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
   },
 });
 

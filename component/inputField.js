@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: horizontalScale(15),
     color: '#808080',
-    fontFamily: getFontFamily('FZ Poppins', 400, ''),
+    fontFamily: getFontFamily(400, ''),
   },
   label: {
     position: 'absolute',
     left: horizontalScale(11),
     fontSize: horizontalScale(10),
     color: '#818181',
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
   },
 });
 

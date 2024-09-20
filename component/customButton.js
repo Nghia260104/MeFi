@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: horizontalScale(35),
   },
   title: {
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
     fontSize: scaleFontSize(15),
     color: 'white',
   },

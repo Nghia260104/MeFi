@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: scaleFontSize(13),
     color: '#2E2E2E',
     marginBottom: 5,
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
   },
   dateCircle: {
     width: horizontalScale(25),
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: scaleFontSize(13),
-    fontFamily: getFontFamily('FZ Poppins', 700, ''),
+    fontFamily: getFontFamily(700, ''),
     color: '#603EF7',
   },
 });

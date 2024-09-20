@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: scaleFontSize(13),
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
     color: '#2E2E2E',
   },
   titleContainer: {

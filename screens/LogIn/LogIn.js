@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   forgot: {
     position: 'absolute',
     right: horizontalScale(2),
-    fontFamily: getFontFamily('FZ Poppins', 400, ''),
+    fontFamily: getFontFamily(400, ''),
     fontSize: scaleFontSize(12),
     color: '#00164A',
   },
@@ -223,13 +223,13 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(15),
   },
   dontHaveAccount: {
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
     fontSize: scaleFontSize(12),
     color: '#8A7B7B',
   },
   signUp: {
     marginLeft: horizontalScale(10),
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
     fontSize: scaleFontSize(12),
     color: '#4D4D4D',
   },

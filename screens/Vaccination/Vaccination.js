@@ -16,7 +16,7 @@ const Vaccination = () => {
 const styles = StyleSheet.create({
   splash: {
     flex: 1,
-    backgroundColor: '#FFF8DC',
+    backgroundColor: '#FFF',
     alignItems: 'center',
   },
   lottie: {

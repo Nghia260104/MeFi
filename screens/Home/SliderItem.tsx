@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 15,
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
   },
   choiceContainer: {
     backgroundColor: '#fff',
@@ -187,14 +187,14 @@ const styles = StyleSheet.create({
   subtitle: {
     color: '#818181',
     fontSize: 15,
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
     paddingLeft: 15,
     paddingTop: 10,
   },
   choices: {
     color: '#000',
     fontSize: 13,
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
     borderColor: '#D9D9D9',
   },
   radioContainer: {
@@ -239,12 +239,12 @@ const styles = StyleSheet.create({
   },
   dropdownHeaderText: {
     fontSize: 16,
-    fontFamily: getFontFamily('FZ Poppins', 500, ''),
+    fontFamily: getFontFamily(500, ''),
     color: '#000',
   },
   selectedTemperature: {
     fontSize: 15,
-    fontFamily: getFontFamily('FZ Poppins', 700, ''),
+    fontFamily: getFontFamily(700, ''),
     textAlign: 'center',
     color: '#2E2E2E',
   },

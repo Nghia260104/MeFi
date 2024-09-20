@@ -13,9 +13,14 @@ import {getFontFamily} from '../../assets/fonts/helper';
 import Male from '../../assets/images/Male.svg';
 import Female from '../../assets/images/Female.svg';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {setAlreadyLaunched} from '../../reducers/slices/checkSlice';
 
 const Sex = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const alreadyLaunched = useSelector(state => state.check.alreadyLaunched);
+  console.log(alreadyLaunched);
 
   const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
   return (
@@ -33,6 +38,7 @@ const Sex = () => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('LogIn');
+            !alreadyLaunched && dispatch(setAlreadyLaunched(true));
           }}>
           <Female width={SCREEN_WIDTH * 0.75} height={SCREEN_WIDTH * 0.75} />
         </TouchableOpacity>
@@ -57,7 +63,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: scaleFontSize(28),
-    fontFamily: getFontFamily('FZ Poppins', 700, ''),
+    fontFamily: getFontFamily(700, ''),
     color: '#2E2E2E',
     textAlign: 'center',
   },

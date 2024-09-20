@@ -37,5 +37,4 @@ export const optionsSlice = createSlice({
 export const {setOptions, resetOptions, setDay, clearSelectedOptions} =
   optionsSlice.actions;
 
-// Export the reducer to be included in the Redux store
 export default optionsSlice.reducer;

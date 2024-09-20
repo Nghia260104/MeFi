@@ -30,7 +30,6 @@ const Home = () => {
   const navigation = useNavigation();
 
   const profileImage = useSelector(state => state.image.profileImage);
-  console.log(profileImage);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,7 +68,7 @@ const Home = () => {
               style={{
                 color: '#000',
                 fontSize: scaleFontSize(15),
-                fontFamily: getFontFamily('FZ Poppins', 600, ''),
+                fontFamily: getFontFamily(600, ''),
               }}>
               How are you today?
             </Text>
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   greeting: {
     color: '#000',
     fontSize: scaleFontSize(17),
-    fontFamily: getFontFamily('FZ Poppins', 600, ''),
+    fontFamily: getFontFamily(600, ''),
   },
   calendar: {
     marginTop: verticalScale(20),
