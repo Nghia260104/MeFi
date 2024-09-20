@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -29,12 +28,11 @@ import CustomDateInput from '../../component/customDateInput';
 import LogIn from '../LogIn/LogIn';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
-import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 import {useDispatch} from 'react-redux';
 import {signUp, sendCode} from '../../actions/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {USER_KEY, ANDROID_CLIENT_ID, WEB_CLIENT_ID} from '@env';
+import {USER_KEY, WEB_CLIENT_ID} from '@env';
 
 import {
   statusCodes,
@@ -42,7 +40,6 @@ import {
   GoogleSignin,
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
-import VerificationScreen from '../Verification/VerificationScreen';
 
 const SignUp = () => {
   const navigation = useNavigation();

@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   StatusBar,
+  Image,
 } from 'react-native';
 import InfiniteScrollCalendar from '../../component/InfiniteCalendar';
 
@@ -19,14 +20,17 @@ import {
 import {getFontFamily} from '../../assets/fonts/helper';
 import {useNavigation} from '@react-navigation/native';
 
-import Avatar from '../../assets/images/Home/Avatar.svg';
 import Hello from '../../assets/images/Home/Hello.svg';
 import Statistic from '../../assets/images/Home/Statistic.svg';
 import Period from '../../assets/images/Home/Period.svg';
 import Whatnews from '../../assets/images/Home/Whatnews.svg';
+import {useSelector} from 'react-redux';
 
 const Home = () => {
   const navigation = useNavigation();
+
+  const profileImage = useSelector(state => state.image.profileImage);
+  console.log(profileImage);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,11 +41,19 @@ const Home = () => {
             onPress={() => {
               navigation.navigate('Personal');
             }}>
-            <Avatar width={50} height={50} />
+            <Image
+              style={styles.avatar}
+              source={
+                typeof profileImage === 'string'
+                  ? {uri: profileImage}
+                  : profileImage
+              }
+              resizeMode="cover"
+            />
           </TouchableWithoutFeedback>
           <View style={styles.greetingContainer}>
-            <Text style={styles.avatar}>Hey,</Text>
-            <Text style={styles.avatar}>Minh Anh</Text>
+            <Text style={styles.greeting}>Hey,</Text>
+            <Text style={styles.greeting}>Minh Anh</Text>
           </View>
         </View>
         <View style={styles.calendar}>
@@ -119,6 +131,11 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(30),
     marginLeft: horizontalScale(20),
   },
+  avatar: {
+    width: horizontalScale(50),
+    height: verticalScale(50),
+    borderRadius: horizontalScale(25),
+  },
   greetingContainer: {
     marginLeft: horizontalScale(12),
     justifyContent: 'space-between',
@@ -128,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: verticalScale(30),
   },
-  avatar: {
+  greeting: {
     color: '#000',
     fontSize: scaleFontSize(17),
     fontFamily: getFontFamily('FZ Poppins', 600, ''),

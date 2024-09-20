@@ -24,8 +24,6 @@ import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
 import {useNavigation} from '@react-navigation/native';
-import VerificationScreen from '../Verification/VerificationScreen';
-import PeriodTrackerCalendar from '../Calendar/Calendar';
 
 import {useDispatch} from 'react-redux';
 import {sendCode, signIn} from '../../actions/auth';
@@ -39,7 +37,6 @@ import {
   GoogleSignin,
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
-import PeriodFrequency from '../Calendar/Calendar2';
 
 const LogIn = () => {
   const navigation = useNavigation();

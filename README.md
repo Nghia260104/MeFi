@@ -116,6 +116,13 @@ npm install lottie-react-native
 npm install @react-native-picker/picker
 ```
 
+### react-native-image-crop-picker
+
+```bash
+#install @react-native-image-crop-picker
+npm i react-native-image-crop-picker --save
+```
+
 #### MongoDB
 
 ```bash

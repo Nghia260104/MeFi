@@ -12,6 +12,7 @@ import VerificationScreen from '../screens/Verification/VerificationScreen';
 import Carousel2 from '../screens/Home/Carousel2';
 import CycleJournal from '../screens/Home/CycleJournal';
 import Personal from '../screens/PersonalInfo.js/Personal';
+import Info from '../screens/PersonalInfo.js/Info';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ const MainNavigator = alreadyLaunched => {
       <Stack.Screen name="Carousel2" component={Carousel2} />
       <Stack.Screen name="CycleJournal" component={CycleJournal} />
       <Stack.Screen name="Personal" component={Personal} />
+      <Stack.Screen name="PersonalInfo" component={Info} />
     </Stack.Navigator>
   );
 };

@@ -7019,6 +7019,11 @@ react-native-gesture-handler@^2.17.1, "react-native-gesture-handler@>= 1.0.0":
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-crop-picker@^0.41.2:
+  version "0.41.2"
+  resolved "https://registry.npmjs.org/react-native-image-crop-picker/-/react-native-image-crop-picker-0.41.2.tgz"
+  integrity sha512-GcDu/adXU/1y/MrxsbOfqcGRGWC2pTttt5VGy/jyRJ6GXfoC29fTQf8SG5kGtc5schSR6K+mKYO4uW6eJPljlQ==
+
 react-native-reanimated@^3.15.2:
   version "3.15.2"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.15.2.tgz"
@@ -7080,7 +7085,7 @@ react-native-swiper@^1.6.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native@*, "react-native@^0.0.0-0 || >=0.65 <1.0", react-native@^0.75.3, "react-native@>= 0.30.0", "react-native@>= 0.67", react-native@>=0.46, react-native@>=0.57, react-native@>=0.59.0:
+react-native@*, "react-native@^0.0.0-0 || >=0.65 <1.0", react-native@^0.75.3, "react-native@>= 0.30.0", "react-native@>= 0.67", react-native@>=0.40.0, react-native@>=0.46, react-native@>=0.57, react-native@>=0.59.0:
   version "0.75.3"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.75.3.tgz"
   integrity sha512-+Ne6u5H+tPo36sme19SCd1u2UID2uo0J/XzAJarxmrDj4Nsdi44eyUDKtQHmhgxjRGsuVJqAYrMK0abLSq8AHw==
