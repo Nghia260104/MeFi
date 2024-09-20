@@ -35,7 +35,7 @@ const Home = () => {
         <View style={styles.avatarContainer}>
           <TouchableWithoutFeedback
             onPress={() => {
-              navigation.navigate('');
+              navigation.navigate('Personal');
             }}>
             <Avatar width={50} height={50} />
           </TouchableWithoutFeedback>

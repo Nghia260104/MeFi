@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -30,8 +31,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 
-import { useDispatch } from 'react-redux';
-import { signUp, sendCode } from '../../actions/auth';
+import {useDispatch} from 'react-redux';
+import {signUp, sendCode} from '../../actions/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_KEY, ANDROID_CLIENT_ID, WEB_CLIENT_ID} from '@env';
 
@@ -74,7 +75,7 @@ const SignUp = () => {
       return;
     }
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
-    if (!res?.token){
+    if (!res?.token) {
       // Sign up failed, need frontend handle, the return statement has to be kept
       return; // Compulsory
     }
@@ -82,7 +83,7 @@ const SignUp = () => {
     await dispatch(sendCode(email));
   };
 
-  const handleGoogleSignUp = async() => {
+  const handleGoogleSignUp = async () => {
     GoogleSignin.signOut();
     try {
       await GoogleSignin.hasPlayServices();
@@ -165,7 +166,7 @@ const SignUp = () => {
           }}
           title="Sign Up"
           onPress={() => {
-              handleSubmit();
+            handleSubmit();
           }}
         />
         <View style={styles.signUpContainer}>
@@ -178,9 +179,10 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.alternativeLogin}>
-          <TouchableOpacity onPress={() => {
-            handleGoogleSignUp();
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              handleGoogleSignUp();
+            }}>
             <Google width={horizontalScale(30)} height={verticalScale(30)} />
           </TouchableOpacity>
           <TouchableOpacity>

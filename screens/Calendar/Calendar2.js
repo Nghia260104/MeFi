@@ -8,6 +8,7 @@ import {
   StatusBar,
   useWindowDimensions,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import Flowers from '../../assets/images/Calendar/Flowers.svg';
@@ -32,52 +33,54 @@ const PeriodFrequency = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <View style={styles.content}>
-        <Text style={[styles.title, {marginTop: SCREEN_HEIGHT * 0.1}]}>
-          Do you have regular periods?
-        </Text>
-        <Text style={[styles.subtitle, {marginTop: SCREEN_HEIGHT * 0.02}]}>
-          This means that you have a consistent number of days in a month
-          between your periods.
-        </Text>
-        <View style={styles.flower}>
-          <Flowers width={166} height={99} />
+      <ScrollView>
+        <View style={styles.content}>
+          <Text style={[styles.title, {marginTop: SCREEN_HEIGHT * 0.1}]}>
+            Do you have regular periods?
+          </Text>
+          <Text style={[styles.subtitle, {marginTop: SCREEN_HEIGHT * 0.02}]}>
+            This means that you have a consistent number of days in a month
+            between your periods.
+          </Text>
+          <View style={styles.flower}>
+            <Flowers width={166} height={99} />
+          </View>
+          <View style={styles.answerContainer}>
+            <TouchableOpacity
+              style={[
+                styles.answerButton,
+                {backgroundColor: answer === 'Yes' ? '#FF8533' : '#ECEAEA'},
+              ]}
+              onPress={() => handleAnswer('Yes')}>
+              <Text style={styles.answer}>Yes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.answerButton,
+                {backgroundColor: answer === 'No' ? '#FF8533' : '#ECEAEA'},
+              ]}
+              onPress={() => handleAnswer('No')}>
+              <Text style={styles.answer}>No</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.answerButton,
+                {
+                  backgroundColor:
+                    answer === "I'm not sure" ? '#FF8533' : '#ECEAEA',
+                },
+              ]}
+              onPress={() => handleAnswer("I'm not sure")}>
+              <Text style={styles.answer}>I'm not sure</Text>
+            </TouchableOpacity>
+          </View>
+          <CustomButton
+            customStyle={[styles.button]}
+            title="Get Started"
+            onPress={() => navigation.navigate('Main')}
+          />
         </View>
-        <View style={styles.answerContainer}>
-          <TouchableOpacity
-            style={[
-              styles.answerButton,
-              {backgroundColor: answer === 'Yes' ? '#FF8533' : '#ECEAEA'},
-            ]}
-            onPress={() => handleAnswer('Yes')}>
-            <Text style={styles.answer}>Yes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.answerButton,
-              {backgroundColor: answer === 'No' ? '#FF8533' : '#ECEAEA'},
-            ]}
-            onPress={() => handleAnswer('No')}>
-            <Text style={styles.answer}>No</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.answerButton,
-              {
-                backgroundColor:
-                  answer === "I'm not sure" ? '#FF8533' : '#ECEAEA',
-              },
-            ]}
-            onPress={() => handleAnswer("I'm not sure")}>
-            <Text style={styles.answer}>I'm not sure</Text>
-          </TouchableOpacity>
-        </View>
-        <CustomButton
-          customStyle={[styles.button, {marginTop: SCREEN_HEIGHT * 0.9}]}
-          title="Get Started"
-          onPress={() => navigation.navigate('Main')}
-        />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     color: '#2E2E2E',
   },
   button: {
-    position: 'absolute',
+    marginTop: verticalScale(70),
     backgroundColor: '#FF8533',
     height: 60,
     width: 150,

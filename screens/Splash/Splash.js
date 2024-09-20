@@ -4,20 +4,23 @@ import LottieView from 'lottie-react-native';
 
 import Logo from '../../assets/images/Splash/Logo.svg';
 import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Splash = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar hidden />
-      <View style={styles.splash}>
-        <Logo width={240} height={150} />
-        <LottieView
-          source={require('../../assets/images/Splash/Splash.json')}
-          style={styles.lottie}
-          autoPlay
-          loop
-        />
-      </View>
+      <ScrollView>
+        <StatusBar hidden />
+        <View style={styles.splash}>
+          <Logo width={240} height={150} />
+          <LottieView
+            source={require('../../assets/images/Splash/Splash.json')}
+            style={styles.lottie}
+            autoPlay
+            loop
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

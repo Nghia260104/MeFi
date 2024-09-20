@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -26,10 +27,10 @@ import {useNavigation} from '@react-navigation/native';
 import VerificationScreen from '../Verification/VerificationScreen';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 
-import { useDispatch } from 'react-redux';
-import { sendCode, signIn } from '../../actions/auth';
+import {useDispatch} from 'react-redux';
+import {sendCode, signIn} from '../../actions/auth';
 
-import { USER_KEY } from '@env';
+import {USER_KEY} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
@@ -65,7 +66,7 @@ const LogIn = () => {
     }
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
     // console.log(res.token); // If token exists, logged in successfully.
-    if(res?.token){
+    if (res?.token) {
       // handle user co verified chua
 
       // neu verified roi thi
@@ -91,7 +92,7 @@ const LogIn = () => {
     }
   };
 
-  const handleGoogleSignIn = async() => {
+  const handleGoogleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
@@ -125,59 +126,65 @@ const LogIn = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <View style={styles.content}>
-        <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
-        <CustomInput
-          customStyle={styles.email}
-          placeholder="Email"
-          onChangeText={setEmail}
-        />
-        <CustomInput
-          customStyle={styles.password}
-          placeholder="Password"
-          onChangeText={setPassword}
-          error={passwordError}
-          secureTextEntry={true}
-        />
-        <View style={styles.forgotButton}>
-          <TouchableWithoutFeedback>
-            <Text style={styles.forgot}>Forgot password</Text>
-          </TouchableWithoutFeedback>
-        </View>
-        <CustomButton
-          customStyle={{
-            marginTop: verticalScale(40),
-            height: verticalScale(50),
-          }}
-          title="Log In"
-          onPress={() => {
-            handleSubmit();
-            // navigation.navigate(PeriodTrackerCalendar);
-          }}
-        />
-        <View style={styles.signUpContainer}>
-          <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
-          <TouchableOpacity
+      <ScrollView>
+        <View style={styles.content}>
+          <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
+          <CustomInput
+            customStyle={styles.email}
+            placeholder="Email"
+            onChangeText={setEmail}
+          />
+          <CustomInput
+            customStyle={styles.password}
+            placeholder="Password"
+            onChangeText={setPassword}
+            error={passwordError}
+            secureTextEntry={true}
+          />
+          <View style={styles.forgotButton}>
+            <TouchableWithoutFeedback>
+              <Text style={styles.forgot}>Forgot password</Text>
+            </TouchableWithoutFeedback>
+          </View>
+          <CustomButton
+            customStyle={{
+              marginTop: verticalScale(40),
+              height: verticalScale(50),
+            }}
+            title="Log In"
             onPress={() => {
-              navigation.navigate(SignUp);
-            }}>
-            <Text style={styles.signUp}> Sign Up</Text>
-          </TouchableOpacity>
+              handleSubmit();
+              // navigation.navigate(PeriodTrackerCalendar);
+            }}
+          />
+          <View style={styles.signUpContainer}>
+            <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(SignUp);
+              }}>
+              <Text style={styles.signUp}> Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.alternativeLogin}>
+            <TouchableOpacity
+              onPress={() => {
+                handleGoogleSignIn();
+              }}>
+              <Google width={horizontalScale(30)} height={verticalScale(30)} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Facebook
+                width={horizontalScale(30)}
+                height={verticalScale(30)}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Apple width={horizontalScale(30)} height={verticalScale(30)} />
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.alternativeLogin}>
-          <TouchableOpacity onPress={() => {
-            handleGoogleSignIn();
-          }}>
-            <Google width={horizontalScale(30)} height={verticalScale(30)} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Facebook width={horizontalScale(30)} height={verticalScale(30)} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Apple width={horizontalScale(30)} height={verticalScale(30)} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

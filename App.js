@@ -7,6 +7,7 @@ import MainNavigator from './navigation/MainNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PersistGate} from 'redux-persist/integration/react';
 import store, {persistor} from './store';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
   const [alreadyLaunched, setAlreadyLaunched] = useState(null);
@@ -37,13 +38,15 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} />
-      <NavigationContainer>
-        {hideSplashScreen ? (
-          <MainNavigator alreadyLaunched={alreadyLaunched} />
-        ) : (
-          <Splash />
-        )}
-      </NavigationContainer>
+      <GestureHandlerRootView>
+        <NavigationContainer>
+          {hideSplashScreen ? (
+            <MainNavigator alreadyLaunched={alreadyLaunched} />
+          ) : (
+            <Splash />
+          )}
+        </NavigationContainer>
+      </GestureHandlerRootView>
     </Provider>
   );
 };

@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
   useWindowDimensions,
+  ScrollView,
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import Rabbie from '../../assets/images/Calendar/Rabbie.svg';
@@ -80,43 +81,45 @@ const PeriodTrackerCalendar = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <View style={styles.content}>
-        <Text style={[styles.title, {marginTop: SCREEN_HEIGHT * 0.12}]}>
-          How long does your period?
-        </Text>
-        <View style={[styles.bunnyContainer, {top: SCREEN_HEIGHT * 0.15}]}>
-          <Rabbie width={178} height={220} />
+      <ScrollView>
+        <View style={styles.content}>
+          <Text style={[styles.title, {marginTop: SCREEN_HEIGHT * 0.12}]}>
+            How long does your period?
+          </Text>
+          <View style={[styles.bunnyContainer, {top: SCREEN_HEIGHT * 0.15}]}>
+            <Rabbie width={178} height={220} />
+          </View>
+          <Calendar
+            style={[styles.calendar, {marginTop: SCREEN_HEIGHT * 0.37}]}
+            onDayPress={onDayPress}
+            markingType={'period'}
+            markedDates={selectedRange}
+            theme={{
+              backgroundColor: 'transparent',
+              calendarBackground: 'transparent',
+              textSectionTitleColor: '#000000',
+              selectedDayBackgroundColor: '#FF8533',
+              selectedDayTextColor: '#ffffff',
+              todayTextColor: '#FF7F50',
+              dayTextColor: '#2d4150',
+              textDisabledColor: 'rgba(0, 0, 0, 0.40)',
+              arrowColor: '#000000',
+              monthTextColor: '#828282',
+              textDayFontFamily: getFontFamily('FZ Poppins', 600, ''),
+              textMonthFontFamily: getFontFamily('FZ Poppins', 500, ''),
+              textDayHeaderFontFamily: getFontFamily('FZ Poppins', 500, ''),
+              textDayFontSize: 17,
+              textMonthFontSize: 16,
+              textDayHeaderFontSize: 12,
+            }}
+          />
+          <CustomButton
+            customStyle={[styles.button, {marginTop: SCREEN_HEIGHT * 0.9}]}
+            title="Next"
+            onPress={() => navigation.navigate('PeriodFrequency')}
+          />
         </View>
-        <Calendar
-          style={[styles.calendar, {marginTop: SCREEN_HEIGHT * 0.37}]}
-          onDayPress={onDayPress}
-          markingType={'period'}
-          markedDates={selectedRange}
-          theme={{
-            backgroundColor: 'transparent',
-            calendarBackground: 'transparent',
-            textSectionTitleColor: '#000000',
-            selectedDayBackgroundColor: '#FF8533',
-            selectedDayTextColor: '#ffffff',
-            todayTextColor: '#FF7F50',
-            dayTextColor: '#2d4150',
-            textDisabledColor: 'rgba(0, 0, 0, 0.40)',
-            arrowColor: '#000000',
-            monthTextColor: '#828282',
-            textDayFontFamily: getFontFamily('FZ Poppins', 600, ''),
-            textMonthFontFamily: getFontFamily('FZ Poppins', 500, ''),
-            textDayHeaderFontFamily: getFontFamily('FZ Poppins', 500, ''),
-            textDayFontSize: 17,
-            textMonthFontSize: 16,
-            textDayHeaderFontSize: 12,
-          }}
-        />
-        <CustomButton
-          customStyle={[styles.button, {marginTop: SCREEN_HEIGHT * 0.9}]}
-          title="Next"
-          onPress={() => navigation.navigate('PeriodFrequency')}
-        />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
