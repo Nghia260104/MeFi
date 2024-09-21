@@ -38,7 +38,7 @@ const Personal = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <CustomTitle title="Information" />
+      <CustomTitle goBack={true} title="Information" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userContainer}>
           <View style={styles.background} />
@@ -135,6 +135,8 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     top: verticalScale(130),
+    backgroundColor: '#FFDF99',
+    borderRadius: horizontalScale(70),
   },
   avatar: {
     width: horizontalScale(140),

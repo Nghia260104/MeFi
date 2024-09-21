@@ -123,6 +123,12 @@ npm install @react-native-picker/picker
 npm i react-native-image-crop-picker --save
 ```
 
+### react-native-linear-gradient
+
+```bash
+npm install react-native-linear-gradient
+```
+
 #### MongoDB
 
 ```bash

@@ -25,7 +25,11 @@ const Carousel2 = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <CustomTitle customStyle={styles.title} title={'Menstrual period'} />
+      <CustomTitle
+        goBack={true}
+        customStyle={styles.title}
+        title={'Menstrual period'}
+      />
       <View style={{flex: 0.95}}>
         <Slider itemList={Item} setSelectedOptions={setSelectedOptions} />
       </View>

@@ -21,6 +21,7 @@ const CycleJournal = () => {
 
   const fullState = useSelector(state => state.options);
   const storedDay = useSelector(state => state.options.day);
+  console.log(storedDay);
 
   useEffect(() => {
     const checkDay = () => {
@@ -44,7 +45,7 @@ const CycleJournal = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <CustomTitle title="Cycle Journal" />
+      <CustomTitle goBack={true} title="Cycle Journal" />
       <ScrollView
         style={styles.contentContainer}
         showsVerticalScrollIndicator={false}>
@@ -79,6 +80,7 @@ const CycleJournal = () => {
         </TouchableOpacity>
 
         {/* Other statistics Section */}
+        {/* eslint-disable-next-line react-native/no-inline-styles */}
         <View style={{marginTop: 20}}>
           <Text style={styles.title}>Other statistics</Text>
 

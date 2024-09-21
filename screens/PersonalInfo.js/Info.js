@@ -24,11 +24,13 @@ import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProfileImage} from '../../reducers/slices/profileImage';
 
+import defaultFemaleImage from '../../assets/images/defaultFemale.png';
+
 const Info = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profileImage = useSelector(state => state.image.profileImage);
-  const [localImage, setLocalImage] = useState(null);
+  const [localImage, setLocalImage] = useState(defaultFemaleImage);
 
   const handleSave = () => {
     if (localImage !== profileImage) {
@@ -51,21 +53,11 @@ const Info = () => {
     });
   };
 
-  const getImageSource = () => {
-    if (localImage) {
-      return {uri: localImage};
-    } else if (profileImage) {
-      return typeof profileImage === 'string'
-        ? {uri: profileImage}
-        : profileImage;
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
       <View style={styles.userContainer}>
-        <CustomTitle title="Information" />
+        <CustomTitle goBack={true} title="Information" />
         <ScrollView
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}>
@@ -75,7 +67,9 @@ const Info = () => {
                 style={styles.avatar}
                 source={
                   localImage
-                    ? {uri: localImage}
+                    ? typeof localImage === 'string'
+                      ? {uri: localImage}
+                      : localImage
                     : typeof profileImage === 'string'
                     ? {uri: profileImage}
                     : profileImage
@@ -136,6 +130,8 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     marginTop: verticalScale(31),
+    backgroundColor: '#FFDF99',
+    borderRadius: horizontalScale(70),
   },
   cateContainer: {
     width: '100%',

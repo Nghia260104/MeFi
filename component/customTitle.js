@@ -6,15 +6,17 @@ import {useNavigation} from '@react-navigation/native';
 import {scaleFontSize} from '../assets/styles/scaling';
 import {getFontFamily} from '../assets/fonts/helper';
 
-const CustomTitle = ({customStyle, title}) => {
+const CustomTitle = ({goBack, customStyle, title, icon}) => {
   const navigation = useNavigation();
   return (
     <View style={[styles.container, customStyle]}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <BackChevron width={24} height={24} />
-      </TouchableOpacity>
+      {goBack === true && (
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <BackChevron width={24} height={24} />
+        </TouchableOpacity>
+      )}
       <Text style={styles.text}>{title}</Text>
-      <View style={{width: 24, height: 24}} />
+      {icon ? icon : <View style={{width: 24, height: 24}} />}
     </View>
   );
 };
