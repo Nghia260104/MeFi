@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -23,16 +23,37 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProfileImage} from '../../reducers/slices/profileImage';
+import {setName} from '../../reducers/slices/userSlice';
+
+import {USER_KEY} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Info = () => {
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profileImage = useSelector(state => state.image.profileImage);
   const [localImage, setLocalImage] = useState(profileImage);
+  const [email, setEmail] = useState(user.email);
+  const [fullName, setFullName] = useState(user.name);
+  const [dob, setDob] = useState(user.dob);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const storedData = await AsyncStorage.getItem(USER_KEY);
+      const res = JSON.parse(storedData);
+      setEmail(res.user.email);
+    };
+    fetchData();
+  }, []);
 
   const handleSave = () => {
     if (localImage !== profileImage) {
       dispatch(setProfileImage(localImage));
+    }
+
+    if (fullName !== user.name) {
+      dispatch(setName(fullName));
     }
     navigation.navigate('Personal');
   };
@@ -85,16 +106,22 @@ const Info = () => {
                 style={styles.input}
                 label="Full Name"
                 placeholder="Full Name"
+                value={user.name}
+                onChangeText={setFullName}
               />
               <CustomInput
                 style={styles.input}
                 label="Email"
                 placeholder="Email"
+                value={email}
+                editable={false}
               />
               <CustomDateInput
                 style={styles.input}
                 label="Date of Birth"
                 placeholder="Date of Birth"
+                value={user.dob}
+                onChangeText={setDob}
               />
             </View>
             <CustomButton

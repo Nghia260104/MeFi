@@ -7,6 +7,7 @@ import comic from './reducers/comics';
 import profileImageSlice from './slices/profileImage';
 import checkSlice from './slices/checkSlice';
 import vaccines from './reducers/vaccines';
+import userSlice from './slices/userSlice';
 
 const rootReducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   image: profileImageSlice,
   check: checkSlice,
   vaccines: vaccines,
+  user: userSlice,
 });
 
 export default rootReducer;
