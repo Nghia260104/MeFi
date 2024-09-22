@@ -10,8 +10,8 @@ import {getFontFamily} from '../../../assets/fonts/helper';
 const Vaccine = item => {
   return (
     <View style={styles.container}>
-      <View style={styles.image}>
-        <Image source={item.image} resizeMode="cover" />
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={item.image} resizeMode="cover" />
       </View>
       <View style={styles.vaccineContainer}>
         <Text style={styles.name}>{item.name}</Text>
@@ -32,10 +32,14 @@ const styles = StyleSheet.create({
     elevation: 1,
     borderRadius: horizontalScale(16),
   },
-  image: {
+  imageContainer: {
     width: horizontalScale(90),
     height: horizontalScale(90),
     backgroundColor: '#F3F3F3',
+  },
+  image: {
+    width: horizontalScale(90),
+    height: horizontalScale(90),
   },
   vaccineContainer: {
     justifyContent: 'center',

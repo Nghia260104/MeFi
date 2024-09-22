@@ -18,10 +18,12 @@ import {
 import {getFontFamily} from '../../assets/fonts/helper';
 import CustomButton from '../../component/customButton';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux'; // Import useDispatch
+import {setPeriodRange} from '../../reducers/reducers/period';
 
 const PeriodTrackerCalendar = () => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch(); // Initialize dispatch
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const [selectedRange, setSelectedRange] = useState({});
@@ -78,13 +80,25 @@ const PeriodTrackerCalendar = () => {
     return range;
   };
 
+  const onNextPress = () => {
+    const dates = Object.keys(selectedRange);
+    if (dates.length > 0) {
+      const startDate = dates[0];
+      const endDate = dates[dates.length - 1];
+      // Dispatch the setPeriodRange action with startDate and endDate
+      dispatch(setPeriodRange({period_start: startDate, period_end: endDate}));
+      // Navigate to the next screen
+      navigation.navigate('PeriodFrequency');
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
       <ScrollView>
         <View style={styles.content}>
           <Text style={[styles.title, {marginTop: SCREEN_HEIGHT * 0.12}]}>
-            How long does your period?
+            How long is your period?
           </Text>
           <View style={[styles.bunnyContainer, {top: SCREEN_HEIGHT * 0.15}]}>
             <Rabbie width={178} height={220} />
@@ -116,7 +130,7 @@ const PeriodTrackerCalendar = () => {
           <CustomButton
             customStyle={[styles.button, {marginTop: SCREEN_HEIGHT * 0.9}]}
             title="Next"
-            onPress={() => navigation.navigate('PeriodFrequency')}
+            onPress={onNextPress} // Update onPress to call onNextPress
           />
         </View>
       </ScrollView>

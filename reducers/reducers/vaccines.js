@@ -17,7 +17,7 @@
 
 // export default authReducer;
 
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   globalVaccines: null,
@@ -31,21 +31,22 @@ export const vaccinesSlice = createSlice({
   reducers: {
     getGlobalVaccines: (state, action) => {
       state.globalVaccines = action.payload;
+      console.log(action.payload);
     },
 
-    resetGlobalVaccines: (state) => {
+    resetGlobalVaccines: state => {
       state.globalVaccines = null;
     },
 
     setVaccines: (state, action) => {
-      if (action.payload.error){
+      if (action.payload.error) {
         state.error = action.payload.error;
         return state;
       }
       state.vaccines = action.payload;
     },
 
-    resetVaccines: (state) => {
+    resetVaccines: state => {
       state.vaccines = null;
     },
 
@@ -55,6 +56,12 @@ export const vaccinesSlice = createSlice({
   },
 });
 
-export const {getGlobalVaccines, resetGlobalVaccines, setVaccines, resetVaccines, reset} = vaccinesSlice.actions;
+export const {
+  getGlobalVaccines,
+  resetGlobalVaccines,
+  setVaccines,
+  resetVaccines,
+  reset,
+} = vaccinesSlice.actions;
 
 export default vaccinesSlice.reducer;

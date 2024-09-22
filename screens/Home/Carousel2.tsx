@@ -18,7 +18,6 @@ const Carousel2 = () => {
   const handleDone = () => {
     // Dispatch selected options to Redux
     dispatch(setOptions(selectedOptions));
-    console.log('Selected options:', selectedOptions);
     navigation.navigate('CycleJournal');
   };
 

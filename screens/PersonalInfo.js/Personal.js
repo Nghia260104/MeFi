@@ -27,11 +27,18 @@ import CustomButton from '../../component/customButton';
 import {useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPencil} from '@fortawesome/free-solid-svg-icons';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import * as actionType from '../../constants/actionTypes.js';
 
 const Personal = () => {
   let width = useWindowDimensions().width;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch({type: actionType.LOGOUT});
+    navigation.navigate('LogIn');
+  };
 
   const profileImage = useSelector(state => state.image.profileImage);
 
@@ -108,7 +115,11 @@ const Personal = () => {
               title="Help"
             />
           </View>
-          <CustomButton customStyle={styles.button} title="Log out" />
+          <CustomButton
+            customStyle={styles.button}
+            title="Log out"
+            onPress={handleLogout}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -3,7 +3,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet, Text, View} from 'react-native';
-import {horizontalScale, scaleFontSize} from '../assets/styles/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../assets/styles/scaling';
 import {getFontFamily} from '../assets/fonts/helper';
 
 import HomeNavigator from './HomeNavigator';
@@ -31,7 +35,7 @@ const TabNavigator = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 82, // Sets the height of the tab bar
+          height: verticalScale(82), // Sets the height of the tab bar
           justifyContent: 'center', // Centers the tabs
           alignItems: 'center',
         },

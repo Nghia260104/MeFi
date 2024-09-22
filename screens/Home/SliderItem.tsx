@@ -29,7 +29,7 @@ const width = Dimensions.get('window').width;
 
 const SliderItem = ({item, index, scrollX, setSelectedOptions}: Props) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [selectedTemperature, setSelectedTemperature] = useState('37');
+  const [selectedTemperature, setSelectedTemperature] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   useEffect(() => {
