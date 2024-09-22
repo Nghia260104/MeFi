@@ -23,6 +23,7 @@ import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import SignUp from '../SignUp/SignUp';
+import ConfirmEmailScreen from '../ConfirmEmail/ConfirmEmailScreen';
 import {useNavigation} from '@react-navigation/native';
 
 import {useDispatch} from 'react-redux';
@@ -45,6 +46,8 @@ const LogIn = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const [accountError, setAccountError] = useState('');
+
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
@@ -59,11 +62,25 @@ const LogIn = () => {
     const storedData = await AsyncStorage.getItem(USER_KEY);
     if (!storedData) {
       // Handle log in failed
+      console.log('LogIn: storedData is null');
       return;
     }
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
     // console.log(res.token); // If token exists, logged in successfully.
-    if (res?.token) {
+    // if(res?.message){
+    //   console.log('Error: ');
+    //   console.log(res.message);
+    // }
+    setPasswordError('');
+    setAccountError('');
+    if(res?.message){
+      if(res.message === 'Invalid credentials!')
+        setPasswordError('Invalid credentials!');
+      else if(res.message === 'User does not exist!')
+        setAccountError('User does not exist!');
+    }
+
+    if(res?.token){
       // handle user co verified chua
 
       // neu verified roi thi
@@ -130,6 +147,7 @@ const LogIn = () => {
             customStyle={styles.email}
             placeholder="Email"
             onChangeText={setEmail}
+            error={accountError}
           />
           <CustomInput
             customStyle={styles.password}
@@ -139,9 +157,15 @@ const LogIn = () => {
             secureTextEntry={true}
           />
           <View style={styles.forgotButton}>
-            <TouchableWithoutFeedback>
+            {/* <TouchableWithoutFeedback>
               <Text style={styles.forgot}>Forgot password</Text>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback> */}
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(ConfirmEmailScreen);
+              }}>
+              <Text style={styles.forgot}>Forgot password</Text>
+            </TouchableOpacity>
           </View>
           <CustomButton
             customStyle={{
@@ -164,17 +188,13 @@ const LogIn = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.alternativeLogin}>
-            <TouchableOpacity
-              onPress={() => {
-                handleGoogleSignIn();
-              }}>
+            <TouchableOpacity onPress={() => {
+              handleGoogleSignIn();
+            }}>
               <Google width={horizontalScale(30)} height={verticalScale(30)} />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Facebook
-                width={horizontalScale(30)}
-                height={verticalScale(30)}
-              />
+              <Facebook width={horizontalScale(30)} height={verticalScale(30)} />
             </TouchableOpacity>
             <TouchableOpacity>
               <Apple width={horizontalScale(30)} height={verticalScale(30)} />
