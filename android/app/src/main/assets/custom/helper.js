@@ -1,4 +1,5 @@
-export const getFontFamily = (baseFont = 'FZ Poppins', weight, style = '') => {
+export const getFontFamily = (weight, style = '') => {
+  const baseFont = 'Poppins';
   switch (style) {
     case '':
       switch (weight) {

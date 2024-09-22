@@ -17,7 +17,6 @@
 
 // export default periodReducer;
 
-
 import {createSlice} from '@reduxjs/toolkit';
 
 // Define the initial state for storing selected options and day
@@ -38,7 +37,11 @@ export const periodSlice = createSlice({
       state.period_end = action.payload.period_end;
     },
 
-    resetPeriodRange: (state) => {
+    setNextPeriod: (state, action) => {
+      state.next_period = action.payload;
+    },
+
+    resetPeriodRange: state => {
       state.period_start = null;
       state.period_end = null;
     },
@@ -48,18 +51,23 @@ export const periodSlice = createSlice({
     },
 
     reset: () => {
-        return initialState;
+      return initialState;
     },
 
-    resetPeriodType: (state) => {
-        state.period_type = null;
+    resetPeriodType: state => {
+      state.period_type = null;
     },
   },
 });
 
 // Export the actions for use in components
-export const {setPeriodRange, setPeriodType, resetPeriodRange, resetPeriodType, reset} =
-  periodSlice.actions;
+export const {
+  setPeriodRange,
+  setPeriodType,
+  resetPeriodRange,
+  resetPeriodType,
+  reset,
+} = periodSlice.actions;
 
 // Export the reducer to be included in the Redux store
 export default periodSlice.reducer;

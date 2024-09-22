@@ -6,7 +6,6 @@ import {
   startOfWeek,
   format,
   addDays,
-  isSameDay,
   isToday,
   isWithinInterval,
   parseISO,
@@ -30,9 +29,7 @@ const WeekCalendar = ({weekStart, periodStart, periodEnd}) => {
 
         return (
           <TouchableOpacity key={day} style={styles.dayColumn}>
-            <Text style={[styles.dayText, isWithinPeriod && styles.activeText]}>
-              {day}
-            </Text>
+            <Text style={[styles.dayText]}>{day}</Text>
             <View
               style={[
                 styles.dateCircle,
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
   dateCircle: {
     width: horizontalScale(25),
     height: horizontalScale(25),
-    borderRadius: 100,
+    borderRadius: horizontalScale(25 / 2),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -135,9 +132,6 @@ const styles = StyleSheet.create({
     fontSize: scaleFontSize(13),
     fontFamily: getFontFamily(700, ''),
     color: '#603EF7',
-  },
-  activeText: {
-    color: '#F8D45B', // Highlight color for selected period dates
   },
 });
 

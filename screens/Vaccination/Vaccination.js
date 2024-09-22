@@ -79,14 +79,10 @@ const ListHeader = () => {
 };
 
 const Vaccination = () => {
-  const vaccineData = useSelector(
-    state => state.vaccines.globalVaccines,
-  );
+  const vaccineData = useSelector(state => state.vaccines.globalVaccines);
   const dispatch = useDispatch();
   const [randomVaccines, setRandomVaccines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log('vaccineData', vaccineData);
 
   useEffect(() => {
     if (!vaccineData) {
