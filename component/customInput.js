@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Text,  // Import Text from react-native
 } from 'react-native';
 import {
   horizontalScale,
@@ -119,6 +120,7 @@ const CustomInput = ({
           )}
         </View>
       </View>
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
@@ -150,6 +152,11 @@ const styles = StyleSheet.create({
   },
   passwordIcon: {
     width: 24,
+  },
+  error: {
+    color: 'red',
+    fontSize: scaleFontSize(12),
+    marginTop: verticalScale(5),
   },
 });
 

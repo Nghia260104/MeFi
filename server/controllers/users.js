@@ -11,7 +11,7 @@ export const signIn = async (req, res) => {
   try {
     const existingUser = await users.findOne({email});
     if (!existingUser) {
-      return res.status(404).json({message: 'User does not exist!'});
+      return res.status(200).json({message: 'User does not exist!'});
     }
 
     if (type !== 'Google')
@@ -21,7 +21,8 @@ export const signIn = async (req, res) => {
         existingUser.password,
       );
       if (!isPasswordCorrect) {
-        return res.status(400).json({message: 'Invalid credentials!'});
+        res.status(200).json({message: 'Invalid credentials!'});
+        return;
       }
     }
 

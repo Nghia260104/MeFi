@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import usersRoute from './routes/users.js';
+import comicRoute from './routes/comics.js';
+import vaccineRoute from './routes/vaccines.js';
 
 const app = express();
 
@@ -12,6 +14,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', usersRoute);
+app.use('/comics', comicRoute);
+app.use('/vaccines', vaccineRoute);
 
 mongoose.connect(process.env.MONGODB_URI, {dbName: 'MeFi'})
     .then(() => {

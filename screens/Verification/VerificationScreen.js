@@ -12,6 +12,7 @@ import {
     scaleFontSize,
     verticalScale,
 } from '../../assets/styles/scaling';
+import LogIn from '../LogIn/LogIn';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { sendCode, verify } from '../../actions/auth';
@@ -30,6 +31,7 @@ const VerificationScreen = () => {
     const dispatch = useDispatch();
     const [code, setCode] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
+    const [error, setError] = useState('');
 
     const handleChange = (text, index) => {
         const newCode = [...code];
@@ -68,12 +70,16 @@ const VerificationScreen = () => {
         const encryptedData = await AsyncStorage.getItem(USER_KEY);
         const data = JSON.parse(encryptedData);
         const verified = data.user.verified;
+        setError('');
         if (!verified) {
+            setError('Invalid or expired code!');
             console.log('Invalid or expired code!'); // Need Frontend handle
             return;
         }
         // console.log('Verified successfully'); // Need frontend handle
-        navigation.navigate('PeriodTrackerCalendar');
+        // navigation.navigate('PeriodTrackerCalendar');
+        navigation.navigate(LogIn);
+        // navigation.navigate('Login');
     };
 
     const handleResend = async () => {
@@ -115,6 +121,7 @@ const VerificationScreen = () => {
                             color={'#000'} />
                     </TouchableOpacity>
                 </View>
+                {error && <Text style={styles.error}>{error}</Text>}
             </View>
         </KeyboardAvoidingView>
     );
@@ -191,6 +198,11 @@ const styles = StyleSheet.create({
         // position: 'absolute',
         right: 0,
         marginLeft: 10,
+    },
+    error: {
+        color: 'red',
+        fontSize: scaleFontSize(12),
+        marginTop: verticalScale(5),
     },
 });
 
