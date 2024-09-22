@@ -21,7 +21,6 @@ const CycleJournal = () => {
 
   const fullState = useSelector(state => state.options);
   const storedDay = useSelector(state => state.options.day);
-  console.log(storedDay);
 
   useEffect(() => {
     const checkDay = () => {

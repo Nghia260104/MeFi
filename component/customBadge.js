@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(10),
     borderRadius: horizontalScale(15),
     alignItems: 'center',
-    justifyContent: 'center',
     gap: verticalScale(10),
     backgroundColor: 'white',
     ...Platform.select({

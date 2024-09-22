@@ -7,7 +7,7 @@ import rootReducer from '../reducers';
 const configuration = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'options', 'period', 'check', 'image'],
+  whitelist: ['auth', 'options', 'period', 'check', 'image', 'vaccines'],
 };
 
 const persistedReducer = persistReducer(configuration, rootReducer);

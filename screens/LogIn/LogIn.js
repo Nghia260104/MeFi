@@ -39,6 +39,8 @@ import {
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
 
+import * as TYPES from '../../constants/actionTypes.js';
+
 const LogIn = () => {
   const navigation = useNavigation();
 
@@ -55,7 +57,7 @@ const LogIn = () => {
       email,
       password,
     };
-    await AsyncStorage.clear();
+    AsyncStorage.clear();
     await dispatch(signIn(data));
 
     // Handle data response
@@ -73,14 +75,14 @@ const LogIn = () => {
     // }
     setPasswordError('');
     setAccountError('');
-    if(res?.message){
-      if(res.message === 'Invalid credentials!')
+    if (res?.message) {
+      if (res.message === 'Invalid credentials!')
         setPasswordError('Invalid credentials!');
-      else if(res.message === 'User does not exist!')
+      else if (res.message === 'User does not exist!')
         setAccountError('User does not exist!');
     }
 
-    if(res?.token){
+    if (res?.token) {
       // handle user co verified chua
 
       // neu verified roi thi
@@ -188,13 +190,17 @@ const LogIn = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.alternativeLogin}>
-            <TouchableOpacity onPress={() => {
-              handleGoogleSignIn();
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                handleGoogleSignIn();
+              }}>
               <Google width={horizontalScale(30)} height={verticalScale(30)} />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Facebook width={horizontalScale(30)} height={verticalScale(30)} />
+              <Facebook
+                width={horizontalScale(30)}
+                height={verticalScale(30)}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
               <Apple width={horizontalScale(30)} height={verticalScale(30)} />

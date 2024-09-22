@@ -13,7 +13,7 @@ const authReducer = (state = {authData: null}, action) => {
 
       return {...state, authData: action.data, loading: false, errors: null};
     case actionType.LOGOUT:
-      AsyncStorage.clear();
+      AsyncStorage.removeItem(USER_KEY);
 
       return {...state, authData: null, loading: false, errors: null};
     default:

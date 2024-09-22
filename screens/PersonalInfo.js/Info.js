@@ -24,13 +24,11 @@ import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProfileImage} from '../../reducers/slices/profileImage';
 
-import defaultFemaleImage from '../../assets/images/defaultFemale.png';
-
 const Info = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profileImage = useSelector(state => state.image.profileImage);
-  const [localImage, setLocalImage] = useState(defaultFemaleImage);
+  const [localImage, setLocalImage] = useState(profileImage);
 
   const handleSave = () => {
     if (localImage !== profileImage) {
