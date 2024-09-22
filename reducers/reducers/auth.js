@@ -14,6 +14,10 @@ const authReducer = (state = {authData: null}, action) => {
       AsyncStorage.clear();
 
       return {...state, authData: null, loading: false, errors: null};
+    case actionType.CHECK_EMAIL:
+      AsyncStorage.setItem('ForgotPassword', JSON.stringify({...action.data}));
+
+      return {...state, authData: action.data, loading: false, errors: null};
     default:
       return state;
   }

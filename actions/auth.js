@@ -40,3 +40,13 @@ export const verify = (email, verifiedCode) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const checkEmail = (email) => async (dispatch) => {
+    try {
+        const {data} = await api.checkEmail(email);
+
+        await dispatch({type: TYPES.CHECK_EMAIL, data});
+    } catch (error) {
+        console.log(error);
+    }
+};

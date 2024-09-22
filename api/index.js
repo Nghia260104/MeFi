@@ -21,6 +21,9 @@ export const sendCode = email => {
 export const verify = (email, verifiedCode) => {
   return API.post('/users/verify', {email, verifiedCode});
 };
+export const checkEmail = (email) => {
+  return API.post('/users/checkemail', {email});
+};
 
 // PERIOD SETTINGS
 

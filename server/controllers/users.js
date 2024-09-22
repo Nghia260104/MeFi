@@ -141,6 +141,20 @@ export const verify = async (req, res) => {
   }
 };
 
+export const checkEmail = async (req, res) => {
+  const {email} = req.body;
+  try {
+    const User = await users.findOne({email});
+    if (!User) {
+      return res.status(200).json({message: 'User does not exist!'});
+    }
+
+    return res.status(200).json({message: 'Continue'});
+  } catch (error) {
+    res.status(500).json({message: 'Something went wrong!'});
+  }
+};
+
 export const setPeriodRange = async (req, res) => {
   const {email, startDate, endDate} = req.body;
   try {
