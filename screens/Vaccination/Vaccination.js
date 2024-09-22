@@ -80,7 +80,7 @@ const ListHeader = () => {
 
 const Vaccination = () => {
   const vaccineData = useSelector(
-    state => state.vaccines.globalVaccines.vaccines,
+    state => state.vaccines.globalVaccines,
   );
   const dispatch = useDispatch();
   const [randomVaccines, setRandomVaccines] = useState([]);

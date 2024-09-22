@@ -41,7 +41,7 @@ const ResetPassword = () => {
         console.log('Email:', email);
         console.log('Password:', password);
         await dispatch(resetPassword(email, password));
-        const storedData = await AsyncStorage.getItem('ForgotPassword');
+        const storedData = await AsyncStorage.getItem(USER_KEY);
         if (!storedData) {
             console.log('No stored data');
             return;
