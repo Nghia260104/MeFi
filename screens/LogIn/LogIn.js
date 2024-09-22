@@ -57,7 +57,6 @@ const LogIn = () => {
       email,
       password,
     };
-    AsyncStorage.clear();
     await dispatch(signIn(data));
 
     // Handle data response

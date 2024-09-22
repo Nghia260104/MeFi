@@ -29,11 +29,22 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import * as actionType from '../../constants/actionTypes.js';
+import {differenceInYears} from 'date-fns';
 
 const Personal = () => {
   let width = useWindowDimensions().width;
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const user = useSelector(state => state.user);
+
+  const calculateAge = dob => {
+    const birthDate = new Date(dob);
+    const currentDate = new Date();
+    return differenceInYears(currentDate, birthDate);
+  };
+
+  const age = calculateAge(user.dob);
 
   const handleLogout = () => {
     dispatch({type: actionType.LOGOUT});
@@ -65,7 +76,7 @@ const Personal = () => {
             />
           </View>
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>Minh Anh</Text>
+            <Text style={styles.name}>{user.name}</Text>
             <TouchableOpacity
               style={styles.edit}
               onPress={() => navigation.navigate('PersonalInfo')}>
@@ -76,7 +87,7 @@ const Personal = () => {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.info}>Female - 21 years old</Text>
+          <Text style={styles.info}>Female - {age} years old</Text>
           <View style={styles.cateContainer}>
             <CustomCategory
               icon={

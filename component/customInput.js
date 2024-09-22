@@ -1,11 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Animated,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
-  Text,  // Import Text from react-native
+  Text, // Import Text from react-native
 } from 'react-native';
 import {
   horizontalScale,
@@ -20,13 +20,26 @@ const CustomInput = ({
   customStyle,
   placeholder = '',
   onChangeText,
+  value = '',
   error,
+  editable = true,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(value);
   const [showPassword, setShowPassword] = useState(props.secureTextEntry);
   const labelPosition = useRef(new Animated.Value(text ? 1 : 0)).current;
+
+  useEffect(() => {
+    // If the `value` prop changes, update the internal state
+    setText(value);
+    if (value) {
+      animatedLabel(1);
+    } else {
+      animatedLabel(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -104,6 +117,7 @@ const CustomInput = ({
               props.secureTextEntry ? 'newPassword' : props.secureTextEntry
             }
             secureTextEntry={showPassword}
+            editable={editable}
           />
           {props.secureTextEntry && !!text && (
             <View>

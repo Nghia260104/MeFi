@@ -67,6 +67,7 @@ export const {
   resetPeriodRange,
   resetPeriodType,
   reset,
+  setNextPeriod,
 } = periodSlice.actions;
 
 // Export the reducer to be included in the Redux store
