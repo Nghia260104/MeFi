@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 import CustomInput from '../../component/customInput';
+import { checkEmail } from '../../actions/auth';
 
 const ConfirmEmailScreen = () => {
 
@@ -43,6 +44,20 @@ const ConfirmEmailScreen = () => {
             // Proceed with the email verification process
         }
         // handle check email here
+        await dispatch(checkEmail(email));
+        console.log(email);
+        const storedData = await AsyncStorage.getItem('ForgotPassword');
+        if (!storedData)
+            return;
+        const res = JSON.parse(storedData);
+        if (res?.message) {
+            if (res?.message === 'User does not exist!')
+                setAccountError('User does not exist!');
+            else {
+                navigation.navigate('VerificationScreen');
+                await dispatch(sendCode(email));
+            }
+        }
         // await dispatch(sendCode(data));
         console.log('Email:', email);
         // navigation.navigate('VerificationScreen');
