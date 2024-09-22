@@ -80,12 +80,14 @@ export const sendCode = async (req, res) => {
     if (!User) {
       return res.status(404).json({message: 'User does not exist!'});
     }
+    console.log(email);
 
     const verificationCode = generate6DigitCode();
     const expiredMins = 10;
     const verificationCodeExpires = Date.now() + 1000 * 60 * expiredMins;
 
     User.verificationCode = verificationCode;
+    User.resetPassword = false;
     User.verificationCodeExpires = verificationCodeExpires;
     await User.save();
 
@@ -103,8 +105,7 @@ export const sendCode = async (req, res) => {
       subject: 'Verify Memorii users',
       text: `Your verification code for Memorii app is ${verificationCode}. This code will be expired after ${expiredMins} minutes`,
     };
-
-    await transporter.sendMail(message);
+    // await transporter.sendMail(message);
     res.status(200).json({user: User});
   } catch (error) {
     res.status(500).json({message: 'Something went wrong'});
@@ -131,6 +132,7 @@ export const verify = async (req, res) => {
     }
 
     User.verificationCode = null;
+    User.resetPassword = true;
     User.verificationCodeExpires = null;
     User.verified = true;
     await User.save();
@@ -149,7 +151,7 @@ export const checkEmail = async (req, res) => {
       return res.status(200).json({message: 'User does not exist!'});
     }
 
-    return res.status(200).json({message: 'Continue'});
+    return res.status(200).json({message: 'Continue', email});
   } catch (error) {
     res.status(500).json({message: 'Something went wrong!'});
   }
@@ -162,10 +164,11 @@ export const resetPassword = async (req, res) => {
     if (!User) {
       return res.status(200).json({message: 'User not found!'});
     }
-
-    User.password = password;
+    const salt = await bcrypt.genSaltSync();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    User.password = hashedPassword;
     await User.save();
-    return res.status(200).json({message: 'Reset password successfully!'});
+    return res.status(200).json({user: User});
   } catch (error) {
     res.status(500).json({message: 'Something went wrong!'});
   }

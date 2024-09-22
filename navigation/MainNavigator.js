@@ -15,6 +15,7 @@ import PeriodFrequency from '../screens/Calendar/Calendar2';
 import TabNavigator from './TabNavigator';
 import VerificationScreen from '../screens/Verification/VerificationScreen';
 import ConfirmEmailScreen from '../screens/ConfirmEmail/ConfirmEmailScreen';
+import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import Carousel2 from '../screens/Home/Carousel2';
 import CycleJournal from '../screens/Home/CycleJournal';
 import Personal from '../screens/PersonalInfo.js/Personal';
@@ -77,6 +78,7 @@ const MainNavigator = () => {
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="VerificationScreen" component={VerificationScreen} />
       <Stack.Screen name="ConfirmEmailScreen" component={ConfirmEmailScreen} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
       <Stack.Screen
         name="PeriodTrackerCalendar"
         component={PeriodTrackerCalendar}

@@ -7,6 +7,8 @@ const authReducer = (state = {authData: null}, action) => {
     case actionType.AUTH:
     case actionType.SEND_CODE:
     case actionType.VERIFY:
+    case actionType.RESET_PASSWORD:
+    case actionType.CHECK_EMAIL:
       AsyncStorage.setItem(USER_KEY, JSON.stringify({...action?.data}));
 
       return {...state, authData: action.data, loading: false, errors: null};
@@ -14,11 +16,6 @@ const authReducer = (state = {authData: null}, action) => {
       AsyncStorage.clear();
 
       return {...state, authData: null, loading: false, errors: null};
-    case actionType.CHECK_EMAIL:
-    case actionType.RESET_PASSWORD:
-      AsyncStorage.setItem('ForgotPassword', JSON.stringify({...action.data}));
-
-      return {...state, authData: action.data, loading: false, errors: null};
     default:
       return state;
   }

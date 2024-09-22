@@ -12,6 +12,7 @@ import {
     scaleFontSize,
     verticalScale,
 } from '../../assets/styles/scaling';
+import LogIn from '../LogIn/LogIn';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { sendCode, verify } from '../../actions/auth';
@@ -22,58 +23,57 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import PeriodTrackerCalendar from '../Calendar/Calendar';
 import CustomInput from '../../component/customInput';
-import { checkEmail } from '../../actions/auth';
+import { resetPassword } from '../../actions/auth';
 
-const ConfirmEmailScreen = () => {
+const ResetPassword = () => {
 
-// const ConfirmEmailScreen = ({ navigation }) => {
+// const ResetPassword = ({ navigation }) => {
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [accountError, setAccountError] = useState('');
 
     const handleSubmit = async () => {
-        const data = {
-            email,
-        }; 
-        if (!email) {
-            setAccountError('Email is required');
+        const encryptedLoadedData = await AsyncStorage.getItem(USER_KEY);
+        const loadedData = JSON.parse(encryptedLoadedData);
+        const email = loadedData.user.email;
+        console.log('Email:', email);
+        console.log('Password:', password);
+        await dispatch(resetPassword(email, password));
+        const storedData = await AsyncStorage.getItem('ForgotPassword');
+        if (!storedData) {
+            console.log('No stored data');
             return;
-        } else {
-            setAccountError('');
-            // Proceed with the email verification process
         }
-        // handle check email here
-        await dispatch(checkEmail(email));
-        const storedData = await AsyncStorage.getItem(USER_KEY);
-        if (!storedData)
-            return;
         const res = JSON.parse(storedData);
         if (res?.message) {
-            if (res?.message === 'User does not exist!')
-                setAccountError('User does not exist!');
+            console.log('Message:', res.message);
+            if (res?.message === 'User not found!')
+                setAccountError('User not found!');
             else {
-                await AsyncStorage.setItem('prevScreen', 'ForgotPassword');
-                navigation.navigate('VerificationScreen');
-                console.log('Email:', email);
-                await dispatch(sendCode(email));
+                console.log('Password:', password);
+                navigation.navigate(LogIn);
             }
         }
+        else {
+            console.log('Message is null?');
+        }
+        console.log('Stored data: pass');
     };
 
     return (
         <View style={styles.submitContainer}>
-            <Text style={styles.title}>Please input your email:</Text>
+            <Text style={styles.title}>Input your new password:</Text>
             <CustomInput
-                customStyle={styles.email}
-                placeholder="Email"
-                onChangeText={setEmail}
+                customStyle={styles.password}
+                placeholder="New Password"
+                onChangeText={setPassword}
                 error={accountError}
             />
             <CustomButton
                 customStyle={styles.button}
-                title={'Continue to verify email'}
+                title={'Reset password and back to Log In'}
                 onPress={handleSubmit} 
             />
         </View>
@@ -98,14 +98,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
     },
-    email: {
+    password: {
         marginBottom: 16,
         width: '100%',
         padding: 10, // Adjust padding
     },
     button: {
-        width: horizontalScale(200),
+        width: horizontalScale(180),
     },
 });
 
-export default ConfirmEmailScreen;
+export default ResetPassword;
