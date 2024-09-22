@@ -20,7 +20,6 @@ const Sex = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const alreadyLaunched = useSelector(state => state.check.alreadyLaunched);
-  console.log(alreadyLaunched);
 
   const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
   return (

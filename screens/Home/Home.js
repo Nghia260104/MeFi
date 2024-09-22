@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -25,11 +25,32 @@ import Statistic from '../../assets/images/Home/Statistic.svg';
 import Period from '../../assets/images/Home/Period.svg';
 import Whatnews from '../../assets/images/Home/Whatnews.svg';
 import {useSelector} from 'react-redux';
+import {differenceInDays, isBefore, isToday, parseISO} from 'date-fns';
 
 const Home = () => {
+  const [day, setDay] = useState(0);
   const navigation = useNavigation();
 
+  const period_start = useSelector(state => state.period.period_start);
+  const period_end = useSelector(state => state.period.period_end);
   const profileImage = useSelector(state => state.image.profileImage);
+
+  useEffect(() => {
+    if (period_start && period_end) {
+      const start = parseISO(period_start);
+      const end = parseISO(period_end);
+      const today = new Date();
+
+      if (isBefore(today, end) || isToday(end)) {
+        // If today is before or equal to period_end, calculate day difference
+        const dayDifference = differenceInDays(today, start);
+        setDay(dayDifference);
+      } else {
+        // If today is after period_end, reset the day to 0
+        setDay(0);
+      }
+    }
+  }, [period_start, period_end]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,6 +120,7 @@ const Home = () => {
                 width={horizontalScale(150)}
                 height={verticalScale(140)}
               />
+              <Text style={styles.whatnews}>What's new?</Text>
             </TouchableOpacity>
           </View>
           <View style={{marginLeft: horizontalScale(15)}}>
@@ -107,6 +129,8 @@ const Home = () => {
                 width={horizontalScale(150)}
                 height={verticalScale(150)}
               />
+              <Text style={styles.period}>Period</Text>
+              <Text style={styles.day}>Day: {day}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -161,6 +185,33 @@ const styles = StyleSheet.create({
   functionContainer: {
     alignItems: 'center',
     marginHorizontal: horizontalScale(20),
+  },
+  whatnews: {
+    position: 'absolute',
+    color: '#fff',
+    fontSize: scaleFontSize(15),
+    fontFamily: getFontFamily(600, ''),
+    textAlign: 'center',
+    top: verticalScale(25),
+    left: horizontalScale(15),
+  },
+  period: {
+    position: 'absolute',
+    color: '#fff',
+    fontSize: scaleFontSize(15),
+    fontFamily: getFontFamily(600, ''),
+    textAlign: 'center',
+    top: verticalScale(25),
+    left: horizontalScale(15),
+  },
+  day: {
+    position: 'absolute',
+    color: '#fff',
+    fontSize: scaleFontSize(30),
+    fontFamily: getFontFamily(600, ''),
+    textAlign: 'center',
+    top: verticalScale(50),
+    left: horizontalScale(15),
   },
 });
 
