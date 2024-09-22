@@ -4,18 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const getGlobalVaccine = async (req, res) => {
-    const {vaccine_id, g_type} = req.body;
-
     try {
-        if (!g_type) {
-            const result = await vaccines.find({});
-            return res.status(200).json({vaccines: result});
-        }
-        const result = await vaccines.find({vaccine_id});
-        if (!result) {
-            return res.status(404).json({message: 'Vaccine not found'});
-        }
-
+        const result = await vaccines.find({});
         return res.status(200).json({vaccines: result});
     } catch (error) {
         res.status(500).json({message: 'Something went wrong!'});
@@ -28,15 +18,16 @@ export const setVaccine = async (req, res) => {
     try {
         const existingVaccine = users_vaccines.find({user_id, name: vaccine_data.name, injection_order: vaccine_data.injection_order});
         if (existingVaccine) {
-            return res.status(404).json({message: 'This injection has already existed'});
+            return res.status(200).json({message: 'This injection has already existed', error: 1});
         }
 
-        const result = await users_vaccines.create({user_id, name: vaccine_data.name,
+        await users_vaccines.create({user_id, name: vaccine_data.name,
                                                     injection_order: vaccine_data.injection_order,
                                                     date: vaccine_data.date,
                                                     location: vaccine_data.location});
+        const current = await users_vaccines.find({user_id});
 
-        res.status(200).json({vaccines: result});
+        res.status(200).json({vaccines: current});
     } catch (error) {
         res.status(500).json({message: 'Something went wrong!'});
     }
@@ -46,14 +37,9 @@ export const getVaccine = async (req, res) => {
     const {user_id, name, injection_order, g_type} = req.body;
 
     try {
-        if (!g_type) {
-            const result = await users_vaccines.find({user_id});
-            return res.status(200).json({vaccines: result});
-        }
-
-        const existingVaccine = users_vaccines.find({user_id, name, injection_order});
+        const existingVaccine = await users_vaccines.find({user_id, name, injection_order});
         if (!existingVaccine) {
-            return res.status(404).json({message: 'Injection already existed'});
+            return res.status(200).json({message: 'Injection does not exist', error: 2});
         }
 
         return res.status(200).json({vaccines: existingVaccine});
@@ -66,8 +52,9 @@ export const deleteVaccine = async (req, res) => {
     const {user_id, name, injection_order} = req.body;
 
     try {
-        users_vaccines.deleteOne({user_id, name, injection_order});
-        res.status(200).json({deleteVaccine: 1});
+        await users_vaccines.deleteOne({user_id, name, injection_order});
+        const result = await users_vaccines.find({});
+        res.status(200).json({vaccines: result});
     } catch (error) {
         res.status(500).json({message: 'Something went wrong!'});
     }

@@ -40,8 +40,8 @@ export const getComics = () => {
 
 // VACCINES
 
-export const getGlobalVaccine = (vaccine_id, g_type) => {
-    return API.post('/vaccines/getGlobal', {vaccine_id, g_type});
+export const getGlobalVaccine = () => {
+    return API.post('/vaccines/getGlobal');
 };
 
 export const setVaccine = (user_id, vaccine_data) => {

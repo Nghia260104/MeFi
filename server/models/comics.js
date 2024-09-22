@@ -1,8 +1,12 @@
 import mongoose from 'mongoose';
 
 const comicSchema = new mongoose.Schema({
-    image: {type: String, required: true},
-    chapter: {type: Number, required: true},
+    title: {type: String, required: true},
+    cover: {type: String, required: false},
+    chapter: {type: [{
+        title: {type: String, required: true},
+        image: {type: String, required: true},
+    }], required: false},
 });
 
 export default mongoose.model('Comics', comicSchema);
