@@ -24,6 +24,9 @@ export const verify = (email, verifiedCode) => {
 export const checkEmail = (email) => {
   return API.post('/users/checkemail', {email});
 };
+export const resetPassword = (email, password) => {
+  return API.post('/users/resetpassword', {email, password});
+};
 
 // PERIOD SETTINGS
 

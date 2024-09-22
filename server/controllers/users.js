@@ -155,6 +155,22 @@ export const checkEmail = async (req, res) => {
   }
 };
 
+export const resetPassword = async (req, res) => {
+  const {email, password} = req.body;
+  try {
+    const User = await users.findOne({email});
+    if (!User) {
+      return res.status(200).json({message: 'User not found!'});
+    }
+
+    User.password = password;
+    await User.save();
+    return res.status(200).json({message: 'Reset password successfully!'});
+  } catch (error) {
+    res.status(500).json({message: 'Something went wrong!'});
+  }
+};
+
 export const setPeriodRange = async (req, res) => {
   const {email, startDate, endDate} = req.body;
   try {

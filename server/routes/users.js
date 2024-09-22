@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {signIn, signUp, verify, sendCode, setPeriodRange, setPeriodType, checkEmail} from '../controllers/users.js';
+import {signIn, signUp, verify, sendCode, setPeriodRange, setPeriodType, checkEmail, resetPassword} from '../controllers/users.js';
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.post('/signUp', signUp);
 router.post('/verify', verify);
 router.post('/sendCode', sendCode);
 router.post('/checkemail', checkEmail);
+router.post('/resetpassword', resetPassword);
 router.post('/periodRange', setPeriodRange);
 router.post('/periodType', setPeriodType);
 

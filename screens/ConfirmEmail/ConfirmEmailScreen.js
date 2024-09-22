@@ -54,6 +54,7 @@ const ConfirmEmailScreen = () => {
             if (res?.message === 'User does not exist!')
                 setAccountError('User does not exist!');
             else {
+                await AsyncStorage.setItem('prevScreen', 'ForgotPassword');
                 navigation.navigate('VerificationScreen');
                 await dispatch(sendCode(email));
             }

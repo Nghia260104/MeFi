@@ -50,3 +50,13 @@ export const checkEmail = (email) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const resetPassword = (email, password) => async (dispatch) => {
+    try {
+        const {data} = await api.resetPassword(email, password);
+
+        await dispatch({type: TYPES.RESET_PASSWORD, data});
+    } catch (error) {
+        console.log(error);
+    }
+};
