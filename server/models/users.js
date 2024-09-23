@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     verified: {type: Boolean, default: false},
     verificationCode: {type: String, required: false},
     verificationCodeExpires: {type: Date, required: false},
+    resetPassword: {type: Boolean, required: false, default: false},
 });
 
 export default mongoose.model('Users', userSchema);

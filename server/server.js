@@ -25,3 +25,25 @@ mongoose.connect(process.env.MONGODB_URI, {dbName: 'MeFi'})
     .catch((error) => console.log(error.message));
 
 mongoose.set('autoIndex', false);
+
+// mongoose.connect(process.env.MONGODB_URI, {dbName: 'MeFi'});
+// mongoose.set('autoIndex', false);
+
+// import vaccines from './models/vaccines.js';
+
+// const main = async () => {
+//     var name = ['', 'Influvac Tetra/ Vaxigrip Tetra', 'MMR II/MMRI/Priorix', 'Varivax/ Varilrix/ Varicella',
+//         'Adacel', 'Boostrix', 'Engerix B', 'Twinrix', 'VAT', 'Gardasil/ Gardasil 9', 'Prevenar-13', 'Menactra'];
+//     var prevention = [[], ['Flu'], ['Measles', 'Mumps', 'Rubella'], ['Chickenpox'], 
+//     ['Whooping Cough', 'Diphtheria', 'Tetanus'], ['Whooping Cough', 'Diphtheria', 'Tetanus'],
+//     ['Hepatitis B'], ['Hepatitis A', 'Hepatitis B'], ['Tetanus'], ['Cervical cancer', 'HPV infection'],
+//     ['Pneumococcus infection'], ['Neisseria meningitidis A, C, Y, W']];
+//     for (let i = 1; i <= 11; ++i) {
+//         vaccines.create({name: name[i], prevention: prevention[i], origin: 'Vietnam'});
+//     }
+// };
+
+// // Run the main function
+
+// main();
+
