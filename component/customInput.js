@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    color: '#000',
     fontSize: scaleFontSize(15),
     paddingLeft: horizontalScale(10),
     fontFamily: getFontFamily(400, ''),

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Animated,
   Platform,
@@ -21,28 +21,12 @@ const CustomDateInput = ({
   customStyle,
   placeholder = '',
   onChangeText,
-  value,
   ...props
 }) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const labelPosition = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    // Update the internal date and text when the `value` prop changes
-    if (value) {
-      const newDate = new Date(value);
-      setDate(newDate);
-
-      let formattedDate = `${newDate.getDate()}/${
-        newDate.getMonth() + 1
-      }/${newDate.getFullYear()}`;
-
-      setText(formattedDate);
-      animateLabel(1);
-    }
-  }, [animateLabel, value]);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
