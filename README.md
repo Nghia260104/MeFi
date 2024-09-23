@@ -113,7 +113,7 @@ npm install lottie-react-native
 
 ```bash
 #install @react-native-picker/picker
-npm install @react-native-picker/picker
+npm install @react-native-picker/picker --save
 ```
 
 ### react-native-image-crop-picker

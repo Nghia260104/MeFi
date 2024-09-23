@@ -13,6 +13,7 @@ import {
     verticalScale,
 } from '../../assets/styles/scaling';
 import LogIn from '../LogIn/LogIn';
+import ResetPassword from '../ResetPassword/ResetPassword';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { sendCode, verify } from '../../actions/auth';
@@ -69,23 +70,27 @@ const VerificationScreen = () => {
         // Backend return response
         const encryptedData = await AsyncStorage.getItem(USER_KEY);
         const data = JSON.parse(encryptedData);
-        const verified = data.user.verified;
+        const verified = data.user.resetPassword;
         setError('');
+        console.log(data)
+        console.log('Verified:', verificationCode);
         if (!verified) {
             setError('Invalid or expired code!');
             console.log('Invalid or expired code!'); // Need Frontend handle
             return;
         }
-        // console.log('Verified successfully'); // Need frontend handle
-        // navigation.navigate('PeriodTrackerCalendar');
+        const prevScreen = await AsyncStorage.getItem('prevScreen');
+        if (prevScreen && prevScreen === 'ForgotPassword') {
+            navigation.navigate(ResetPassword);
+            return;
+        }
+
         navigation.navigate(LogIn);
-        // navigation.navigate('Login');
     };
 
     const handleResend = async () => {
-        // Handle the resend code button
-        // console.log('Resend Code');
-        const loadedData = await JSON.parse(AsyncStorage.getItem(USER_KEY));
+        const encryptedLoadedData = await AsyncStorage.getItem(USER_KEY);
+        const loadedData = await JSON.parse(encryptedLoadedData);
         const email = loadedData.user.email;
         await dispatch(sendCode(email));
     };
