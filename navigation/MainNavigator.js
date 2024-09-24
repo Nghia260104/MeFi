@@ -16,13 +16,8 @@ import TabNavigator from './TabNavigator';
 import VerificationScreen from '../screens/Verification/VerificationScreen';
 import ConfirmEmailScreen from '../screens/ConfirmEmail/ConfirmEmailScreen';
 import ResetPassword from '../screens/ResetPassword/ResetPassword';
-import Carousel2 from '../screens/Home/Carousel2';
-import CycleJournal from '../screens/Home/CycleJournal';
-import Personal from '../screens/PersonalInfo.js/Personal';
-import Info from '../screens/PersonalInfo.js/Info';
 import LottieView from 'lottie-react-native';
 import {horizontalScale} from '../assets/styles/scaling';
-import Agendas from '../screens/Vaccination/Agenda';
 
 const Stack = createStackNavigator();
 
@@ -86,11 +81,6 @@ const MainNavigator = () => {
       />
       <Stack.Screen name="PeriodFrequency" component={PeriodFrequency} />
       <Stack.Screen name="Main" component={TabNavigator} />
-      <Stack.Screen name="Carousel2" component={Carousel2} />
-      <Stack.Screen name="CycleJournal" component={CycleJournal} />
-      <Stack.Screen name="Personal" component={Personal} />
-      <Stack.Screen name="PersonalInfo" component={Info} />
-      <Stack.Screen name="Agenda" component={Agendas} />
     </Stack.Navigator>
   );
 };

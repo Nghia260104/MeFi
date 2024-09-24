@@ -53,7 +53,7 @@ const CycleJournal = () => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Carousel2')}>
+          onPress={() => navigation.navigate('Carousel2', {index: 0})}>
           <Text style={styles.category}>Menstrual</Text>
           {/* Show selected options or Plus icon */}
           {getOptionsForTitle('Menstrual Period') ? (
@@ -67,7 +67,7 @@ const CycleJournal = () => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Carousel2')}>
+          onPress={() => navigation.navigate('Carousel2', {index: 1})}>
           <Text style={styles.category}>Menstrual flow</Text>
           {getOptionsForTitle('Menstrual Flow') ? (
             <Text style={styles.selectedOption}>
@@ -85,7 +85,7 @@ const CycleJournal = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('Carousel2', {index: 2})}>
             <Text style={styles.category}>Menstrual mood tracker</Text>
             {getOptionsForTitle('Menstrual Mood Tracker') ? (
               <Text style={styles.selectedOption}>
@@ -98,7 +98,7 @@ const CycleJournal = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('Carousel2', {index: 3})}>
             <Text style={styles.category}>Menstrual symptoms</Text>
             {getOptionsForTitle('Menstrual Symptoms') ? (
               <Text style={styles.selectedOption}>
@@ -111,7 +111,7 @@ const CycleJournal = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('Carousel2', {index: 4})}>
             <Text style={styles.category}>Menstrual flow color</Text>
             {getOptionsForTitle('Menstrual Flow Color') ? (
               <Text style={styles.selectedOption}>
@@ -124,7 +124,7 @@ const CycleJournal = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('Carousel2', {index: 5})}>
             <Text style={styles.category}>Sleep Quality</Text>
             {getOptionsForTitle('Sleep Quality') ? (
               <Text style={styles.selectedOption}>
@@ -137,7 +137,7 @@ const CycleJournal = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('Carousel2', {index: 6})}>
             <Text style={styles.category}>Temperature</Text>
             {getOptionsForTitle('Temperature') ? (
               <Text style={styles.selectedOption}>
@@ -150,7 +150,7 @@ const CycleJournal = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Carousel2')}>
+            onPress={() => navigation.navigate('Carousel2', {index: 7})}>
             <Text style={styles.category}>Sexual activity</Text>
             {getOptionsForTitle('Sexual Activity') ? (
               <Text style={styles.selectedOption}>

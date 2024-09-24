@@ -139,6 +139,7 @@ const SliderItem = ({item, index, scrollX, setSelectedOptions}: Props) => {
       <View style={styles.item}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.index}>{index + 1 + '/9'}</Text>
         </View>
         <View style={styles.choiceContainer}>
           {item.subtitle && (
@@ -165,10 +166,12 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     backgroundColor: '#FF8533',
-    paddingLeft: 15,
+    paddingHorizontal: 15,
     paddingTop: 10,
     paddingBottom: 8,
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -176,6 +179,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 15,
     fontFamily: getFontFamily(600, ''),
+  },
+  index: {
+    color: '#fff',
+    fontSize: 11,
+    fontFamily: getFontFamily(500, ''),
   },
   choiceContainer: {
     backgroundColor: '#fff',

@@ -25,6 +25,21 @@ import UnselectedComics from '../assets/images/Tabs/unselectedComics.svg';
 import SelectedComics from '../assets/images/Tabs/selectedComics.svg';
 import UnselectedCommunity from '../assets/images/Tabs/unselectedCommunity.svg';
 import SelectedCommunity from '../assets/images/Tabs/selectedCommunity.svg';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+
+const getTabBarVisibility = route => {
+  const allowedRoutes = ['Home', 'Vaccination', 'Comics', 'Community'];
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+  if (allowedRoutes.includes(routeName)) {
+    return {
+      display: 'flex', // Shows the tab bar
+      height: verticalScale(82), // Sets the height of the tab bar
+      justifyContent: 'center', // Centers the tabs
+      alignItems: 'center',
+    };
+  }
+  return {display: 'none'};
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -34,11 +49,6 @@ const TabNavigator = () => {
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {
-          height: verticalScale(82), // Sets the height of the tab bar
-          justifyContent: 'center', // Centers the tabs
-          alignItems: 'center',
-        },
         tabBarIcon: ({focused}) => {
           let IconComponent;
           let label;
@@ -76,22 +86,34 @@ const TabNavigator = () => {
       <Tab.Screen
         name="HomeNavigator"
         component={HomeNavigator}
-        options={{headerTitle: 'Home'}}
+        options={({route}) => ({
+          headerTitle: 'Home',
+          tabBarStyle: getTabBarVisibility(route),
+        })}
       />
       <Tab.Screen
         name="VaccineNavigator"
         component={VaccineNavigator}
-        options={{headerTitle: 'Vaccination'}}
+        options={({route}) => ({
+          headerTitle: 'Vaccination',
+          tabBarStyle: getTabBarVisibility(route),
+        })}
       />
       <Tab.Screen
         name="ComicsNavigator"
         component={ComicsNavigator}
-        options={{headerTitle: 'Comics'}}
+        options={({route}) => ({
+          headerTitle: 'Comics',
+          tabBarStyle: getTabBarVisibility(route),
+        })}
       />
       <Tab.Screen
         name="CommunityNavigator"
         component={CommunityNavigator}
-        options={{headerTitle: 'Community'}}
+        options={({route}) => ({
+          headerTitle: 'Community',
+          tabBarStyle: getTabBarVisibility(route),
+        })}
       />
     </Tab.Navigator>
   );

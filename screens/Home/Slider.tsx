@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, Dimensions} from 'react-native';
 import SliderItem from './SliderItem';
 import Animated, {
@@ -10,14 +10,27 @@ import {ItemType} from './Data';
 type Props = {
   itemList: ItemType[];
   setSelectedOptions: (options: {title: string; selected: string}[]) => void;
+  initialIndex: number;
 };
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.8;
 const SPACING = (width - ITEM_WIDTH) / 2;
 
-const Slider = ({itemList, setSelectedOptions}: Props) => {
+const Slider = ({itemList, setSelectedOptions, initialIndex}: Props) => {
   const scrollX = useSharedValue(0);
+
+  const flatListRef = useRef(null); // Create a ref for the FlatList
+
+  // Scroll to the initial index when the component mounts
+  useEffect(() => {
+    if (flatListRef.current && initialIndex !== undefined) {
+      flatListRef.current.scrollToOffset({
+        offset: initialIndex * (ITEM_WIDTH + SPACING * 2),
+        animated: false,
+      });
+    }
+  }, [initialIndex]);
 
   const onScrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
@@ -28,6 +41,7 @@ const Slider = ({itemList, setSelectedOptions}: Props) => {
   return (
     <View>
       <Animated.FlatList
+        ref={flatListRef}
         data={itemList}
         horizontal
         showsHorizontalScrollIndicator={false}

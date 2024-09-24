@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Slider from './Slider';
 import CustomButton from '../../component/customButton';
 import CustomTitle from '../../component/customTitle';
@@ -9,11 +9,15 @@ import {Item} from './Data';
 import {setOptions} from '../../reducers/slices/optionSlice';
 
 const Carousel2 = () => {
+  const selected = useSelector(state => state.options);
   const [selectedOptions, setSelectedOptions] = useState<
     {title: string; selected: string}[]
-  >([]);
+  >(selected.selectedOptions);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const route = useRoute();
+
+  const {index} = route.params;
 
   const handleDone = () => {
     // Dispatch selected options to Redux
@@ -30,7 +34,11 @@ const Carousel2 = () => {
         title={'Menstrual period'}
       />
       <View style={{flex: 0.95}}>
-        <Slider itemList={Item} setSelectedOptions={setSelectedOptions} />
+        <Slider
+          itemList={Item}
+          setSelectedOptions={setSelectedOptions}
+          initialIndex={index}
+        />
       </View>
       <CustomButton
         customStyle={styles.done}

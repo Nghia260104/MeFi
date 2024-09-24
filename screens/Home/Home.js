@@ -30,7 +30,7 @@ import {differenceInDays, isBefore, isToday, parseISO} from 'date-fns';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Home = () => {
-  const [day, setDay] = useState(0);
+  const [day, setDay] = useState('');
   const navigation = useNavigation();
 
   const user = useSelector(state => state.user);
@@ -47,10 +47,10 @@ const Home = () => {
       if (isBefore(today, end) || isToday(end)) {
         // If today is before or equal to period_end, calculate day difference
         const dayDifference = differenceInDays(today, start);
-        setDay(dayDifference);
+        setDay('Day: ' + dayDifference);
       } else {
-        // If today is after period_end, reset the day to 0
-        setDay(0);
+        const dayDifference = differenceInDays(today, end);
+        setDay('Next: ' + (28 - dayDifference) + ' days');
       }
     }
   }, [period_start, period_end]);
@@ -134,7 +134,7 @@ const Home = () => {
                   height={verticalScale(140)}
                 />
                 <Text style={styles.period}>Period</Text>
-                <Text style={styles.day}>Day: {day}</Text>
+                <Text style={styles.day}>{day}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -214,8 +214,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: scaleFontSize(30),
     fontFamily: getFontFamily(600, ''),
-    textAlign: 'center',
-    top: verticalScale(50),
+    top: verticalScale(40),
     left: horizontalScale(15),
   },
 });
