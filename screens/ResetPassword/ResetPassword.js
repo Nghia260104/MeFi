@@ -38,8 +38,6 @@ const ResetPassword = () => {
         const encryptedLoadedData = await AsyncStorage.getItem(USER_KEY);
         const loadedData = JSON.parse(encryptedLoadedData);
         const email = loadedData.user.email;
-        console.log('Email:', email);
-        console.log('Password:', password);
         await dispatch(resetPassword(email, password));
         const storedData = await AsyncStorage.getItem(USER_KEY);
         if (!storedData) {
@@ -48,18 +46,12 @@ const ResetPassword = () => {
         }
         const res = JSON.parse(storedData);
         if (res?.message) {
-            console.log('Message:', res.message);
             if (res?.message === 'User not found!')
                 setAccountError('User not found!');
             else {
-                console.log('Password:', password);
                 navigation.navigate(LogIn);
             }
         }
-        else {
-            console.log('Message is null?');
-        }
-        console.log('Stored data: pass');
     };
 
     return (

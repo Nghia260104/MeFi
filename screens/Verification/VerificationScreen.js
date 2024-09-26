@@ -72,11 +72,8 @@ const VerificationScreen = () => {
         const data = JSON.parse(encryptedData);
         const verified = data.user.resetPassword;
         setError('');
-        console.log(data)
-        console.log('Verified:', verificationCode);
         if (!verified) {
             setError('Invalid or expired code!');
-            console.log('Invalid or expired code!'); // Need Frontend handle
             return;
         }
         const prevScreen = await AsyncStorage.getItem('prevScreen');

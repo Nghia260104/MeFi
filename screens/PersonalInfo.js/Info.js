@@ -27,6 +27,7 @@ import {setName} from '../../reducers/slices/userSlice';
 
 import {USER_KEY} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { changeName } from '../../api';
 
 const Info = () => {
   const user = useSelector(state => state.user);
@@ -51,8 +52,11 @@ const Info = () => {
     if (localImage !== profileImage) {
       dispatch(setProfileImage(localImage));
     }
-
+    const changeData = async () => {
+      await dispatch(changeName(email, fullName));
+    };
     if (fullName !== user.name) {
+      changeData();
       dispatch(setName(fullName));
     }
     navigation.navigate('Personal');
