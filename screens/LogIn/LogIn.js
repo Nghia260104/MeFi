@@ -40,6 +40,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 import * as TYPES from '../../constants/actionTypes.js';
+import { setName } from '../../reducers/slices/userSlice.js'
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -67,11 +68,7 @@ const LogIn = () => {
       return;
     }
     const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
-    // console.log(res.token); // If token exists, logged in successfully.
-    // if(res?.message){
-    //   console.log('Error: ');
-    //   console.log(res.message);
-    // }
+
     setPasswordError('');
     setAccountError('');
     if (res?.message) {
@@ -86,7 +83,9 @@ const LogIn = () => {
 
       // neu verified roi thi
       // navigation.navigate(PeriodTrackerCalendar);
-
+      if(res?.user.name){
+        dispatch(setName(res?.user.name));
+      }
       if (!res?.user.verified) {
         navigation.navigate('VerificationScreen');
         await dispatch(sendCode(email));
@@ -114,7 +113,6 @@ const LogIn = () => {
 
       if (isSuccessResponse(response)) {
         // read user's info
-        // console.log(response.data);
         await dispatch(signIn({email: response.data.user.email}));
       }
     } catch (error) {

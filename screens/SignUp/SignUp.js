@@ -86,7 +86,6 @@ const SignUp = () => {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       if (isSuccessResponse(response)) {
-        // console.log(response.data);
         const data = {
           email: response.data.user.email,
           name: response.data.user.name,

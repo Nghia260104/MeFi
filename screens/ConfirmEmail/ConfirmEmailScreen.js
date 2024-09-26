@@ -56,7 +56,6 @@ const ConfirmEmailScreen = () => {
             else {
                 await AsyncStorage.setItem('prevScreen', 'ForgotPassword');
                 navigation.navigate('VerificationScreen');
-                console.log('Email:', email);
                 await dispatch(sendCode(email));
             }
         }

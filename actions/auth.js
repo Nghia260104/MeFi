@@ -60,3 +60,13 @@ export const resetPassword = (email, password) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const changeName = (email, name) => async (dispatch) => {
+    try {
+        const {data} = await api.changeName(email, name);
+
+        await dispatch({type: TYPES.CHANGE_NAME, data});
+    } catch (error) {
+        console.log(error);
+    }
+};

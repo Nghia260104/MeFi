@@ -77,7 +77,6 @@ const Button = ({flatListIndex, flatListRef, dataLength, x, navigation}) => {
   const handlePress = async () => {
     try {
       await AsyncStorage.setItem('alreadyLaunched', 'true');
-      console.log('alreadyLaunched flag set to true');
       navigation.navigate('Sex');
     } catch (error) {
       console.error('Error setting alreadyLaunched flag:', error);
