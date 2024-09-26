@@ -21,7 +21,7 @@ export const sendCode = email => {
 export const verify = (email, verifiedCode) => {
   return API.post('/users/verify', {email, verifiedCode});
 };
-export const checkEmail = (email) => {
+export const checkEmail = email => {
   return API.post('/users/checkemail', {email});
 };
 export const resetPassword = (email, password) => {
@@ -41,7 +41,7 @@ export const setPeriodType = (email, p_type) => {
 // GET COMICS
 
 export const getComics = () => {
-  return API.post('/comics');
+  return API.post('/comics/get');
 };
 
 // VACCINES

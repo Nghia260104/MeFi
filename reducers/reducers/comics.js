@@ -14,23 +14,11 @@
 
 // export default authReducer;
 
-
 import {createSlice} from '@reduxjs/toolkit';
 
 // Define the initial state for storing selected options and day
 const initialState = {
-  comics: [
-    {
-      title: null,
-      cover: null,
-      chapter: [
-        {
-          title: null,
-          image: null,
-        },
-      ],
-    },
-  ],
+  comics: [],
 };
 
 // Create a slice for options with reducers to handle actions
@@ -49,8 +37,7 @@ export const comicsSlice = createSlice({
 });
 
 // Export the actions for use in components
-export const {setComics, reset} =
-  comicsSlice.actions;
+export const {setComics, reset} = comicsSlice.actions;
 
 // Export the reducer to be included in the Redux store
 export default comicsSlice.reducer;

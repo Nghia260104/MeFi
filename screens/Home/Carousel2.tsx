@@ -31,7 +31,7 @@ const Carousel2 = () => {
       <CustomTitle
         goBack={true}
         customStyle={styles.title}
-        title={'Menstrual period'}
+        title={index >= 3 ? 'Other Statistics' : 'Menstrual period'}
       />
       <View style={{flex: 0.95}}>
         <Slider
