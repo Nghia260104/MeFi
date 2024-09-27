@@ -139,7 +139,7 @@ npm install mongodb --save
 #### Dependencies for MongoDB, Backend and api between front-end and back-end
 
 ```bash
-npm install mongoose express cors axios react-native-dotenv jsonwebtoken bcrypt @react-native-google-signin/google-signin jwt-decode --save
+npm install mongoose express cors axios react-native-dotenv jsonwebtoken bcrypt @react-native-google-signin/google-signin jwt-decode @trycourier/courier --save
 ```
 
 #### Redux for global state management

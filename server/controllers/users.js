@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import users from '../models/users.js';
 import nodemailer from 'nodemailer';
+import { CourierClient } from "@trycourier/courier";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -90,21 +91,39 @@ export const sendCode = async (req, res) => {
     User.verificationCodeExpires = verificationCodeExpires;
     await User.save();
 
-    const transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    // const transporter = nodemailer.createTransport({
+    //   service: process.env.EMAIL_SERVICE,
+    //   auth: {
+    //     user: process.env.EMAIL_USER,
+    //     pass: process.env.EMAIL_PASS,
+    //   },
+    // });
 
-    const message = {
-      from: `Memorii <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'Verify Memorii users',
-      text: `Your verification code for Memorii app is ${verificationCode}. This code will be expired after ${expiredMins} minutes`,
-    };
-    await transporter.sendMail(message);
+    // const message = {
+    //   from: `Memorii <${process.env.EMAIL_USER}>`,
+    //   to: email,
+    //   subject: 'Verify Memorii users',
+    //   text: `Your verification code for Memorii app is ${verificationCode}. This code will be expired after ${expiredMins} minutes`,
+    // };
+    // await transporter.sendMail(message);
+
+      const courier = new CourierClient(
+        { authorizationToken: "pk_prod_F2YQTSBCB7M8J2GMGG9QSRBKJ50V"});
+
+      const { requestId } = await courier.send({
+        message: {
+          content: {
+            title: "MeFi verification code",
+            body: "Your verification code for Memorii app is {{verificationCode}}. This code will be expired after {{expiredMins}} minutes"
+          },
+          data: {
+            verificationCode, expiredMins,
+          },
+          to: {
+            email: email,
+          },
+        },
+      });
     res.status(200).json({user: User});
   } catch (error) {
     res.status(500).json({message: 'Something went wrong'});
