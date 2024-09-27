@@ -94,7 +94,7 @@ const VerificationScreen = () => {
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text style={styles.title}>OTP</Text>
-            <Text style={styles.notify}>We have sent you a verification OTP code to your email</Text>
+            <Text style={styles.notify}>We have sent you a verification OTP code to your email (this action may take a few minutes)</Text>
             <View style={styles.inputContainer}>
                 {code.map((digit, index) => (
                     <TextInput

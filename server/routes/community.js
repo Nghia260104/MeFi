@@ -1,5 +1,5 @@
 import express from 'express';
-import { getBlogs, createBlog, deleteBlog, likeBlog, getComments, deleteComment, createComment, likeComment } from '../controllers/community';
+import { getBlogs, createBlog, deleteBlog, likeBlog, getComments, deleteComment, createComment, likeComment } from '../controllers/community.js';
 
 const router = express.Router();
 
