@@ -15,6 +15,7 @@ import Female from '../../assets/images/Female.svg';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAlreadyLaunched} from '../../reducers/slices/checkSlice';
+import {setGender} from '../../reducers/slices/genderSlice';
 
 const Sex = () => {
   const navigation = useNavigation();
@@ -31,13 +32,19 @@ const Sex = () => {
           {width: SCREEN_WIDTH * 0.9, height: SCREEN_HEIGHT * 0.8},
         ]}>
         <Text style={styles.text}>What is your gender?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('LogIn');
+            !alreadyLaunched && dispatch(setAlreadyLaunched(true));
+            dispatch(setGender(false));
+          }}>
           <Male width={SCREEN_WIDTH * 0.75} height={SCREEN_WIDTH * 0.75} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('LogIn');
             !alreadyLaunched && dispatch(setAlreadyLaunched(true));
+            dispatch(setGender(true));
           }}>
           <Female width={SCREEN_WIDTH * 0.75} height={SCREEN_WIDTH * 0.75} />
         </TouchableOpacity>

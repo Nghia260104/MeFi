@@ -78,6 +78,7 @@ const PeriodFrequency = () => {
             customStyle={[styles.button]}
             title="Get Started"
             onPress={() => navigation.navigate('Main')}
+            textColor={'black'}
           />
         </View>
       </ScrollView>
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: verticalScale(70),
-    backgroundColor: '#FF8533',
+    backgroundColor: '#FFDF99',
     height: 60,
     width: 150,
     borderRadius: 35,

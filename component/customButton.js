@@ -7,10 +7,10 @@ import {
 } from '../assets/styles/scaling';
 import {getFontFamily} from '../assets/fonts/helper';
 
-const CustomButton = ({customStyle, title, onPress}) => {
+const CustomButton = ({customStyle, title, onPress, textColor}) => {
   return (
     <TouchableOpacity style={[styles.button, customStyle]} onPress={onPress}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, {color: textColor}]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: getFontFamily(600, ''),
     fontSize: scaleFontSize(15),
-    color: 'white',
   },
 });
 

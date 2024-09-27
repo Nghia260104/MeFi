@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   StatusBar,
   Image,
-  ScrollViewBase,
 } from 'react-native';
 import InfiniteScrollCalendar from '../../component/InfiniteCalendar';
 
@@ -27,7 +26,6 @@ import Period from '../../assets/images/Home/Period.svg';
 import Whatnews from '../../assets/images/Home/Whatnews.svg';
 import {useSelector} from 'react-redux';
 import {differenceInDays, isBefore, isToday, parseISO} from 'date-fns';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const Home = () => {
   const [day, setDay] = useState('');
@@ -83,63 +81,49 @@ const Home = () => {
           <InfiniteScrollCalendar />
         </View>
       </View>
-      <ScrollView>
-        <View style={styles.greetingRabbieContainer}>
-          <Hello width={320} height={170} />
-          <View style={styles.hello}>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('CycleJournal')}>
-              <Text
-                style={{
-                  color: '#000',
-                  fontSize: scaleFontSize(15),
-                  fontFamily: getFontFamily(600, ''),
-                }}>
-                How are you today?
-              </Text>
-            </TouchableWithoutFeedback>
+      <View style={styles.greetingRabbieContainer}>
+        <Hello width={320} height={170} />
+        <View style={styles.hello}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('CycleJournal')}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: scaleFontSize(15),
+                fontFamily: getFontFamily(600, ''),
+              }}>
+              How are you today?
+            </Text>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+      <View style={styles.functionContainer}>
+        <View
+          style={{
+            marginTop: verticalScale(20),
+          }}>
+          <Statistic width={horizontalScale(340)} height={verticalScale(100)} />
+        </View>
+        <View
+          style={{
+            marginTop: verticalScale(20),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <Whatnews
+              width={horizontalScale(150)}
+              height={verticalScale(140)}
+            />
+            <Text style={styles.whatnews}>What's new?</Text>
+          </View>
+          <View style={{marginLeft: horizontalScale(15)}}>
+            <Period width={horizontalScale(150)} height={verticalScale(140)} />
+            <Text style={styles.period}>Period</Text>
+            <Text style={styles.day}>{day}</Text>
           </View>
         </View>
-        <View style={styles.functionContainer}>
-          <View
-            style={{
-              marginTop: verticalScale(20),
-            }}>
-            <TouchableOpacity>
-              <Statistic
-                width={horizontalScale(340)}
-                height={verticalScale(100)}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              marginTop: verticalScale(20),
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View>
-              <TouchableOpacity>
-                <Whatnews
-                  width={horizontalScale(150)}
-                  height={verticalScale(140)}
-                />
-                <Text style={styles.whatnews}>What's new?</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{marginLeft: horizontalScale(15)}}>
-              <TouchableOpacity>
-                <Period
-                  width={horizontalScale(150)}
-                  height={verticalScale(140)}
-                />
-                <Text style={styles.period}>Period</Text>
-                <Text style={styles.day}>{day}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

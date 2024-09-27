@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -22,7 +21,6 @@ import Facebook from '../../assets/images/Facebook.svg';
 import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
-import SignUp from '../SignUp/SignUp';
 import ConfirmEmailScreen from '../ConfirmEmail/ConfirmEmailScreen';
 import {useNavigation} from '@react-navigation/native';
 
@@ -38,8 +36,7 @@ import {
   GoogleSignin,
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
-
-import * as TYPES from '../../constants/actionTypes.js';
+import {setUser} from '../../reducers/slices/userSlice';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -66,7 +63,9 @@ const LogIn = () => {
       console.log('LogIn: storedData is null');
       return;
     }
-    const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
+    const res = JSON.parse(storedData);
+    dispatch(setUser(res.user));
+    console.log(res); // In res, there must be a token, a user block with user profile
     // console.log(res.token); // If token exists, logged in successfully.
     // if(res?.message){
     //   console.log('Error: ');
@@ -75,10 +74,11 @@ const LogIn = () => {
     setPasswordError('');
     setAccountError('');
     if (res?.message) {
-      if (res.message === 'Invalid credentials!')
+      if (res.message === 'Invalid credentials!') {
         setPasswordError('Invalid credentials!');
-      else if (res.message === 'User does not exist!')
+      } else if (res.message === 'User does not exist!') {
         setAccountError('User does not exist!');
+      }
     }
 
     if (res?.token) {
@@ -178,12 +178,13 @@ const LogIn = () => {
               handleSubmit();
               // navigation.navigate(PeriodTrackerCalendar);
             }}
+            textColor={'white'}
           />
           <View style={styles.signUpContainer}>
             <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(SignUp);
+                navigation.navigate('SignUp');
               }}>
               <Text style={styles.signUp}> Sign Up</Text>
             </TouchableOpacity>

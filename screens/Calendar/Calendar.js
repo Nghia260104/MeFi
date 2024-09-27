@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StatusBar,
   useWindowDimensions,
   ScrollView,
+  BackHandler,
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import Rabbie from '../../assets/images/Calendar/Rabbie.svg';
@@ -17,17 +18,33 @@ import {
 } from '../../assets/styles/scaling';
 import {getFontFamily} from '../../assets/fonts/helper';
 import CustomButton from '../../component/customButton';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux'; // Import useDispatch
-import {setPeriodRange, setNextPeriod} from '../../reducers/reducers/period';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux'; // Import useDispatch
+import {setNextPeriod} from '../../reducers/reducers/period';
 import {addDays} from 'date-fns';
+import {setPeriodRange} from '../../actions/period';
 
 const PeriodTrackerCalendar = () => {
   const navigation = useNavigation();
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch(); // Initialize dispatch
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const [selectedRange, setSelectedRange] = useState({});
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        // Return true to prevent default behavior (exit app)
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, []),
+  );
 
   const onDayPress = day => {
     const selectedDate = day.dateString;
@@ -87,7 +104,13 @@ const PeriodTrackerCalendar = () => {
       const startDate = dates[0];
       const endDate = dates[dates.length - 1];
       // Dispatch the setPeriodRange action with startDate and endDate
-      dispatch(setPeriodRange({period_start: startDate, period_end: endDate}));
+      dispatch(
+        setPeriodRange({
+          email: user.email,
+          startDate: startDate,
+          endDate: endDate,
+        }),
+      );
 
       const nextPeriod = addDays(new Date(endDate), 28);
       const nextPeriodFormatted = nextPeriod.toISOString().split('T')[0]; // Format to YYYY-MM-DD
@@ -139,6 +162,7 @@ const PeriodTrackerCalendar = () => {
             customStyle={[styles.button, {marginTop: SCREEN_HEIGHT * 0.9}]}
             title="Next"
             onPress={onNextPress} // Update onPress to call onNextPress
+            textColor={'#FFFFFF'}
           />
         </View>
       </ScrollView>
@@ -178,7 +202,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    backgroundColor: '#FCA735',
+    backgroundColor: '#FF8533',
     height: 60,
     width: 150,
     borderRadius: 35,

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -25,11 +26,10 @@ import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
 import CustomDateInput from '../../component/customDateInput';
-import LogIn from '../LogIn/LogIn';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {signUp, sendCode} from '../../actions/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_KEY, WEB_CLIENT_ID} from '@env';
@@ -43,6 +43,7 @@ import {
 
 const SignUp = () => {
   const navigation = useNavigation();
+  const gender = useSelector(state => state.gender.gender);
 
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
@@ -51,8 +52,9 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [dob, setDob] = useState('');
   const [isTick, setIsTick] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError] = useState('');
 
   const dispatch = useDispatch();
 
@@ -61,7 +63,8 @@ const SignUp = () => {
       email,
       name,
       password,
-      // Will need dob: <Date of birth input field>
+      dob,
+      gender,
     };
     await dispatch(signUp(data));
 
@@ -78,6 +81,7 @@ const SignUp = () => {
     }
     navigation.navigate('VerificationScreen');
     await dispatch(sendCode(email));
+    await AsyncStorage.removeItem('prevScreen');
   };
 
   const handleGoogleSignUp = async () => {
@@ -87,6 +91,7 @@ const SignUp = () => {
       const response = await GoogleSignin.signIn();
       if (isSuccessResponse(response)) {
         // console.log(response.data);
+        // eslint-disable-next-line no-unused-vars
         const data = {
           email: response.data.user.email,
           name: response.data.user.name,
@@ -117,79 +122,91 @@ const SignUp = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <View style={styles.content}>
-        <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
-        <CustomInput
-          customStyle={styles.name}
-          placeholder="Name"
-          onChangeText={setName}
-        />
-        <CustomInput
-          customStyle={styles.email}
-          placeholder="Email"
-          onChangeText={setEmail}
-        />
-        <CustomInput
-          customStyle={styles.password}
-          placeholder="Password"
-          onChangeText={setPassword}
-          error={passwordError}
-          secureTextEntry={true}
-        />
-        <CustomDateInput customStyle={styles.dob} placeholder="Date of birth" />
-        <View style={styles.consentContainer}>
-          <TouchableOpacity
-            style={styles.checkBox}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          <Logo width={SCREEN_WIDTH * 0.25} height={SCREEN_WIDTH * 0.25} />
+          <CustomInput
+            customStyle={styles.name}
+            placeholder="Name"
+            onChangeText={setName}
+          />
+          <CustomInput
+            customStyle={styles.email}
+            placeholder="Email"
+            onChangeText={setEmail}
+          />
+          <CustomInput
+            customStyle={styles.password}
+            placeholder="Password"
+            onChangeText={setPassword}
+            error={passwordError}
+            secureTextEntry={true}
+          />
+          <CustomDateInput
+            customStyle={styles.dob}
+            placeholder="Date of birth"
+            onChangeText={setDob}
+          />
+          <View style={styles.consentContainer}>
+            <TouchableOpacity
+              style={styles.checkBox}
+              onPress={() => {
+                setIsTick(!isTick);
+              }}>
+              {isTick && (
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  color="#121619"
+                  size={scaleFontSize(14)}
+                />
+              )}
+            </TouchableOpacity>
+            <Text style={styles.consent}>
+              I would like to receive your newsletter and other promotional
+              information.
+            </Text>
+          </View>
+          <CustomButton
+            // eslint-disable-next-line react-native/no-inline-styles
+            customStyle={{
+              marginTop: verticalScale(30),
+              height: verticalScale(50),
+              backgroundColor: '#FF8533',
+            }}
+            title="Sign Up"
             onPress={() => {
-              setIsTick(!isTick);
-            }}>
-            {isTick && (
-              <FontAwesomeIcon
-                icon={faCheck}
-                color="#121619"
-                size={scaleFontSize(14)}
+              handleSubmit();
+            }}
+            textColor="white"
+          />
+          <View style={styles.signUpContainer}>
+            <Text style={styles.dontHaveAccount}>Already have an account?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LogIn');
+              }}>
+              <Text style={styles.signUp}> Log in</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.alternativeLogin}>
+            <TouchableOpacity
+              onPress={() => {
+                handleGoogleSignUp();
+              }}>
+              <Google width={horizontalScale(30)} height={verticalScale(30)} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Facebook
+                width={horizontalScale(30)}
+                height={verticalScale(30)}
               />
-            )}
-          </TouchableOpacity>
-          <Text style={styles.consent}>
-            I would like to receive your newsletter and other promotional
-            information.
-          </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Apple width={horizontalScale(30)} height={verticalScale(30)} />
+            </TouchableOpacity>
+          </View>
         </View>
-        <CustomButton
-          customStyle={{
-            marginTop: verticalScale(30),
-            height: verticalScale(50),
-          }}
-          title="Sign Up"
-          onPress={() => {
-            handleSubmit();
-          }}
-        />
-        <View style={styles.signUpContainer}>
-          <Text style={styles.dontHaveAccount}>Already have an account?</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(LogIn);
-            }}>
-            <Text style={styles.signUp}> Log in</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.alternativeLogin}>
-          <TouchableOpacity
-            onPress={() => {
-              handleGoogleSignUp();
-            }}>
-            <Google width={horizontalScale(30)} height={verticalScale(30)} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Facebook width={horizontalScale(30)} height={verticalScale(30)} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Apple width={horizontalScale(30)} height={verticalScale(30)} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

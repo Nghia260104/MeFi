@@ -35,14 +35,14 @@ const MainNavigator = () => {
           if (parsedData.token) {
             setInitialRoute('Main');
           } else {
-            setInitialRoute(alreadyLaunched ? 'LogIn' : 'Onboarding');
+            setInitialRoute(alreadyLaunched ? 'Sex' : 'Onboarding');
           }
         } else {
-          setInitialRoute(alreadyLaunched ? 'LogIn' : 'Onboarding');
+          setInitialRoute(alreadyLaunched ? 'Sex' : 'Onboarding');
         }
       } catch (error) {
         console.error('Failed to fetch stored data:', error);
-        setInitialRoute(alreadyLaunched ? 'LogIn' : 'Onboarding');
+        setInitialRoute(alreadyLaunched ? 'Sex' : 'Onboarding');
       } finally {
         setIsLoading(false);
       }

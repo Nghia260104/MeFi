@@ -44,6 +44,7 @@ const Carousel2 = () => {
         customStyle={styles.done}
         title={'Done'}
         onPress={handleDone}
+        textColor={'black'}
       />
     </SafeAreaView>
   );
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
   },
   done: {
     position: 'absolute',
+    backgroundColor: '#FFDF99',
     width: 120,
     bottom: 40,
   },

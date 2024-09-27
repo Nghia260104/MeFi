@@ -32,7 +32,7 @@ export const periodSlice = createSlice({
   name: 'period',
   initialState: initialState,
   reducers: {
-    setPeriodRange: (state, action) => {
+    setPeriodRanges: (state, action) => {
       state.period_start = action.payload.period_start;
       state.period_end = action.payload.period_end;
     },
@@ -46,7 +46,7 @@ export const periodSlice = createSlice({
       state.period_end = null;
     },
 
-    setPeriodType: (state, action) => {
+    setPeriodTypes: (state, action) => {
       state.period_type = action.payload;
     },
 
@@ -62,8 +62,8 @@ export const periodSlice = createSlice({
 
 // Export the actions for use in components
 export const {
-  setPeriodRange,
-  setPeriodType,
+  setPeriodRanges,
+  setPeriodTypes,
   resetPeriodRange,
   resetPeriodType,
   reset,

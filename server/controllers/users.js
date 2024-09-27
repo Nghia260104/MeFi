@@ -14,8 +14,7 @@ export const signIn = async (req, res) => {
       return res.status(200).json({message: 'User does not exist!'});
     }
 
-    if (type !== 'Google')
-    {
+    if (type !== 'Google') {
       const isPasswordCorrect = await bcrypt.compare(
         password,
         existingUser.password,
@@ -37,7 +36,7 @@ export const signIn = async (req, res) => {
 };
 
 export const signUp = async (req, res) => {
-  const {email, password, name, dob, type, profilePhoto} = req.body;
+  const {email, password, name, dob, type, profilePhoto, gender} = req.body;
   try {
     const existingUser = await users.findOne({email});
     if (existingUser) {
@@ -45,27 +44,38 @@ export const signUp = async (req, res) => {
     }
 
     let result;
-    if (type === 'Google'){
+    if (type === 'Google') {
       result = await users.create({email, name, verified: true, profilePhoto});
-    }
-    else {
+    } else {
       const salt = await bcrypt.genSaltSync();
       const hashedPassword = await bcrypt.hash(password, salt);
 
-      if (!dob){
-        result = await users.create({email, password: hashedPassword, name});
-      }
-      else {
-        result = await users.create({email, password: hashedPassword, name, DateOfBirth: dob});
+      if (!dob) {
+        result = await users.create({
+          email,
+          password: hashedPassword,
+          name,
+          gender,
+        });
+      } else {
+        result = await users.create({
+          email,
+          password: hashedPassword,
+          name,
+          DateOfBirth: dob,
+          gender,
+        });
       }
     }
 
-    const token = jwt.sign({email: result.email, id: result._id}, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      {email: result.email, id: result._id},
+      process.env.JWT_SECRET,
+    );
     res.status(200).json({user: result, token});
-  }
-  catch (error) {
-      users.deleteOne({email});
-      res.status(500).json({message: 'Something went wrong!'});
+  } catch (error) {
+    users.deleteOne({email});
+    res.status(500).json({message: 'Something went wrong!'});
   }
 };
 
@@ -128,7 +138,7 @@ export const verify = async (req, res) => {
     }
 
     if (!verified) {
-      return res.status(404).json({ message: 'Invalid or expired code' });
+      return res.status(404).json({message: 'Invalid or expired code'});
     }
 
     User.verificationCode = null;
@@ -168,7 +178,9 @@ export const resetPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     User.password = hashedPassword;
     await User.save();
-    return res.status(200).json({user: User, message: 'Reset password successfully'});
+    return res
+      .status(200)
+      .json({user: User, message: 'Reset password successfully'});
   } catch (error) {
     res.status(500).json({message: 'Something went wrong!'});
   }
@@ -176,14 +188,17 @@ export const resetPassword = async (req, res) => {
 
 export const setPeriodRange = async (req, res) => {
   const {email, startDate, endDate} = req.body;
+  console.log('object');
   try {
     const User = await users.findOne({email});
+    console.log(User);
     if (!User) {
       return res.status(404).json({message: 'User does not exist!'});
     }
     User.period_start = startDate;
     User.period_end = endDate;
     await User.save();
+    console.log(User);
 
     res.status(200).json({user: User});
   } catch (error) {

@@ -31,11 +31,11 @@ export const resetPassword = (email, password) => {
 // PERIOD SETTINGS
 
 export const setPeriodRange = (email, startDate, endDate) => {
-  return API.post('/users/setPeriodRange', {email, startDate, endDate});
+  return API.post('/users/periodRange', {email, startDate, endDate});
 };
 
 export const setPeriodType = (email, p_type) => {
-  return API.post('/users/setPeriodType', {email, p_type});
+  return API.post('/users/periodType', {email, p_type});
 };
 
 // GET COMICS

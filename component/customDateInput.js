@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Animated,
   Platform,
@@ -20,6 +20,7 @@ import {faCalendar} from '@fortawesome/free-regular-svg-icons';
 const CustomDateInput = ({
   customStyle,
   placeholder = '',
+  value = '',
   onChangeText,
   ...props
 }) => {
@@ -28,8 +29,22 @@ const CustomDateInput = ({
   const [text, setText] = useState('');
   const labelPosition = useRef(new Animated.Value(0)).current;
 
-  const onChange = (event, selectedDate) => {
+  useEffect(() => {
+    if (value) {
+      let tempDate = new Date(value);
+      let fDate = `${tempDate.getDate()}/${
+        tempDate.getMonth() + 1
+      }/${tempDate.getFullYear()}`;
+      setText(fDate);
+      animateLabel(1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const onChange = (_event, selectedDate) => {
     const currentDate = selectedDate || date;
+    value = currentDate;
+    console.log('value', value);
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
@@ -39,7 +54,7 @@ const CustomDateInput = ({
     }/${tempDate.getFullYear()}`;
 
     setText(fDate);
-    onChangeText?.(fDate);
+    onChangeText?.(currentDate);
     animateLabel(1);
   };
 
@@ -150,6 +165,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    color: '#000',
     fontSize: scaleFontSize(15),
     paddingLeft: horizontalScale(10),
     fontFamily: getFontFamily(400, ''),
