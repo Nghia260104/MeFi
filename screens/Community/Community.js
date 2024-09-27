@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Pressable, Image, TextInput} from 'react-native';
+import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
+import {useSelector} from 'react-redux';
+import {getFontFamily} from '../../assets/fonts/helper';
+
+import CustomButton from '../../component/customButton';
+import CustomPost from '../../component/Community/customPost';
+import CustomTitle from '../../component/customTitle';
 
 import Save from '../../assets/images/Community/Save.svg';
 import Notification from '../../assets/images/Community/Notification.svg';
 import ImagePost from '../../assets/images/Community/ImagePost.svg';
 import Link from '../../assets/images/Community/Link.svg';
-import CustomTitle from '../../component/customTitle';
-import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
-import {useSelector} from 'react-redux';
-import {getFontFamily} from '../../assets/fonts/helper';
-import CustomButton from '../../component/customButton';
-import CustomPost from '../../component/Community/customPost';
 
 const Community = () => {
   const profileImage = useSelector(state => state.image.profileImage);

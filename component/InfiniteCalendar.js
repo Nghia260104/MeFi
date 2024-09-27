@@ -36,7 +36,9 @@ const WeekCalendar = ({weekStart, periodStart, periodEnd}) => {
                   styles.dateCircle,
                   // eslint-disable-next-line react-native/no-inline-styles
                   (isCurrentDay || isWithinPeriod) && {
-                    backgroundColor: isWithinPeriod ? '#FFF3D4' : '#F8D45B',
+                    backgroundColor: isCurrentDay
+                      ? '#F8D45B'
+                      : isWithinPeriod && '#FFF3D4',
                   },
                 ]}>
                 <Text style={[styles.dateText]}>{format(date, 'd')}</Text>
@@ -54,8 +56,8 @@ const WeekCalendar = ({weekStart, periodStart, periodEnd}) => {
 
 const InfiniteScrollCalendar = () => {
   // Fetch period_start and period_end from the Redux store
-  const period_start = useSelector(state => state.period.period_start);
-  const period_end = useSelector(state => state.period.period_end);
+  const period_start = useSelector(state => state.user.period_start);
+  const period_end = useSelector(state => state.user.period_end);
 
   const [currentIndex, setCurrentIndex] = useState(1);
   const [weeks, setWeeks] = useState([

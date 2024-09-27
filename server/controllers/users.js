@@ -204,10 +204,8 @@ export const changeName = async (req, res) => {
 
 export const setPeriodRange = async (req, res) => {
   const {email, startDate, endDate} = req.body;
-  console.log('object');
   try {
     const User = await users.findOne({email});
-    console.log(User);
     if (!User) {
       return res.status(404).json({message: 'User does not exist!'});
     }

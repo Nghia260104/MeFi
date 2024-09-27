@@ -20,14 +20,23 @@ import {
 } from '../../assets/styles/scaling';
 import {getFontFamily} from '../../assets/fonts/helper';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {setPeriodType} from '../../actions/period';
 
 const PeriodFrequency = () => {
+  const user = useSelector(state => state.user);
   const navigation = useNavigation();
   const [answer, setAnswer] = useState('');
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
+  const dispatch = useDispatch();
 
   const handleAnswer = choice => {
     setAnswer(choice);
+  };
+
+  const handleSubmit = () => {
+    navigation.navigate('Main');
+    dispatch(setPeriodType(user.email, answer));
   };
 
   return (
@@ -77,7 +86,7 @@ const PeriodFrequency = () => {
           <CustomButton
             customStyle={[styles.button]}
             title="Get Started"
-            onPress={() => navigation.navigate('Main')}
+            onPress={handleSubmit}
             textColor={'black'}
           />
         </View>

@@ -20,8 +20,6 @@ import {getFontFamily} from '../../assets/fonts/helper';
 import CustomButton from '../../component/customButton';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux'; // Import useDispatch
-import {setNextPeriod} from '../../reducers/reducers/period';
-import {addDays} from 'date-fns';
 import {setPeriodRange} from '../../actions/period';
 
 const PeriodTrackerCalendar = () => {
@@ -104,19 +102,7 @@ const PeriodTrackerCalendar = () => {
       const startDate = dates[0];
       const endDate = dates[dates.length - 1];
       // Dispatch the setPeriodRange action with startDate and endDate
-      dispatch(
-        setPeriodRange({
-          email: user.email,
-          startDate: startDate,
-          endDate: endDate,
-        }),
-      );
-
-      const nextPeriod = addDays(new Date(endDate), 28);
-      const nextPeriodFormatted = nextPeriod.toISOString().split('T')[0]; // Format to YYYY-MM-DD
-
-      // Dispatch the setNextPeriod action with nextPeriod
-      dispatch(setNextPeriod({period_next: nextPeriodFormatted}));
+      dispatch(setPeriodRange(user.email, startDate, endDate));
 
       // Navigate to the next screen
       navigation.navigate('PeriodFrequency');

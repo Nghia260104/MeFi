@@ -6,7 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableWithoutFeedback,
-  TouchableOpacity,
   StatusBar,
   Image,
 } from 'react-native';
@@ -24,34 +23,53 @@ import Hello from '../../assets/images/Home/Hello.svg';
 import Statistic from '../../assets/images/Home/Statistic.svg';
 import Period from '../../assets/images/Home/Period.svg';
 import Whatnews from '../../assets/images/Home/Whatnews.svg';
-import {useSelector} from 'react-redux';
-import {differenceInDays, isBefore, isToday, parseISO} from 'date-fns';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addDays,
+  differenceInDays,
+  format,
+  isBefore,
+  isToday,
+  parseISO,
+} from 'date-fns';
+import {setPeriodRanges} from '../../reducers/slices/userSlice';
+import {setPeriodRange} from '../../actions/period';
 
 const Home = () => {
   const [day, setDay] = useState('');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const user = useSelector(state => state.user);
-  const period_start = useSelector(state => state.period.period_start);
-  const period_end = useSelector(state => state.period.period_end);
   const profileImage = useSelector(state => state.image.profileImage);
 
   useEffect(() => {
-    if (period_start && period_end) {
-      const start = parseISO(period_start);
-      const end = parseISO(period_end);
+    if (user.period_start && user.period_end) {
+      const start = parseISO(user.period_start);
+      const end = parseISO(user.period_end);
       const today = new Date();
 
       if (isBefore(today, end) || isToday(end)) {
         // If today is before or equal to period_end, calculate day difference
         const dayDifference = differenceInDays(today, start);
-        setDay('Day: ' + dayDifference);
+        setDay('Day: ' + (dayDifference + 1));
       } else {
         const dayDifference = differenceInDays(today, end);
+        if (28 - dayDifference === 0) {
+          const newStart = today;
+          const newEnd = addDays(today, 7);
+
+          // Convert dates to strings in ISO format
+          const newStartString = format(newStart, 'yyyy-MM-dd');
+          const newEndString = format(newEnd, 'yyyy-MM-dd');
+
+          dispatch(setPeriodRange(user.email, newStartString, newEndString));
+          dispatch(setPeriodRanges(newStartString, newEndString));
+        }
         setDay('Next: ' + (28 - dayDifference) + ' days');
       }
     }
-  }, [period_start, period_end]);
+  }, [user.period_start, user.period_end, user.email, dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>

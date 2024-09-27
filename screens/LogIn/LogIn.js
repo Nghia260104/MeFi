@@ -64,8 +64,7 @@ const LogIn = () => {
       return;
     }
     const res = JSON.parse(storedData);
-    dispatch(setUser(res.user));
-    console.log(res); // In res, there must be a token, a user block with user profile
+    dispatch(setUser(res.user)); // In res, there must be a token, a user block with user profile
     // console.log(res.token); // If token exists, logged in successfully.
     // if(res?.message){
     //   console.log('Error: ');
@@ -159,9 +158,6 @@ const LogIn = () => {
             secureTextEntry={true}
           />
           <View style={styles.forgotButton}>
-            {/* <TouchableWithoutFeedback>
-              <Text style={styles.forgot}>Forgot password</Text>
-            </TouchableWithoutFeedback> */}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ConfirmEmailScreen);

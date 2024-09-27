@@ -1,7 +1,6 @@
 import {combineReducers} from 'redux';
 
 import auth from './reducers/auth';
-import period from './reducers/period';
 import optionsSlice from './slices/optionSlice';
 import profileImageSlice from './slices/profileImage';
 import checkSlice from './slices/checkSlice';
@@ -13,7 +12,6 @@ import genderSlice from './slices/genderSlice';
 const rootReducer = combineReducers({
   auth,
   options: optionsSlice,
-  period,
   comic: comics,
   image: profileImageSlice,
   check: checkSlice,

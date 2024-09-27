@@ -24,6 +24,7 @@ import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProfileImage} from '../../reducers/slices/profileImage';
 import {setName} from '../../reducers/slices/userSlice';
+import {changeName} from '../../actions/auth';
 
 const Info = () => {
   const user = useSelector(state => state.user);
@@ -33,7 +34,7 @@ const Info = () => {
   const [localImage, setLocalImage] = useState(profileImage);
   const [email, setEmail] = useState(user.email);
   const [fullName, setFullName] = useState(user.name);
-  const [dob, setDob] = useState(user.dob);
+  const [dob, setDob] = useState(user.DateOfBirth);
 
   const handleSave = () => {
     if (localImage !== profileImage) {
@@ -89,7 +90,7 @@ const Info = () => {
                 resizeMode="cover"
               />
               <View style={styles.edit}>
-                <TouchableOpacity onPress={imagePick}>
+                <TouchableOpacity onPress={imagePick} disabled>
                   <FontAwesomeIcon icon={faPencil} size={scaleFontSize(15)} />
                 </TouchableOpacity>
               </View>

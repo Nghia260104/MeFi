@@ -37,7 +37,8 @@ const Sex = () => {
             navigation.navigate('LogIn');
             !alreadyLaunched && dispatch(setAlreadyLaunched(true));
             dispatch(setGender(false));
-          }}>
+          }}
+          disabled>
           <Male width={SCREEN_WIDTH * 0.75} height={SCREEN_WIDTH * 0.75} />
         </TouchableOpacity>
         <TouchableOpacity

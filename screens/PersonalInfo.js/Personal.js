@@ -30,7 +30,6 @@ import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import * as actionType from '../../constants/actionTypes.js';
 import {differenceInYears} from 'date-fns';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Personal = () => {
   let width = useWindowDimensions().width;
@@ -38,8 +37,6 @@ const Personal = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.user);
-
-  console.log(user.dob);
 
   const calculateAge = dob => {
     const birthDate = new Date(dob);
