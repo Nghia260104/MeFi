@@ -108,7 +108,7 @@ export const createComment = async (req, res) => {
             res.status(200).json({comments: comments});
         }
         else {
-            await comments.create({creator, content, comment_id, createdAt: Date.now()});
+            await comments.create({creator, content, comment: comment_id, createdAt: Date.now()});
             const Comments = await comments.find({});
             if (Comments) {
                 res.status(404).json({message: 'Comments not found'});
