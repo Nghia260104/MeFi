@@ -39,8 +39,11 @@ const Info = () => {
     if (localImage !== profileImage) {
       dispatch(setProfileImage(localImage));
     }
-
+    const changeData = async () => {
+      await dispatch(changeName(email, fullName));
+    };
     if (fullName !== user.name) {
+      changeData();
       dispatch(setName(fullName));
     }
     navigation.navigate('Personal');

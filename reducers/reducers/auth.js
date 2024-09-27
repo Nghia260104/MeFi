@@ -9,6 +9,7 @@ const authReducer = (state = {authData: null}, action) => {
     case actionType.VERIFY:
     case actionType.RESET_PASSWORD:
     case actionType.CHECK_EMAIL:
+    case actionType.CHANGE_NAME:
       AsyncStorage.setItem(USER_KEY, JSON.stringify({...action?.data}));
 
       return {...state, authData: action.data, loading: false, errors: null};

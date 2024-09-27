@@ -36,7 +36,7 @@ import {
   GoogleSignin,
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
-import {setUser} from '../../reducers/slices/userSlice';
+import {setName, setUser} from '../../reducers/slices/userSlice';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -86,7 +86,9 @@ const LogIn = () => {
 
       // neu verified roi thi
       // navigation.navigate(PeriodTrackerCalendar);
-
+      if (res?.user.name) {
+        dispatch(setName(res?.user.name));
+      }
       if (!res?.user.verified) {
         navigation.navigate('VerificationScreen');
         await dispatch(sendCode(email));
@@ -114,7 +116,6 @@ const LogIn = () => {
 
       if (isSuccessResponse(response)) {
         // read user's info
-        // console.log(response.data);
         await dispatch(signIn({email: response.data.user.email}));
       }
     } catch (error) {

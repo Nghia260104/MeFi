@@ -27,6 +27,9 @@ export const checkEmail = email => {
 export const resetPassword = (email, password) => {
   return API.post('/users/resetpassword', {email, password});
 };
+export const changeName = (email, name) => {
+  return API.post('/users/changeName', {email, name});
+};
 
 // PERIOD SETTINGS
 
