@@ -29,8 +29,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: horizontalScale(40),
     padding: horizontalScale(15),
-    elevation: 1,
     borderRadius: horizontalScale(16),
+    borderWidth: 1,
+    marginBottom: verticalScale(10),
   },
   imageContainer: {
     width: horizontalScale(90),

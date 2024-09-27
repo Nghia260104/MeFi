@@ -44,7 +44,6 @@ const CustomDateInput = ({
   const onChange = (_event, selectedDate) => {
     const currentDate = selectedDate || date;
     value = currentDate;
-    console.log('value', value);
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 

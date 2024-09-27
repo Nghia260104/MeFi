@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback, useMemo, useEffect} from 'react';
 import {
   FlatList,
@@ -32,57 +33,12 @@ import Search from '../../component/searchBar';
 
 import defaultVaccine from './defaultVaccine.jpg';
 
-const ItemSeparator = () => <View style={{height: verticalScale(10)}} />;
-
-const ListHeader = () => {
-  const navigation = useNavigation();
-  return (
-    <>
-      <View style={{marginBottom: horizontalScale(35)}}>
-        <Search />
-      </View>
-      <View style={styles.subFunction}>
-        <CustomBadge
-          icon={
-            <Activities
-              width={horizontalScale(24)}
-              height={horizontalScale(24)}
-            />
-          }
-          title="Vaccination Activities"
-        />
-        <CustomBadge
-          icon={
-            <Schedule
-              width={horizontalScale(24)}
-              height={horizontalScale(24)}
-            />
-          }
-          title="Upcoming vaccination schedule"
-          onPress={() => navigation.navigate('Agenda')}
-        />
-        <CustomBadge
-          icon={
-            <Places width={horizontalScale(24)} height={horizontalScale(24)} />
-          }
-          title="Injection places near me"
-        />
-      </View>
-      <View style={styles.list}>
-        <Text style={styles.listTitle}>List of vaccines</Text>
-        <TouchableWithoutFeedback>
-          <Text style={styles.seeMore}>See more</Text>
-        </TouchableWithoutFeedback>
-      </View>
-    </>
-  );
-};
-
 const Vaccination = () => {
   const vaccineData = useSelector(state => state.vaccines.globalVaccines);
   const dispatch = useDispatch();
   const [randomVaccines, setRandomVaccines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (!vaccineData) {
@@ -153,12 +109,55 @@ const Vaccination = () => {
         title="Vaccination"
         icon={<Noti width={horizontalScale(18)} height={horizontalScale(18)} />}
       />
+      <View
+        style={{
+          marginHorizontal: horizontalScale(15),
+          padding: horizontalScale(5),
+          marginTop: verticalScale(20),
+        }}>
+        <View style={{marginBottom: horizontalScale(35)}}>
+          <Search />
+        </View>
+        <View style={styles.subFunction}>
+          <CustomBadge
+            icon={
+              <Activities
+                width={horizontalScale(24)}
+                height={horizontalScale(24)}
+              />
+            }
+            title="Vaccination Activities"
+          />
+          <CustomBadge
+            icon={
+              <Schedule
+                width={horizontalScale(24)}
+                height={horizontalScale(24)}
+              />
+            }
+            title="Upcoming vaccination schedule"
+          />
+          <CustomBadge
+            icon={
+              <Places
+                width={horizontalScale(24)}
+                height={horizontalScale(24)}
+              />
+            }
+            title="Injection places near me"
+          />
+        </View>
+        <View style={styles.list}>
+          <Text style={styles.listTitle}>List of vaccines</Text>
+          <TouchableWithoutFeedback>
+            <Text style={styles.seeMore}>See more</Text>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
       <FlatList
         data={randomVaccines}
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
-        ItemSeparatorComponent={ItemSeparator}
-        ListHeaderComponent={ListHeader}
         contentContainerStyle={styles.flatListContent}
         showsVerticalScrollIndicator={false}
       />
@@ -174,9 +173,8 @@ const styles = StyleSheet.create({
   flatListContent: {
     flexGrow: 1,
     marginHorizontal: horizontalScale(15),
-    marginTop: verticalScale(25),
-    padding: horizontalScale(5),
-    paddingBottom: verticalScale(20),
+    paddingHorizontal: horizontalScale(5),
+    paddingBottom: verticalScale(10),
   },
   subFunction: {
     flexDirection: 'row',

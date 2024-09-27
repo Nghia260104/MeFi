@@ -44,7 +44,7 @@ const Personal = () => {
     return differenceInYears(currentDate, birthDate);
   };
 
-  const age = calculateAge(user.dob);
+  const age = calculateAge(user.DateOfBirth);
 
   const handleLogout = () => {
     try {
