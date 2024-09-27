@@ -8,6 +8,7 @@ import vaccines from './reducers/vaccines';
 import userSlice from './slices/userSlice';
 import comics from './reducers/comics';
 import genderSlice from './slices/genderSlice';
+import communitySlice from './slices/communitySlice';
 
 const rootReducer = combineReducers({
   auth,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   vaccines: vaccines,
   user: userSlice,
   gender: genderSlice,
+  community: communitySlice,
 });
 
 export default rootReducer;

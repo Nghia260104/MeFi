@@ -64,7 +64,7 @@ const LogIn = () => {
       return;
     }
     const res = JSON.parse(storedData);
-    dispatch(setUser(res.user)); // In res, there must be a token, a user block with user profile
+    // In res, there must be a token, a user block with user profile
     // console.log(res.token); // If token exists, logged in successfully.
     // if(res?.message){
     //   console.log('Error: ');
@@ -82,7 +82,7 @@ const LogIn = () => {
 
     if (res?.token) {
       // handle user co verified chua
-
+      dispatch(setUser(res.user));
       // neu verified roi thi
       // navigation.navigate(PeriodTrackerCalendar);
       if (res?.user.name) {
@@ -115,7 +115,9 @@ const LogIn = () => {
 
       if (isSuccessResponse(response)) {
         // read user's info
-        await dispatch(signIn({email: response.data.user.email}));
+        await dispatch(
+          signIn({email: response.data.user.email, type: 'Google'}),
+        );
       }
     } catch (error) {
       if (isErrorWithCode(error)) {

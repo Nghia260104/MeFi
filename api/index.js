@@ -64,3 +64,37 @@ export const getVaccine = (user_id, vaccine_id, g_type) => {
 export const deleteVaccine = (user_id, vaccine_id) => {
   return API.post('/vaccines/delete', {user_id, vaccine_id});
 };
+
+// COMMUNITY
+
+export const getBlogs = () => {
+  return API.post('/community/blogs/get');
+};
+
+export const createBlog = (blog) => {
+  return API.post('/community/blogs/create', blog);
+};
+
+export const deleteBlog = (blog) => {
+  return API.post('/community/blogs/delete', blog);
+};
+
+export const likeBlog = (blog) => {
+  return API.post('/community/blogs/like', blog);
+};
+
+export const getComments = () => {
+  return API.post('/community/comments/get');
+};
+
+export const createComment = (cmt) => {
+  return API.post('/community/comments/create', cmt);
+};
+
+export const deleteComment = (cmt) => {
+  return API.post('/community/comments/delete', cmt);
+};
+
+export const likeComment = (cmt) => {
+  return API.post('/community/comments/like', cmt);
+};
