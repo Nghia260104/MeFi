@@ -7,6 +7,7 @@ dotenv.config();
 import usersRoute from './routes/users.js';
 import comicRoute from './routes/comics.js';
 import vaccineRoute from './routes/vaccines.js';
+import communityRoute from './routes/community.js';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/users', usersRoute);
 app.use('/comics', comicRoute);
 app.use('/vaccines', vaccineRoute);
+app.use('/community', communityRoute);
 
 mongoose.connect(process.env.MONGODB_URI, {dbName: 'MeFi'})
     .then(() => {

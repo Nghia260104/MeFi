@@ -6,7 +6,7 @@ const comicSchema = new mongoose.Schema({
     chapter: {type: [{
         title: {type: String},
         image: {type: String},
-    }], required: false},
+    }], required: false, default: []},
 });
 
 export default mongoose.model('Comics', comicSchema);

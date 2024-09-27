@@ -113,7 +113,7 @@ const LogIn = () => {
 
       if (isSuccessResponse(response)) {
         // read user's info
-        await dispatch(signIn({email: response.data.user.email}));
+        await dispatch(signIn({email: response.data.user.email, type: 'Google'}));
       }
     } catch (error) {
       if (isErrorWithCode(error)) {
