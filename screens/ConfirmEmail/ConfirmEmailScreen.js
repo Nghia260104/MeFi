@@ -1,110 +1,99 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-} from 'react-native';
-import {
-    horizontalScale,
-    scaleFontSize,
-    verticalScale,
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
 } from '../../assets/styles/scaling';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { sendCode, verify } from '../../actions/auth';
-import { USER_KEY } from '@env';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {sendCode} from '../../actions/auth';
+import {USER_KEY} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../component/customButton';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import PeriodTrackerCalendar from '../Calendar/Calendar';
 import CustomInput from '../../component/customInput';
-import { checkEmail } from '../../actions/auth';
+import {checkEmail} from '../../actions/auth';
+import {getFontFamily} from '../../assets/fonts/helper';
 
 const ConfirmEmailScreen = () => {
+  // const ConfirmEmailScreen = ({ navigation }) => {
 
-// const ConfirmEmailScreen = ({ navigation }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [accountError, setAccountError] = useState('');
 
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
-    const [email, setEmail] = useState('');
-    const [accountError, setAccountError] = useState('');
+  const handleSubmit = async () => {
+    if (!email) {
+      setAccountError('Email is required');
+      return;
+    } else {
+      setAccountError('');
+      // Proceed with the email verification process
+    }
+    // handle check email here
+    await dispatch(checkEmail(email));
+    const storedData = await AsyncStorage.getItem(USER_KEY);
+    console.log(storedData);
+    if (!storedData) {
+      return;
+    }
+    const res = JSON.parse(storedData);
+    if (res?.message) {
+      if (res?.message === 'User does not exist!') {
+        setAccountError('User does not exist!');
+      } else {
+        await AsyncStorage.setItem('prevScreen', 'ForgotPassword');
+        navigation.navigate('VerificationScreen');
+        console.log('Email:', email);
+        await dispatch(sendCode(email));
+      }
+    }
+  };
 
-    const handleSubmit = async () => {
-        const data = {
-            email,
-        }; 
-        if (!email) {
-            setAccountError('Email is required');
-            return;
-        } else {
-            setAccountError('');
-            // Proceed with the email verification process
-        }
-        // handle check email here
-        await dispatch(checkEmail(email));
-        const storedData = await AsyncStorage.getItem(USER_KEY);
-        if (!storedData)
-            return;
-        const res = JSON.parse(storedData);
-        if (res?.message) {
-            if (res?.message === 'User does not exist!')
-                setAccountError('User does not exist!');
-            else {
-                await AsyncStorage.setItem('prevScreen', 'ForgotPassword');
-                navigation.navigate('VerificationScreen');
-                await dispatch(sendCode(email));
-            }
-        }
-    };
-
-    return (
-        <View style={styles.submitContainer}>
-            <Text style={styles.title}>Please input your email:</Text>
-            <CustomInput
-                customStyle={styles.email}
-                placeholder="Email"
-                onChangeText={setEmail}
-                error={accountError}
-            />
-            <CustomButton
-                customStyle={styles.button}
-                title={'Continue to verify email'}
-                onPress={handleSubmit} 
-            />
-        </View>
-    );
+  return (
+    <View style={styles.submitContainer}>
+      <Text style={styles.title}>Please input your email:</Text>
+      <KeyboardAvoidingView behavior="padding" style={styles.email}>
+        <CustomInput
+          customStyle={styles.email}
+          placeholder="Email"
+          onChangeText={setEmail}
+          error={accountError}
+        />
+      </KeyboardAvoidingView>
+      <CustomButton
+        customStyle={styles.button}
+        title={'Continue to verify email'}
+        onPress={handleSubmit}
+        textColor={'#fff'}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    submitContainer: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: 'white',
-        padding: 16,
-        paddingHorizontal: horizontalScale(30),
-        // marginHorizontal: horizontalScale(20),
-    },
-    title: {
-        marginTop: verticalScale(70),
-        // marginTop: verticalScale(50),
-        color: '#000',
-        fontSize: scaleFontSize(24),
-        marginBottom: verticalScale(16),
-        fontWeight: 'bold',
-        textAlign: 'left',
-    },
-    email: {
-        marginBottom: 16,
-        width: '100%',
-        padding: 10, // Adjust padding
-    },
-    button: {
-        width: horizontalScale(200),
-    },
+  submitContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: horizontalScale(20),
+  },
+  title: {
+    color: '#000',
+    fontSize: scaleFontSize(25),
+    marginBottom: verticalScale(16),
+    fontFamily: getFontFamily(600, ''),
+  },
+  email: {
+    width: '100%',
+  },
+  button: {
+    marginTop: verticalScale(20),
+    width: horizontalScale(200),
+    backgroundColor: '#FF8533',
+  },
 });
 
 export default ConfirmEmailScreen;

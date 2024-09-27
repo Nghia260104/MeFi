@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -24,10 +24,7 @@ import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setProfileImage} from '../../reducers/slices/profileImage';
 import {setName} from '../../reducers/slices/userSlice';
-
-import {USER_KEY} from '@env';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { changeName } from '../../api';
+import {changeName} from '../../actions/auth';
 
 const Info = () => {
   const user = useSelector(state => state.user);
@@ -37,16 +34,7 @@ const Info = () => {
   const [localImage, setLocalImage] = useState(profileImage);
   const [email, setEmail] = useState(user.email);
   const [fullName, setFullName] = useState(user.name);
-  const [dob, setDob] = useState(user.dob);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const storedData = await AsyncStorage.getItem(USER_KEY);
-      const res = JSON.parse(storedData);
-      setEmail(res.user.email);
-    };
-    fetchData();
-  }, []);
+  const [dob, setDob] = useState(user.DateOfBirth);
 
   const handleSave = () => {
     if (localImage !== profileImage) {
@@ -82,8 +70,10 @@ const Info = () => {
       <View style={styles.userContainer}>
         <CustomTitle goBack={true} title="Information" />
         <ScrollView
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}>
+          {/* eslint-disable-next-line react-native/no-inline-styles*/}
           <View style={{alignItems: 'center'}}>
             <View style={styles.avatarContainer}>
               <Image
@@ -100,7 +90,7 @@ const Info = () => {
                 resizeMode="cover"
               />
               <View style={styles.edit}>
-                <TouchableOpacity onPress={imagePick}>
+                <TouchableOpacity onPress={imagePick} disabled>
                   <FontAwesomeIcon icon={faPencil} size={scaleFontSize(15)} />
                 </TouchableOpacity>
               </View>
@@ -119,12 +109,13 @@ const Info = () => {
                 placeholder="Email"
                 value={email}
                 editable={false}
+                onChangeText={setEmail}
               />
               <CustomDateInput
                 style={styles.input}
                 label="Date of Birth"
                 placeholder="Date of Birth"
-                value={user.dob}
+                value={dob}
                 onChangeText={setDob}
               />
             </View>
@@ -132,6 +123,7 @@ const Info = () => {
               customStyle={styles.button}
               title="Save Change"
               onPress={handleSave}
+              textColor={'white'}
             />
           </View>
         </ScrollView>
@@ -176,6 +168,7 @@ const styles = StyleSheet.create({
   button: {
     width: '85%',
     marginTop: verticalScale(120),
+    backgroundColor: '#FF8533',
   },
   edit: {
     position: 'absolute',

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -22,7 +21,6 @@ import Facebook from '../../assets/images/Facebook.svg';
 import Google from '../../assets/images/Google.svg';
 import CustomInput from '../../component/customInput';
 import CustomButton from '../../component/customButton';
-import SignUp from '../SignUp/SignUp';
 import ConfirmEmailScreen from '../ConfirmEmail/ConfirmEmailScreen';
 import {useNavigation} from '@react-navigation/native';
 
@@ -38,9 +36,7 @@ import {
   GoogleSignin,
   isSuccessResponse,
 } from '@react-native-google-signin/google-signin';
-
-import * as TYPES from '../../constants/actionTypes.js';
-import { setName } from '../../reducers/slices/userSlice.js'
+import {setName, setUser} from '../../reducers/slices/userSlice';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -67,23 +63,29 @@ const LogIn = () => {
       console.log('LogIn: storedData is null');
       return;
     }
-    const res = JSON.parse(storedData); // In res, there must be a token, a user block with user profile
-
+    const res = JSON.parse(storedData);
+    // In res, there must be a token, a user block with user profile
+    // console.log(res.token); // If token exists, logged in successfully.
+    // if(res?.message){
+    //   console.log('Error: ');
+    //   console.log(res.message);
+    // }
     setPasswordError('');
     setAccountError('');
     if (res?.message) {
-      if (res.message === 'Invalid credentials!')
+      if (res.message === 'Invalid credentials!') {
         setPasswordError('Invalid credentials!');
-      else if (res.message === 'User does not exist!')
+      } else if (res.message === 'User does not exist!') {
         setAccountError('User does not exist!');
+      }
     }
 
     if (res?.token) {
       // handle user co verified chua
-
+      dispatch(setUser(res.user));
       // neu verified roi thi
       // navigation.navigate(PeriodTrackerCalendar);
-      if(res?.user.name){
+      if (res?.user.name) {
         dispatch(setName(res?.user.name));
       }
       if (!res?.user.verified) {
@@ -113,7 +115,9 @@ const LogIn = () => {
 
       if (isSuccessResponse(response)) {
         // read user's info
-        await dispatch(signIn({email: response.data.user.email, type: 'Google'}));
+        await dispatch(
+          signIn({email: response.data.user.email, type: 'Google'}),
+        );
       }
     } catch (error) {
       if (isErrorWithCode(error)) {
@@ -156,9 +160,6 @@ const LogIn = () => {
             secureTextEntry={true}
           />
           <View style={styles.forgotButton}>
-            {/* <TouchableWithoutFeedback>
-              <Text style={styles.forgot}>Forgot password</Text>
-            </TouchableWithoutFeedback> */}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ConfirmEmailScreen);
@@ -176,12 +177,13 @@ const LogIn = () => {
               handleSubmit();
               // navigation.navigate(PeriodTrackerCalendar);
             }}
+            textColor={'white'}
           />
           <View style={styles.signUpContainer}>
             <Text style={styles.dontHaveAccount}>Don't have an account?</Text>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(SignUp);
+                navigation.navigate('SignUp');
               }}>
               <Text style={styles.signUp}> Sign Up</Text>
             </TouchableOpacity>

@@ -1,26 +1,24 @@
 import {combineReducers} from 'redux';
 
 import auth from './reducers/auth';
-import period from './reducers/period';
-import periodSlice from './slices/periodSlice';
 import optionsSlice from './slices/optionSlice';
-import comic from './reducers/comics';
 import profileImageSlice from './slices/profileImage';
 import checkSlice from './slices/checkSlice';
 import vaccines from './reducers/vaccines';
 import userSlice from './slices/userSlice';
+import comics from './reducers/comics';
+import genderSlice from './slices/genderSlice';
 import communitySlice from './slices/communitySlice';
 
 const rootReducer = combineReducers({
   auth,
   options: optionsSlice,
-  period,
-  periodSlice: periodSlice,
-  comic,
+  comic: comics,
   image: profileImageSlice,
   check: checkSlice,
   vaccines: vaccines,
   user: userSlice,
+  gender: genderSlice,
   community: communitySlice,
 });
 

@@ -4,6 +4,6 @@ import {getComics} from '../controllers/comics.js';
 
 const router = express.Router();
 
-router.post('/comics', getComics);
+router.post('/get', getComics);
 
 export default router;

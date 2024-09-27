@@ -1,9 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = {
-  name: 'Minh Anh',
-  dob: '2003-06-13',
-};
+const initialState = {};
 
 export const userSlice = createSlice({
   name: 'user',
@@ -15,6 +12,14 @@ export const userSlice = createSlice({
     setDob: (state, action) => {
       state.dob = action.payload;
     },
+    setUser: (state, action) => {
+      // Update the entire state with the passed object
+      return {...state, ...action.payload};
+    },
+    setPeriodRanges: (state, action) => {
+      state.period_start = action.payload.period_start;
+      state.period_end = action.payload.period_end;
+    },
     reset: state => {
       state.name = initialState.name;
       state.dob = initialState.dob;
@@ -22,6 +27,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const {setName, setDob, reset} = userSlice.actions;
+export const {setName, setDob, reset, setUser, setPeriodRanges} =
+  userSlice.actions;
 
 export default userSlice.reducer;

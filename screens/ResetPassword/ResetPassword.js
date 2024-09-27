@@ -1,103 +1,145 @@
-import React, { useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, Text, StyleSheet, BackHandler} from 'react-native';
 import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-} from 'react-native';
-import {
-    horizontalScale,
-    scaleFontSize,
-    verticalScale,
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
 } from '../../assets/styles/scaling';
 import LogIn from '../LogIn/LogIn';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { sendCode, verify } from '../../actions/auth';
-import { USER_KEY } from '@env';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {USER_KEY} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../component/customButton';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import PeriodTrackerCalendar from '../Calendar/Calendar';
 import CustomInput from '../../component/customInput';
-import { resetPassword } from '../../actions/auth';
+import {resetPassword} from '../../actions/auth';
+import {getFontFamily} from '../../assets/fonts/helper';
 
 const ResetPassword = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [password, setPassword] = useState('');
+  const [cfpassword, setCfpassword] = useState('');
+  const [checkPassword, setCheckPassword] = useState(false);
+  const [accountError, setAccountError] = useState('');
 
-// const ResetPassword = ({ navigation }) => {
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        // Navigate to the screen you want
+        navigation.navigate('LogIn');
+        // Return true to prevent default back behavior
+        return true;
+      };
 
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
-    const [password, setPassword] = useState('');
-    const [accountError, setAccountError] = useState('');
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-    const handleSubmit = async () => {
-        const encryptedLoadedData = await AsyncStorage.getItem(USER_KEY);
-        const loadedData = JSON.parse(encryptedLoadedData);
-        const email = loadedData.user.email;
-        await dispatch(resetPassword(email, password));
-        const storedData = await AsyncStorage.getItem(USER_KEY);
-        if (!storedData) {
-            console.log('No stored data');
-            return;
-        }
-        const res = JSON.parse(storedData);
-        if (res?.message) {
-            if (res?.message === 'User not found!')
-                setAccountError('User not found!');
-            else {
-                navigation.navigate(LogIn);
-            }
-        }
-    };
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation]),
+  );
 
-    return (
-        <View style={styles.submitContainer}>
-            <Text style={styles.title}>Input your new password:</Text>
-            <CustomInput
-                customStyle={styles.password}
-                placeholder="New Password"
-                onChangeText={setPassword}
-                error={accountError}
-            />
-            <CustomButton
-                customStyle={styles.button}
-                title={'Reset password and back to Log In'}
-                onPress={handleSubmit} 
-            />
-        </View>
-    );
+  useEffect(() => {
+    if (password === '' || cfpassword === '') {
+      setCheckPassword(false);
+    } else {
+      if (password !== cfpassword) {
+        setCheckPassword(true);
+      } else {
+        setCheckPassword(false);
+      }
+    }
+  }, [password, cfpassword]);
+
+  const handleSubmit = async () => {
+    const encryptedLoadedData = await AsyncStorage.getItem(USER_KEY);
+    const loadedData = JSON.parse(encryptedLoadedData);
+    const email = loadedData.user.email;
+    await dispatch(resetPassword(email, password));
+    const storedData = await AsyncStorage.getItem(USER_KEY);
+    if (!storedData) {
+      console.log('No stored data');
+      return;
+    }
+    const res = JSON.parse(storedData);
+    if (res?.message) {
+      if (res?.message === 'User not found!') {
+        setAccountError('User not found!');
+      } else {
+        navigation.navigate(LogIn);
+      }
+    }
+  };
+
+  return (
+    <View style={styles.submitContainer}>
+      <Text style={styles.title}>Input your new password:</Text>
+      <CustomInput
+        customStyle={styles.password}
+        placeholder="New Password"
+        onChangeText={setPassword}
+        secureTextEntry={true}
+        error={accountError}
+      />
+      <View style={styles.cfpass}>
+        <CustomInput
+          customStyle={styles.password}
+          placeholder="Confirm New Password"
+          onChangeText={setCfpassword}
+          secureTextEntry={true}
+          error={accountError}
+        />
+        {checkPassword ? (
+          <Text style={styles.check}>The password doesn't match</Text>
+        ) : null}
+      </View>
+      <CustomButton
+        customStyle={styles.button}
+        title={'Reset password'}
+        onPress={handleSubmit}
+        textColor={'#fff'}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    submitContainer: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: 'white',
-        padding: 16,
-        paddingHorizontal: horizontalScale(30),
-        // marginHorizontal: horizontalScale(20),
-    },
-    title: {
-        marginTop: verticalScale(70),
-        // marginTop: verticalScale(50),
-        color: '#000',
-        fontSize: scaleFontSize(24),
-        marginBottom: verticalScale(16),
-        fontWeight: 'bold',
-        textAlign: 'left',
-    },
-    password: {
-        marginBottom: 16,
-        width: '100%',
-        padding: 10, // Adjust padding
-    },
-    button: {
-        width: horizontalScale(180),
-    },
+  submitContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: horizontalScale(30),
+  },
+  title: {
+    color: '#000',
+    fontSize: scaleFontSize(24),
+    marginBottom: verticalScale(16),
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  password: {
+    marginBottom: 16,
+    width: '100%',
+    paddingVertical: 10,
+  },
+  button: {
+    marginTop: verticalScale(20),
+    width: horizontalScale(160),
+    height: verticalScale(50),
+    backgroundColor: '#FF8533',
+  },
+  cfpass: {
+    width: '100%',
+  },
+  check: {
+    color: 'red',
+    paddingLeft: 12,
+    position: 'absolute',
+    fontSize: scaleFontSize(12),
+    fontFamily: getFontFamily(400, ''),
+    bottom: 0,
+  },
 });
 
 export default ResetPassword;

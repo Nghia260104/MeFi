@@ -24,13 +24,12 @@ import Cycle from '../../assets/images/Personal/Cycle.svg';
 import Setting from '../../assets/images/Personal/Setting.svg';
 import Support from '../../assets/images/Personal/Support.svg';
 import CustomButton from '../../component/customButton';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPencil} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import * as actionType from '../../constants/actionTypes.js';
 import {differenceInYears} from 'date-fns';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Personal = () => {
   let width = useWindowDimensions().width;
@@ -48,8 +47,17 @@ const Personal = () => {
   const age = calculateAge(user.dob);
 
   const handleLogout = () => {
-    dispatch({type: actionType.LOGOUT});
-    navigation.navigate('LogIn');
+    try {
+      dispatch({type: actionType.LOGOUT});
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Sex'}],
+        }),
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const profileImage = useSelector(state => state.image.profileImage);
@@ -88,7 +96,9 @@ const Personal = () => {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.info}>Female - {age} years old</Text>
+          <Text style={styles.info}>
+            {user.gender ? 'Female' : 'Male'} - {age} years old
+          </Text>
           <View style={styles.cateContainer}>
             <CustomCategory
               icon={
@@ -131,6 +141,7 @@ const Personal = () => {
             customStyle={styles.button}
             title="Log out"
             onPress={handleLogout}
+            textColor={'#FF8533'}
           />
         </View>
       </ScrollView>
@@ -195,6 +206,9 @@ const styles = StyleSheet.create({
   button: {
     width: horizontalScale(130),
     marginTop: verticalScale(30),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#FF8533',
   },
 });
 

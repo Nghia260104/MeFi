@@ -15,41 +15,49 @@ import {getFontFamily} from '../assets/fonts/helper';
 import {horizontalScale, scaleFontSize} from '../assets/styles/scaling';
 
 const WeekCalendar = ({weekStart, periodStart, periodEnd}) => {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  try {
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  return (
-    <View style={styles.weekContainer}>
-      {days.map((day, index) => {
-        const date = addDays(weekStart, index);
-        const isWithinPeriod = isWithinInterval(date, {
-          start: periodStart,
-          end: periodEnd,
-        }); // Check if the date is within the period range
-        const isCurrentDay = isToday(date);
+    return (
+      <View style={styles.weekContainer}>
+        {days.map((day, index) => {
+          const date = addDays(weekStart, index);
+          const isWithinPeriod = isWithinInterval(date, {
+            start: periodStart,
+            end: periodEnd,
+          }); // Check if the date is within the period range
+          const isCurrentDay = isToday(date);
 
-        return (
-          <TouchableOpacity key={day} style={styles.dayColumn}>
-            <Text style={[styles.dayText]}>{day}</Text>
-            <View
-              style={[
-                styles.dateCircle,
-                (isCurrentDay || isWithinPeriod) && {
-                  backgroundColor: isWithinPeriod ? '#FFF3D4' : '#F8D45B',
-                },
-              ]}>
-              <Text style={[styles.dateText]}>{format(date, 'd')}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
+          return (
+            <TouchableOpacity key={day} style={styles.dayColumn}>
+              <Text style={[styles.dayText]}>{day}</Text>
+              <View
+                style={[
+                  styles.dateCircle,
+                  // eslint-disable-next-line react-native/no-inline-styles
+                  (isCurrentDay || isWithinPeriod) && {
+                    backgroundColor: isCurrentDay
+                      ? '#F8D45B'
+                      : isWithinPeriod && '#FFF3D4',
+                  },
+                ]}>
+                <Text style={[styles.dateText]}>{format(date, 'd')}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  } catch (error) {
+    console.log('Error in WeekCalendar:', error);
+    return <Text>Error rendering calendar</Text>;
+  }
 };
 
 const InfiniteScrollCalendar = () => {
   // Fetch period_start and period_end from the Redux store
-  const period_start = useSelector(state => state.period.period_start);
-  const period_end = useSelector(state => state.period.period_end);
+  const period_start = useSelector(state => state.user.period_start);
+  const period_end = useSelector(state => state.user.period_end);
 
   const [currentIndex, setCurrentIndex] = useState(1);
   const [weeks, setWeeks] = useState([

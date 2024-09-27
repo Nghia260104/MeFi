@@ -6,10 +6,8 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableWithoutFeedback,
-  TouchableOpacity,
   StatusBar,
   Image,
-  ScrollViewBase,
 } from 'react-native';
 import InfiniteScrollCalendar from '../../component/InfiniteCalendar';
 
@@ -25,35 +23,53 @@ import Hello from '../../assets/images/Home/Hello.svg';
 import Statistic from '../../assets/images/Home/Statistic.svg';
 import Period from '../../assets/images/Home/Period.svg';
 import Whatnews from '../../assets/images/Home/Whatnews.svg';
-import {useSelector} from 'react-redux';
-import {differenceInDays, isBefore, isToday, parseISO} from 'date-fns';
-import {ScrollView} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addDays,
+  differenceInDays,
+  format,
+  isBefore,
+  isToday,
+  parseISO,
+} from 'date-fns';
+import {setPeriodRanges} from '../../reducers/slices/userSlice';
+import {setPeriodRange} from '../../actions/period';
 
 const Home = () => {
   const [day, setDay] = useState('');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const user = useSelector(state => state.user);
-  const period_start = useSelector(state => state.period.period_start);
-  const period_end = useSelector(state => state.period.period_end);
   const profileImage = useSelector(state => state.image.profileImage);
 
   useEffect(() => {
-    if (period_start && period_end) {
-      const start = parseISO(period_start);
-      const end = parseISO(period_end);
+    if (user.period_start && user.period_end) {
+      const start = parseISO(user.period_start);
+      const end = parseISO(user.period_end);
       const today = new Date();
 
       if (isBefore(today, end) || isToday(end)) {
         // If today is before or equal to period_end, calculate day difference
         const dayDifference = differenceInDays(today, start);
-        setDay('Day: ' + dayDifference);
+        setDay('Day: ' + (dayDifference + 1));
       } else {
         const dayDifference = differenceInDays(today, end);
+        if (28 - dayDifference === 0) {
+          const newStart = today;
+          const newEnd = addDays(today, 7);
+
+          // Convert dates to strings in ISO format
+          const newStartString = format(newStart, 'yyyy-MM-dd');
+          const newEndString = format(newEnd, 'yyyy-MM-dd');
+
+          dispatch(setPeriodRange(user.email, newStartString, newEndString));
+          dispatch(setPeriodRanges(newStartString, newEndString));
+        }
         setDay('Next: ' + (28 - dayDifference) + ' days');
       }
     }
-  }, [period_start, period_end]);
+  }, [user.period_start, user.period_end, user.email, dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -83,63 +99,49 @@ const Home = () => {
           <InfiniteScrollCalendar />
         </View>
       </View>
-      <ScrollView>
-        <View style={styles.greetingRabbieContainer}>
-          <Hello width={320} height={170} />
-          <View style={styles.hello}>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('CycleJournal')}>
-              <Text
-                style={{
-                  color: '#000',
-                  fontSize: scaleFontSize(15),
-                  fontFamily: getFontFamily(600, ''),
-                }}>
-                How are you today?
-              </Text>
-            </TouchableWithoutFeedback>
+      <View style={styles.greetingRabbieContainer}>
+        <Hello width={320} height={170} />
+        <View style={styles.hello}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('CycleJournal')}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: scaleFontSize(15),
+                fontFamily: getFontFamily(600, ''),
+              }}>
+              How are you today?
+            </Text>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+      <View style={styles.functionContainer}>
+        <View
+          style={{
+            marginTop: verticalScale(20),
+          }}>
+          <Statistic width={horizontalScale(340)} height={verticalScale(100)} />
+        </View>
+        <View
+          style={{
+            marginTop: verticalScale(20),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <Whatnews
+              width={horizontalScale(150)}
+              height={verticalScale(140)}
+            />
+            <Text style={styles.whatnews}>What's new?</Text>
+          </View>
+          <View style={{marginLeft: horizontalScale(15)}}>
+            <Period width={horizontalScale(150)} height={verticalScale(140)} />
+            <Text style={styles.period}>Period</Text>
+            <Text style={styles.day}>{day}</Text>
           </View>
         </View>
-        <View style={styles.functionContainer}>
-          <View
-            style={{
-              marginTop: verticalScale(20),
-            }}>
-            <TouchableOpacity>
-              <Statistic
-                width={horizontalScale(340)}
-                height={verticalScale(100)}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              marginTop: verticalScale(20),
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View>
-              <TouchableOpacity>
-                <Whatnews
-                  width={horizontalScale(150)}
-                  height={verticalScale(140)}
-                />
-                <Text style={styles.whatnews}>What's new?</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{marginLeft: horizontalScale(15)}}>
-              <TouchableOpacity>
-                <Period
-                  width={horizontalScale(150)}
-                  height={verticalScale(140)}
-                />
-                <Text style={styles.period}>Period</Text>
-                <Text style={styles.day}>{day}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
